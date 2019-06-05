@@ -1,7 +1,7 @@
 import path from 'path'
-import _ from 'lodash'
 import unusedFilename from 'unused-filename'
 import fs from 'fs-extra'
+import { filterfiles } from '../common'
 
 class Posts {
   constructor(opt) {
@@ -10,11 +10,7 @@ class Posts {
   }
 
   async index() {
-    var files = await fs.readdir(this.library.localPath)
-    files = files.filter(file => {
-      return _.endsWith(file, '.md')
-    })
-    return files
+    return await filterfiles(this.library.localPath)
   }
 
   async create(name) {

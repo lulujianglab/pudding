@@ -1,6 +1,7 @@
 <template>
   <column class="sidebar">
    <button @click="upload">同步</button>
+   <button @click="translate">md2html</button>
     <column
       v-for="item in menu"
       :key="item.title"
@@ -65,6 +66,9 @@ export default {
     },
     async upload() {
       var ret = await ipc.send('/publish/github')
+    },
+    async translate() {
+      await ipc.send('/publish/translate')
     },
     isItemActive (item) {
       if (item.remotePath) {
