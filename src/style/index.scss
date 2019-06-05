@@ -1,0 +1,67 @@
+@import "./reset.scss";
+@import "./flex.scss";
+@import "./util.scss";
+// @import "./overwrite.scss";
+@import "./biz.scss";
+@import "./iconfont.scss";
+
+html,
+body {
+  height: 100%;
+}
+
+#app {
+  min-height: 100%;
+}
+
+body {
+  word-wrap: break-word;
+  color: #666;
+  font-size: 14px; // 此项目各种12px
+}
+
+.inner {
+  width: 1150px;
+  margin: 0 auto;
+}
+
+#app {
+  // http://iconfont.cn/manage/index?spm=a313x.7781069.1998910419.10&manage_type=myprojects&projectId=593655&keyword=
+  [class^="el-icon-my"],
+  [class*=" el-icon-my"] {
+    font-family: "iconfont" !important;
+    /* 以下内容参照第三方图标库本身的规则 */
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .el-tree-node {
+    white-space: normal;
+  }
+  .el-tree-node__content {
+    height: auto;
+  }
+}
+
+.user-popper.el-popper {
+  .logout {
+    cursor: pointer;
+    &:hover {
+      // color: $--color-primary;
+    }
+  }
+}
+
+.no-arrow.el-popper {
+  margin-top: 0 !important;
+}
+
+.lishen-popper.el-popper {
+  padding: 0;
+}
+
+// a[href] {
+//   &:hover {
+//     color: $--color-primary;
+//   }
+// }

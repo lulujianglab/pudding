@@ -1,0 +1,85 @@
+// 覆盖 element ui 的写在这里
+
+#app {
+  table.pl-table {
+    font-size: 16px;
+    border-style: solid;
+    border-color: #E8E8E8;
+    border-width: 1px 1px 0 1px;
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: separate;
+    td {
+      border-style: solid;
+      border-color: #E8E8E8;
+      border-width: 0 1px 1px 0;
+      padding: 20px 0;
+    }
+    td:first-child {
+      color: $--color-text-primary;
+      padding-left: 55px;
+    }
+    td:last-child {
+      color: $--color-text-regular;
+      padding-left: 68px;
+      padding-right: 68px;
+      border-right-width: 0;
+    }
+    tr:nth-child(odd) {
+      background: #FAFBFC;
+    }
+  }
+
+  .operator {
+    .operator-item {
+      margin: 0;
+      &:after {
+        content: '|';
+        padding-left: 6px;
+        padding-right: 4px;
+        color: #eee;
+      }
+      &:last-child {
+        &:after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .el-form-item__label, .el-radio__label {
+    color: #666;
+  }
+
+  .el-checkbox__label {
+    font-size: 12px;
+    color: #333;
+    font-weight: normal;
+  }
+
+  .el-checkbox__label {
+    width: 60px;
+  }
+
+  .stopover-station {
+    .el-table__row {
+      td {
+        background-color: #fff !important;
+      }
+    }
+    .el-table__row--striped {
+      td {
+        background-color: #E5E9F2 !important;
+      }
+    }
+    th {
+      background: #EEF1F6;
+    }
+  }
+
+  .dialog-no-header {
+    .el-dialog__header {
+      background: transparent;
+    }
+  }
+}

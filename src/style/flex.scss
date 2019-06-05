@@ -1,0 +1,316 @@
+// flexbox 工具类
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-1 {
+  flex: 1
+}
+
+.main-align-start {
+  justify-content: flex-start
+}
+
+.main-align-end {
+  justify-content: flex-end
+}
+
+.main-align-center {
+  justify-content: center
+}
+
+.main-align-space-between {
+  justify-content: space-between
+}
+
+.main-align-space-around {
+  justify-content: space-around
+}
+
+.cross-align-start {
+  align-items: flex-start
+}
+
+.cross-align-end {
+  align-items: flex-end
+}
+
+.cross-align-center {
+  align-items: center
+}
+
+.cross-align-baseline {
+  align-items: baseline
+}
+
+.cross-align-stretch {
+  align-items: stretch
+}
+
+.cross-align-inherit {
+  align-items: inherit;
+}
+
+// .right {
+//   float: right;
+// }
+
+// .left {
+//   float: left;
+// }
+
+// // .mt {
+// //   margin-top: $--margin;
+// // }
+
+// .clearfix {
+//   &:before,
+//   &:after {
+//     display: table;
+//     content: '';
+//   }
+//   &:after {
+//     clear: both;
+//   }
+// }
+
+// .text-click {
+//   color: $--color-primary;
+//   cursor: pointer;
+// }
+
+// .text-small {
+//   font-size: 12px;
+// }
+
+// .primary {
+//   color: $--color-primary;
+// }
+
+// .primary-2 {
+//   color: $--color-primary-2;
+// }
+
+// .text-regular {
+//   color: $--color-text-regular;
+// }
+
+// .text-right {
+//   text-align: right;
+// }
+
+// .pointer {
+//   cursor: pointer;
+// }
+
+// .card {
+//   background-color: #fff;
+//   position: relative;
+
+//   h1 {
+//     color: #333;
+//     font-size: 18px;
+//     font-weight: 400;
+//     line-height: 1;
+//   }
+// }
+
+// .card-header {
+//   height: 44px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   padding: 0 30px;
+//   border-bottom: 2px solid #EEF1F6;
+// }
+
+// .card-body {
+//   min-height: 100px;
+// }
+
+// .tooltip {
+//   background: #E9F9EA;
+//   border-radius: 100px;
+//   width: 26px;
+//   height: 26px;
+//   line-height: 26px;
+//   color: #333;
+//   text-align: center;
+//   font-size: 20px;
+//   display: inline-block;
+// }
+
+
+
+// .el-icon-my-flag {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   color: $--color-primary;
+//   font-size: 20px;
+// }
+
+// .btn-large {
+//   margin-top: 20px;
+//   height: 50px;
+//   font-size: 22px;
+//   min-width: 200px;
+//   color: #FFFFFF;
+//   border-radius: 25px;
+//   background: linear-gradient(-15deg, #75C0FF 0%, #008BFA 69%);
+//   box-shadow: 0 0 7px 3px #C7E6FF;
+//   padding: 0 34px;
+//   border: none;
+//   transition: all .2s ease;
+//   &:hover, &:focus, &:visited {
+//     outline: none;
+//     color: #fff;
+//     border: none;
+//     background: linear-gradient(-15deg, #75C0FF 0%, #008BFA 69%);
+//     box-shadow: 0 0 7px 3px #C7E6FF;
+//   }
+//   &:hover {
+//     background: linear-gradient(15deg, #75C0FF 0%, #008BFA 69%);
+//   }
+// }
+
+// .text-primary {
+//   color: $--color-text-primary;
+// }
+// .text-primary-dark {
+//   color: #151515;
+// }
+// .text-regular {
+//   color: $--color-text-regular;
+// }
+// .text-secondary {
+//   color: $--color-text-secondary
+// }
+// .text-warning {
+//   color: #EE5F22;
+// }
+
+// .el-icon-my-wancheng {
+//   color: #23C563;
+// }
+
+// .el-icon-my-tishi {
+//   color: #FF9A32;
+// }
+
+// /* 文本高亮 */
+// em {
+//   color: #c00;
+//   font-style: normal;
+// }
+
+// .btn-hover {
+//   i {
+//     margin-right: 5px;
+//   }
+//   &:hover {
+//     cursor: pointer;
+//     color: $--color-primary;
+//   }
+// }
+
+// // 已废弃
+// .box-shadow {
+//   // border-radius: 2px;
+//   background: #fff;
+//   // border: 1px solid #e4e7ed;
+//   box-shadow: 2px 3px 8px 0 rgba(220,220,220,0.50);
+// }
+
+// .card {
+//   background: #fff;
+//   box-shadow: 2px 3px 8px 0 rgba(220,220,220,0.50);
+// }
+
+// .link {
+//   &:hover {
+//     color: $--color-primary;
+//     cursor: pointer;
+//   }
+// }
+
+// .btn-danger {
+//   &:hover {
+//     color: $--color-danger !important;
+//   }
+// }
+
+// // 分割线容器
+// .sep-wrapper {
+//   .sep-item {
+//     &:after {
+//       content: "|";
+//       color: $--color-text-secondary;
+//       margin: 0 18px;
+//     }
+//     &:last-child {
+//       &:after {
+//         display: none;
+//       }
+//     }
+//   }
+// }
+
+// .show-more-btn {
+//   cursor: pointer;
+//   text-align: center;
+//   margin-top: 7px;
+//   font-size: 14px;
+//   color: $--color-text-regular;
+//   background-color: #f5f7fa;
+//   line-height: 24px;
+//   i {
+//     margin-right: 6px;
+//   }
+// }
+
+// .two-line {
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   display: -webkit-box;
+//   -webkit-line-clamp: 2;
+//   /*! autoprefixer: off */
+//   -webkit-box-orient: vertical;
+//   /* autoprefixer: on */
+// }
+
+// .three-line {
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   display: -webkit-box;
+//   -webkit-line-clamp: 3;
+//   /*! autoprefixer: off */
+//   -webkit-box-orient: vertical;
+//   /* autoprefixer: on */
+// }
+
+// .four-line {
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   display: -webkit-box;
+//   -webkit-line-clamp: 4;
+//   /*! autoprefixer: off */
+//   -webkit-box-orient: vertical;
+//   /* autoprefixer: on */
+// }
+
+// .mask {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background-color: rgba(0, 0, 0, 0.5);
+// }
