@@ -66,7 +66,7 @@ export default class Upload {
         console.log('start push 改动')
         await this.git.push('origin', this.config.branch, { '--force': true })
       } else {
-        console.log('start push 无改动')
+        console.log('start push 无添加')
         await this.git.push('origin', this.config.branch, { '--force': true })
       }
       console.log('上传成功')
