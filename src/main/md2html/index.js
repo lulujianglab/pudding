@@ -6,11 +6,31 @@ import { filterfiles } from '../common'
 
 const MarkdownIt = require('markdown-it')
 const MarkdownItKatex = require('@iktakahiro/markdown-it-katex')
-const markdownItTocAndAnchor = require('markdown-it-toc-and-anchor')
+// const markdownItTocAndAnchor = require('markdown-it-toc-and-anchor')
 const MarkdownItTaskLists = require('markdown-it-task-lists')
+const emoji = require('markdown-it-emoji')
+const imsize = require('markdown-it-imsize')
+const hljs = require('highlight.js')
 
 const markdownIt = new MarkdownIt({
   html: true,
+  linkify: true,
+  typography: true,
+  highlight: (str, lang) => {
+    // 添加这两行才能正确显示 <>
+    str = str.replace(/&lt;/g, "<");
+    str = str.replace(/&gt;/g, ">");
+
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return '<pre class="hljs"><code>' +
+               hljs.highlight(lang, str, true).value +
+               '</code></pre>';
+      } catch (__) {}
+    }
+
+    return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
+  }
 })
 
 markdownIt.use(MarkdownItKatex)
@@ -20,6 +40,8 @@ markdownIt.use(MarkdownItKatex)
 markdownIt.use(MarkdownItTaskLists, {
   label: true, labelAfter: true,
 })
+markdownIt.use(emoji)
+markdownIt.use(imsize, { autofill: true })
 
 export default class Translate {
   constructor(opt) {
