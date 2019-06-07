@@ -1,3 +1,75 @@
-a {
-  color: red;
+html, body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+	font-size: 100%;
+	font: inherit;
+  vertical-align: baseline;
+  line-height: 1.7;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+  'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+  'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+.wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+  background: #fff;
+  color: #333;
+}
+
+.title {
+  text-align: center;
+  padding: 24px;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.content {
+  font-size: 16px;
+}
+
+.content h1, h2, h3, h4, h5, h6 {
+  margin: 16px 0;
+}
+.content h1 {
+  font-size: 28px;
+}
+
+.content h2 {
+  font-size: 24px;
+}
+
+.content h3 {
+  font-size: 20px;
+}
+
+.content h4 {
+  font-size: 18px;
+}
+
+.content table {
+  width: 100%;
+  text-align: left;
+  border-radius: 4px 4px 0 0;
+  border-collapse: collapse;
+}
+
+.content tr {
+  transition: all .3s,height 0s;
+}
+
+.content th {
+  padding: 14px 12px;
+  color: rgba(0,0,0,0.85);
+  font-weight: 500;
+  text-align: left;
+  border-bottom: 1px solid #e8e8e8;
+  background: #fafafa;
+}
+
+.content td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #e8e8e8;
+  transition: all .3s,border 0s;
 }

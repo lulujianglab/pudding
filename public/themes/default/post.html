@@ -6,6 +6,11 @@
     <link href="./assets/hl.css" rel="stylesheet"></link>
   </head>
   <body>
-    <%= post.htmlContent %>
+    <div class="wrapper">
+      <h1 class="title"><%= post.postName %></h1>
+      <div class="content">
+          <%= post.htmlContent %>
+      </div>
+    </div>
   </body>
 </html>

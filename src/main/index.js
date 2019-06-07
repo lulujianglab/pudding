@@ -27,7 +27,7 @@ class Main {
 
     ipc.on('/publish/config', (...args) => upload.saveInfo(...args))
     ipc.on('/publish/github', (...args) => upload.post(...args))
-    ipc.on('/publish/translate', (...args) => translate.tohtml(...args))
+    ipc.on('/publish/translate', (...args) => translate.toHtml(...args))
   }
 
 
