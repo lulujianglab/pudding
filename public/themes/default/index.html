@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>布丁笔记</title>
+    <link href="./assets/common.css" rel="stylesheet"></link>
+  </head>
+  <body>
+    <% for (let post of posts ) { %>
+      <div>
+        <a href="./<%= post.postName %>.html"><%= post.postName %></a>
+      </div>
+    <% } %>
+  </body>
+</html>

@@ -3,7 +3,6 @@ import { log } from 'electron-log';
 import { app } from 'electron'
 import fs from 'fs-extra'
 import _ from 'lodash'
-import { filterfiles } from '../common'
 
 const MarkdownIt = require('markdown-it')
 const MarkdownItKatex = require('@iktakahiro/markdown-it-katex')
@@ -47,26 +46,30 @@ markdownIt.use(imsize, { autofill: true })
 export default class Translate {
   constructor(opt) {
     opt = opt || {}
+    this.library = opt.library
     this.localPath = opt.library.localPath
+    this.toHtml()
+    this.putAssets()
   }
 
-  async index() {
-    return await filterfiles(this.localPath)
+  async putAssets() {
+    var assetsDir = path.join(__static, 'themes/default/assets')
+    await fs.copy(assetsDir, path.join(this.localPath, 'dist/assets'))
   }
 
-  async tohtml() {
-    const files = await this.index()
-    console.log('开始 md2html')
-    let content = '<br>'
-    let compiled = _.template('<a href="<%- basename %>.html"><h1>${content}</h1></a>')
-    files.forEach(async file => {
-      var basename = path.basename(file, '.md')
-      content = `${content}${compiled({'basename' : basename,'content': file})}`
-      var markdownStr = await fs.readFile(path.join(this.localPath, file), 'utf8')
-      var html = markdownIt.render(markdownStr)
-      await fs.writeFile(path.join(this.localPath, 'dist', `${basename}.html`), html)
-    })
-    await fs.writeFile(path.join(this.localPath, 'dist', 'index.html'), content, 'utf8')
-    console.log('md2html 成功')
+  async toHtml() {
+    const posts = await this.library.getPostsInfo()
+    var templateDir = path.join(__static, 'themes/default')
+    var indexTemplate = await fs.readFile(path.join(templateDir, 'index.html'), 'utf8')
+    var html = _.template(indexTemplate)({ posts })
+    await fs.writeFile(path.join(this.localPath, 'dist', 'index.html'), html)
+    var postTemplate = await fs.readFile(path.join(templateDir, 'post.html'), 'utf8')
+    var postCompiled = _.template(postTemplate)
+    for (let post of posts) {
+      var mdContent = await fs.readFile(post.localPath, 'utf8')
+      var htmlContent = markdownIt.render(mdContent)
+      var htmlPage = postCompiled({ post: { ...post, htmlContent } })
+      await fs.writeFile(path.join(this.localPath, 'dist', `${post.postName}.html`), htmlPage)
+    }
   }
 }

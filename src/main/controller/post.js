@@ -1,7 +1,6 @@
 import path from 'path'
 import unusedFilename from 'unused-filename'
 import fs from 'fs-extra'
-import { filterfiles } from '../common'
 
 class Posts {
   constructor(opt) {
@@ -10,7 +9,7 @@ class Posts {
   }
 
   async index() {
-    return await filterfiles(this.library.localPath)
+    return this.library.getPostsInfo()
   }
 
   async create(name) {

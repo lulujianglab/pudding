@@ -20,6 +20,22 @@ class Library {
     return this.localPath
   }
 
+  async getPostsInfo() {
+    // 获取所有文章信息
+    var files = await fs.readdir(this.localPath)
+    files = files.filter(file => {
+      return _.endsWith(file, '.md')
+    })
+    files = files.map(file => {
+      return {
+        fileName: file,
+        postName: path.basename(file, '.md'),
+        localPath: path.join(this.localPath, file)
+      }
+    })
+    return files
+  }
+
   async tryInitWelcomeFile() {
     var name = 'Welcome.md'
     var welcomePath = path.join(this.localPath, name)

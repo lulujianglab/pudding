@@ -1,11 +1,11 @@
 <template>
   <column class="wrapper">
     <router-link
-      :to="{ path: '/posts/edit', query: { name: item } }"
+      :to="{ path: '/posts/edit', query: { name: item.fileName } }"
       class="item flex-row"
       v-for="item in posts"
-      :key="item">
-      <span>{{item}}</span>
+      :key="item.localPath">
+      <span>{{item.postName}}</span>
     </router-link>
   </column>
 </template>
