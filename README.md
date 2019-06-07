@@ -37,6 +37,7 @@
 - GFM 任务清单
 - GFM 表格
 - markdown-it-emoji
+- 文章目录
 
 ## Project setup
 ```

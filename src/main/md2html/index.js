@@ -2,6 +2,7 @@ import path from 'path'
 import { log } from 'electron-log';
 import { app } from 'electron'
 import fs from 'fs-extra'
+import _ from 'lodash'
 import { filterfiles } from '../common'
 
 const MarkdownIt = require('markdown-it')
@@ -46,28 +47,26 @@ markdownIt.use(imsize, { autofill: true })
 export default class Translate {
   constructor(opt) {
     opt = opt || {}
-    this.library = opt.library
-    this.appDir = path.join(app.getPath('documents'), 'pudding')
+    this.localPath = opt.library.localPath
   }
 
   async index() {
-    return await filterfiles(this.library.localPath)
+    return await filterfiles(this.localPath)
   }
 
   async tohtml() {
     const files = await this.index()
-    // console.log('.md files',files)
+    console.log('开始 md2html')
+    let content = '<br>'
+    let compiled = _.template('<a href="<%- basename %>.html"><h1>${content}</h1></a>')
     files.forEach(async file => {
       var basename = path.basename(file, '.md')
-      var markdownStr = await fs.readFile(path.join(this.appDir, file), 'utf8')
+      content = `${content}${compiled({'basename' : basename,'content': file})}`
+      var markdownStr = await fs.readFile(path.join(this.localPath, file), 'utf8')
       var html = markdownIt.render(markdownStr)
-      await fs.writeFile(path.join(this.appDir, 'dist', `${basename}.html`), html)
+      await fs.writeFile(path.join(this.localPath, 'dist', `${basename}.html`), html)
     })
-    // files.forEach(file => {
-    //   const html = markdownIt.render(fs.readFile(`${this.appDir}/${file}`) + '')
-    //   const newName = file.replace(/.md/,'.html')
-    //   console.log('.html file', newName)
-    //   fs.writeFile(`${this.appDir}/dist/${newName}`, this.html)
-    // })
+    await fs.writeFile(path.join(this.localPath, 'dist', 'index.html'), content, 'utf8')
+    console.log('md2html 成功')
   }
 }
