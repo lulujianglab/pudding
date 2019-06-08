@@ -1,9 +1,9 @@
 <template>
   <column class="wrapper">
     <row>仓库名：<input type="text" id="repository" v-model="configForm.repository" class="input" /></row>
-    <row>用户名：<input type="text" v-model="configForm.username" class="input" /></row>
+    <row>用户名：<input type="text" v-model="configForm.userName" class="input" /></row>
     <row>分支：<input type="text" v-model="configForm.branch" class="input" /></row>
-    <row>邮箱：<input type="text" v-model="configForm.email" class="input" /></row>
+    <!-- <row>邮箱：<input type="text" v-model="configForm.email" class="input" /></row> -->
     <row>token：<input type="text" v-model="configForm.token" class="input" /></row>
     <button @click="onSave" class="button">保存</button>
     <!-- <el-form :model="configForm" class="demo-form-inline">
@@ -11,7 +11,7 @@
         <el-input v-model="configForm.repository" placeholder="repository"></el-input>
       </el-form-item>
       <el-form-item label="用户名">
-        <el-input v-model="configForm.username" placeholder="username"></el-input>
+        <el-input v-model="configForm.userName" placeholder="userName"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSave('configForm')">保存</el-button>
@@ -29,8 +29,8 @@ export default {
     return {
       configForm : {
         repository: '',
-        username: '',
-        email: '',
+        userName: '',
+        // email: '',
         branch: '',
         token: ''
       }

@@ -9,19 +9,14 @@ export default class Upload {
     this.config = {}
     // this.remoteUrl = 'https://testtesttestlab:token@github.com/testtesttestlab/testtesttestlab.github.io.git'
     this.appDir = path.join(app.getPath('documents'), 'pudding')
-    this.outputDir = `${this.appDir}/dist`
+    this.outputDir = path.join(this.appDir, 'dist')
     this.git = simpleGit(this.outputDir)
   }
 
-  // saveInfo(configForm) {
-  //   this.remoteUrl = `https://${configForm.username}@github.com/${configForm.username}/${configForm.repository}.git`
-  //   this.config = configForm
-  // }
-
   async post() {
-    const values = db.get('syncSetting.github').value()
-    console.log(values)
-    this.remoteUrl = `https://${values.username}:${values.token}@github.com/${values.username}/${values.repository}.git`
+    this.config = db.get('syncSetting.github').value()
+    const {userName, token, repository} = this.config
+    this.remoteUrl = `https://${userName}:${token}@github.com/${userName}/${repository}.git`
     console.log('remoteUrl',this.remoteUrl)
     let result = null
     const repoStatus = await this.git.checkIsRepo()
@@ -38,11 +33,15 @@ export default class Upload {
 
     try {
       await this.git.init()
-      await this.git.addConfig('user.name', this.config.username)
+      await this.git.addConfig('user.name', this.config.userName)
       // await this.git.addConfig('user.email', this.config.email)
+      console.log('start add')
       await this.git.add('./*')
+      console.log('start first commit')
       await this.git.commit('first commit')
+      console.log('start addRemote')
       await this.git.addRemote('origin', this.remoteUrl)
+      console.log('start push')
       await this.git.push('origin', this.config.branch, { '--force': true })
       console.log('上传成功')
     } catch (e) {
