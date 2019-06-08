@@ -1,6 +1,7 @@
 import { app } from 'electron'
 import * as simpleGit from 'simple-git/promise'
 import path from 'path'
+import db from './db'
 
 export default class Upload {
   constructor() {
@@ -12,12 +13,15 @@ export default class Upload {
     this.git = simpleGit(this.outputDir)
   }
 
-  saveInfo(configForm) {
-    this.remoteUrl = `https://${configForm.username}@github.com/${configForm.username}/${configForm.repository}.git`
-    this.config = configForm
-  }
+  // saveInfo(configForm) {
+  //   this.remoteUrl = `https://${configForm.username}@github.com/${configForm.username}/${configForm.repository}.git`
+  //   this.config = configForm
+  // }
 
   async post() {
+    const values = db.get('syncSetting.github').value()
+    console.log(values)
+    this.remoteUrl = `https://${values.username}:${values.token}@github.com/${values.username}/${values.repository}.git`
     console.log('remoteUrl',this.remoteUrl)
     let result = null
     const repoStatus = await this.git.checkIsRepo()
@@ -35,7 +39,7 @@ export default class Upload {
     try {
       await this.git.init()
       await this.git.addConfig('user.name', this.config.username)
-      await this.git.addConfig('user.email', this.config.email)
+      // await this.git.addConfig('user.email', this.config.email)
       await this.git.add('./*')
       await this.git.commit('first commit')
       await this.git.addRemote('origin', this.remoteUrl)

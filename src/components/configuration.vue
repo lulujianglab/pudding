@@ -28,18 +28,22 @@ export default {
   data() {
     return {
       configForm : {
-        repository: 'testtesttestlab.github.io',
-        username: 'testtesttestlab',
-        email: 'lulujianglab@qq.com',
-        branch: 'master',
+        repository: '',
+        username: '',
+        email: '',
+        branch: '',
         token: ''
       }
     }
   },
 
+  async created() {
+    this.configForm = await ipc.send('/github/detail')
+  },
+
   methods: {
     async onSave() {
-      const postName = await ipc.send('/publish/config', this.configForm)
+      const postName = await ipc.send('/github/edit', this.configForm)
     }
   }
 }
