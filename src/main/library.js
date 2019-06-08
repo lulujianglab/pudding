@@ -1,13 +1,13 @@
 import { app } from 'electron'
 import path from 'path'
 import fs from 'fs-extra'
+import dayjs from 'dayjs'
 
 class Library {
   constructor(localPath) {
     this.localPath = null
     this.imagePath = null
     this.init(localPath)
-    console.log(__static)
   }
 
   async init(localPath) {
@@ -26,13 +26,17 @@ class Library {
     files = files.filter(file => {
       return _.endsWith(file, '.md')
     })
-    files = files.map(file => {
+    files = Promise.all(files.map(async file => {
+      let localPath = path.join(this.localPath, file)
+      let stat = await fs.stat(localPath)
       return {
         fileName: file,
+        createdAt: dayjs(stat.ctime).format('YYYY-MM-DD hh:mm'),
+        updatedAt: dayjs(stat.mtime).format('YYYY-MM-DD hh:mm'),
         postName: path.basename(file, '.md'),
-        localPath: path.join(this.localPath, file)
+        localPath
       }
-    })
+    }))
     return files
   }
 

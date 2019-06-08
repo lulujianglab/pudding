@@ -61,7 +61,7 @@ export default class Translate {
     const posts = await this.library.getPostsInfo()
     var templateDir = path.join(__static, 'themes/default')
     var indexTemplate = await fs.readFile(path.join(templateDir, 'index.html'), 'utf8')
-    var html = _.template(indexTemplate)({ posts, 'userName': "Lulujianglab's" })
+    var html = _.template(indexTemplate)({ posts, 'userName': "Lulujianglab's " })
     await fs.writeFile(path.join(this.localPath, 'dist', 'index.html'), html)
     // await fs.writeFile(path.join(this.localPath, 'dist', 'README.md'), posts)
     var postTemplate = await fs.readFile(path.join(templateDir, 'post.html'), 'utf8')
