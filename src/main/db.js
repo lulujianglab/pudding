@@ -13,15 +13,15 @@ class DB {
   async init() {
     const userDataDir = app.getPath('userData')
     if (!await fs.pathExists(userDataDir)) {
-      console.log('创建用户目录', userDataDir)
+      // console.log('创建用户目录', userDataDir)
       await fs.mkdirp(userDataDir)
     }
     var dbPath = path.join(userDataDir, '/db.json')
-    console.log('数据库', dbPath)
+    // console.log('数据库', dbPath)
     const adapter = new FileAsync(dbPath)
     var db = await low(adapter)
     db.defaults({
-      posts: [], // 文章列表
+      posts: [], // 文章列表, title, name, content, createdAt, updatedAt
       syncSettting: {
         github: {}, // github
         oss: {} // 阿里云oss

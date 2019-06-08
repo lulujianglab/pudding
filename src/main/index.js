@@ -30,6 +30,7 @@ class Main {
 
     ipc.on('/github/detail', (...args) => github.show(...args))
     ipc.on('/github/edit', (...args) => github.edit(...args))
+    ipc.on('/github/exportFromIssues', (...args) => github.exportFromIssues(...args))
 
     ipc.on('/publish/github', (...args) => upload.post(...args))
     ipc.on('/publish/translate', (...args) => translate.toHtml(...args))

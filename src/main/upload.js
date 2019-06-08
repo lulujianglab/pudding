@@ -7,7 +7,6 @@ export default class Upload {
   constructor() {
     this.remoteUrl = ''
     this.config = {}
-    // this.remoteUrl = 'https://testtesttestlab:token@github.com/testtesttestlab/testtesttestlab.github.io.git'
     this.appDir = path.join(app.getPath('documents'), 'pudding')
     this.outputDir = path.join(this.appDir, 'dist')
     this.git = simpleGit(this.outputDir)
@@ -17,7 +16,6 @@ export default class Upload {
     this.config = db.get('syncSetting.github').value()
     const {userName, token, repository} = this.config
     this.remoteUrl = `https://${userName}:${token}@github.com/${userName}/${repository}.git`
-    console.log('remoteUrl',this.remoteUrl)
     let result = null
     const repoStatus = await this.git.checkIsRepo()
     if (repoStatus) {
@@ -30,9 +28,10 @@ export default class Upload {
 
   async firstPost() {
     console.log('首次同步')
-
+    console.log('start init')
     try {
       await this.git.init()
+      console.log('start config')
       await this.git.addConfig('user.name', this.config.userName)
       // await this.git.addConfig('user.email', this.config.email)
       console.log('start add')

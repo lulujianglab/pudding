@@ -29,7 +29,7 @@ const markdownIt = new MarkdownIt({
       } catch (__) {}
     }
 
-    return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
+    return '<pre class="hljs"><code>' + markdownIt.utils.escapeHtml(str) + '</code></pre>';
   }
 })
 
