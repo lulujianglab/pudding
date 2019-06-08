@@ -2,13 +2,26 @@
 <html>
   <head>
     <title>布丁笔记</title>
+    <meta charset="utf8">
     <link href="./assets/common.css" rel="stylesheet"></link>
   </head>
   <body>
-    <% for (let post of posts ) { %>
-      <div>
-        <a href="./<%= post.postName %>.html"><%= post.postName %></a>
-      </div>
-    <% } %>
+    <div style="background-image: url(./assets/images/index-poster.jpg)" class="poster"></div>
+    <div class="wrapper">
+      <h1 class="blog-title"><%= userName %> Blog</h1>
+      <% for (let post of posts ) { %>
+        <article class="post">
+          <header class="post-header">
+            <h1 class="post-title">
+              <a href="./<%= post.postName %>.html" class="post-title-link"><%= post.postName %></a>
+            </h1>
+            <div class="post-time">2017-11-08</div>
+          </header>
+          <div class="post-body">
+              
+          </div>
+        </article>
+      <% } %>
+    </div>
   </body>
 </html>

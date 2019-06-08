@@ -1,6 +1,7 @@
 * {
   padding: 0;
   margin: 0;
+  text-decoration: none;
 }
 
 body {
@@ -9,6 +10,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
   'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
   'Segoe UI Emoji', 'Segoe UI Symbol';
+  min-width: 800px;  
 }
 
 .wrapper {
@@ -122,4 +124,55 @@ body {
 .content ol {
   margin: 0 0 18px;
   padding-left: 2em;
+}
+
+.blog-img {
+  width: 100%;
+  height: 200px;
+}
+
+.blog-title {
+  text-align: center;
+  padding: 24px;
+  font-size: 60px;
+  font-weight: 600;
+}
+
+.post {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.post:last-child {
+  border-bottom: 0;
+  margin-bottom: 100px;
+}
+
+.post-time {
+  margin: 2px 0 12px 0;
+  color: #999;
+  font-size: 14px;
+}
+
+.post-body {
+  color: #555;
+  font-size: 15px;
+}
+
+.post a {
+  color: #333;
+  cursor: pointer;
+}
+
+.post a:hover  {
+  color: #333;
+  text-decoration: underline #333;  
+}
+
+.poster {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 560px;
 }
