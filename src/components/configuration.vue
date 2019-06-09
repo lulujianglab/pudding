@@ -49,11 +49,11 @@ export default {
   methods: {
     async exportFromIssues() {
       const { issuesAddress } = this.configForm
-      const postName = await ipc.send('/github/exportFromIssues', {issuesAddress})
+      await ipc.send('/github/exportFromIssues', {issuesAddress})
     },
 
     async onSave() {
-      const postName = await ipc.send('/github/edit', this.configForm)
+      await ipc.send('/github/edit', this.configForm)
     }
   }
 }

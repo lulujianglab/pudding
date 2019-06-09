@@ -66,10 +66,12 @@ export default class Translate {
     var postTemplate = await fs.readFile(path.join(templateDir, 'post.html'), 'utf8')
     var postCompiled = _.template(postTemplate)
     for (let post of posts) {
-      var mdContent = await fs.readFile(post.localPath, 'utf8')
+      var postLocalPath = path.join(this.library.localPath, post.fileName)
+      var mdContent = await fs.readFile(postLocalPath, 'utf8')
       var htmlContent = markdownIt.render(mdContent)
       var htmlPage = postCompiled({ post: { ...post, htmlContent } })
-      await fs.writeFile(path.join(this.localPath, 'dist', `${post.postName}.html`), htmlPage)
+      var safeTitle = path.basename(post.fileName, '.md')
+      await fs.writeFile(path.join(this.localPath, 'dist', `${safeTitle}.html`), htmlPage)
     }
   }
 }

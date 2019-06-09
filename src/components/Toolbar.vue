@@ -41,11 +41,11 @@ export default {
   },
   methods: {
     async createPost() {
-      const postName = await ipc.send('/posts/create')
+      const title = await ipc.send('/posts/create')
       this.$router.push({
         path: '/posts/edit',
         query: {
-          name: postName
+          name: title
         }
       })
     }
