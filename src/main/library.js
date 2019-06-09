@@ -2,6 +2,7 @@ import { app } from 'electron'
 import path from 'path'
 import fs from 'fs-extra'
 import dayjs from 'dayjs'
+// import db from './db'
 
 class Library {
   constructor(localPath) {
@@ -26,7 +27,10 @@ class Library {
     files = files.filter(file => {
       return _.endsWith(file, '.md')
     })
+    // const config = db.get('syncSetting.github').value()
     files = Promise.all(files.map(async file => {
+      // const mainItem = config.filter(item => (item.title === file))
+      // console.log('1111', mainItem)
       let localPath = path.join(this.localPath, file)
       let stat = await fs.stat(localPath)
       return {

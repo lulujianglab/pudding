@@ -7,17 +7,18 @@ export default class Upload {
   constructor() {
     this.remoteUrl = ''
     this.config = {}
-    this.appDir = path.join(app.getPath('documents'), 'pudding')
-    this.outputDir = path.join(this.appDir, 'dist')
-    this.git = simpleGit(this.outputDir)
+    this.git = null
   }
 
   async post() {
     this.config = db.get('syncSetting.github').value()
     const {userName, token, repository} = this.config
     this.remoteUrl = `https://${userName}:${token}@github.com/${userName}/${repository}.git`
-    let result = null
+    this.appDir = path.join(app.getPath('documents'), 'pudding')
+    this.outputDir = path.join(this.appDir, 'dist')
+    this.git = simpleGit(this.outputDir)
     const repoStatus = await this.git.checkIsRepo()
+    let result = null
     if (repoStatus) {
       result = await this.commonPost()
     } else {

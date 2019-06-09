@@ -2,6 +2,7 @@ import path from 'path'
 import { log } from 'electron-log';
 import { app } from 'electron'
 import fs from 'fs-extra'
+import db from '../db'
 import _ from 'lodash'
 
 const MarkdownIt = require('markdown-it')
@@ -48,7 +49,7 @@ export default class Translate {
     opt = opt || {}
     this.library = opt.library
     this.localPath = opt.library.localPath
-    this.toHtml()
+    // this.toHtml()
     this.putAssets()
   }
 
@@ -58,10 +59,11 @@ export default class Translate {
   }
 
   async toHtml() {
+    const { userName } = db.get('syncSetting.github').value()
     const posts = await this.library.getPostsInfo()
     var templateDir = path.join(__static, 'themes/default')
     var indexTemplate = await fs.readFile(path.join(templateDir, 'index.html'), 'utf8')
-    var html = _.template(indexTemplate)({ posts, 'userName': "Lulujianglab's " })
+    var html = _.template(indexTemplate)({ posts, 'userName': `${userName}'s` })
     await fs.writeFile(path.join(this.localPath, 'dist', 'index.html'), html)
     // await fs.writeFile(path.join(this.localPath, 'dist', 'README.md'), posts)
     var postTemplate = await fs.readFile(path.join(templateDir, 'post.html'), 'utf8')
