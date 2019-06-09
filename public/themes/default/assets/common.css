@@ -126,6 +126,15 @@ body {
   padding-left: 2em;
 }
 
+.content img {
+  max-width: 100%
+}
+
+.content a {
+  text-decoration: none;
+  color: rgb(85, 26, 139);
+}
+
 .blog-img {
   width: 100%;
   height: 200px;

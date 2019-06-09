@@ -2,6 +2,7 @@ import path from 'path'
 import fs from 'fs-extra'
 import db from '../db'
 import _ from 'lodash'
+import dayjs from 'dayjs'
 
 const MarkdownIt = require('markdown-it')
 const MarkdownItKatex = require('@iktakahiro/markdown-it-katex')
@@ -55,14 +56,27 @@ export default class Translate {
     await fs.copy(assetsDir, path.join(this.localPath, 'dist/assets'))
   }
 
+  addBlogTile() {
+    let { domain, userName } = db.get('syncSetting.github').value()
+    domain = domain || userName
+    return domain
+  }
+
   async toHtml() {
-    const { userName } = db.get('syncSetting.github').value()
+    const domain = this.addBlogTile()
+    const github = db.get('syncSetting.github').value()
     const posts = await this.library.getPostsInfo()
     var templateDir = path.join(__static, 'themes/default')
+
     var indexTemplate = await fs.readFile(path.join(templateDir, 'index.html'), 'utf8')
-    var html = _.template(indexTemplate)({ posts, 'userName': `${userName}'s` })
+    var html = _.template(indexTemplate)({ posts, 'userName': domain })
     await fs.writeFile(path.join(this.localPath, 'dist', 'index.html'), html)
-    // await fs.writeFile(path.join(this.localPath, 'dist', 'README.md'), posts)
+
+    var readmeTemplate = await fs.readFile(path.join(__static, 'README.md'), 'utf8')
+    var sortPosts = _.groupBy(posts, post => dayjs(post.createdAt).format('YYYY'))
+    var readmeData = _.template(readmeTemplate)({ sortPosts, dayjs, domain, github })
+    await fs.writeFile(path.join(this.localPath, 'dist', 'README.md'), readmeData)
+
     var postTemplate = await fs.readFile(path.join(templateDir, 'post.html'), 'utf8')
     var postCompiled = _.template(postTemplate)
     for (let post of posts) {

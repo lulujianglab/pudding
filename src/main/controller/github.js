@@ -31,13 +31,13 @@ class Github {
       .filter(item => item.state === 'open')
       .map(async item => {
         // 将 issues 写入 md 文件
-        let fileName = `${item.title}.md`
-        fileName = fileName.replace(/\//g, '\u2215') // 转义斜杆
+        var title = escapeFileName(item.title)
+        let fileName = `${title}.md`
         var localPath = path.join(this.library.localPath, fileName)
         await fs.writeFile(localPath, item.body, 'utf8')
         // 存入 db
         return {
-          title: item.title,
+          title,
           fileName,
           createdAt: item.created_at,
           updatedAt: item.updated_at,
@@ -51,6 +51,10 @@ class Github {
     )
     db.set('posts', posts).write()
   }
+}
+
+function escapeFileName(str) {
+  return str.replace(/\//g, '\u2215')
 }
 
 export default Github

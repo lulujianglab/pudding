@@ -14,7 +14,7 @@ class DB {
     if (!await fs.pathExists(dbDir)) {
       await fs.mkdirp(dbDir)
     }
-    var dbPath = path.join(dbDir, '/db.json')
+    var dbPath = path.join(dbDir, 'db.json')
     // console.log('数据库', dbPath)
     const adapter = new FileAsync(dbPath)
     var db = await low(adapter)
