@@ -1,6 +1,4 @@
 import path from 'path'
-import { log } from 'electron-log';
-import { app } from 'electron'
 import fs from 'fs-extra'
 import db from '../db'
 import _ from 'lodash'

@@ -7,16 +7,14 @@ const FileAsync = require('lowdb/adapters/FileAsync')
 // 目前只在 main 中用, 相当于 server 中用 mongo 一样, 对 renderer 提供 ipc 接口
 class DB {
   constructor() {
-    this.init()
   }
 
-  async init() {
-    const userDataDir = app.getPath('userData')
-    if (!await fs.pathExists(userDataDir)) {
-      // console.log('创建用户目录', userDataDir)
-      await fs.mkdirp(userDataDir)
+  async init(dbDir) {
+    dbDir = dbDir || app.getPath('userData')
+    if (!await fs.pathExists(dbDir)) {
+      await fs.mkdirp(dbDir)
     }
-    var dbPath = path.join(userDataDir, '/db.json')
+    var dbPath = path.join(dbDir, '/db.json')
     // console.log('数据库', dbPath)
     const adapter = new FileAsync(dbPath)
     var db = await low(adapter)

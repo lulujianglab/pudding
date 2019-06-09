@@ -21,9 +21,10 @@ class Github {
 
   }
 
-  async exportFromIssues() {
-    const { userName, repository } = db.get('syncSetting.github').value()
-    let { data: posts } = await axios(`https://api.github.com/repos/${userName}/${repository}/issues`, {
+  async exportFromIssues(values) {
+    const { issuesAddress } = values
+    const { userName } = db.get('syncSetting.github').value()
+    let { data: posts } = await axios(`https://api.github.com/repos/${userName}/${issuesAddress}/issues`, {
       // Authorization: `token ${token}`
     })
     posts = await Promise.all((posts || [])
@@ -31,7 +32,7 @@ class Github {
       .map(async item => {
         // 将 issues 写入 md 文件
         let fileName = `${item.title}.md`
-        fileName = fileName.replace(/[/\\:]/g, '-')
+        fileName = fileName.replace(/\//g, '\u2215') // 转义斜杆
         var localPath = path.join(this.library.localPath, fileName)
         await fs.writeFile(localPath, item.body, 'utf8')
         // 存入 db

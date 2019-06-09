@@ -1,6 +1,7 @@
 import path from 'path'
 import unusedFilename from 'unused-filename'
 import fs from 'fs-extra'
+import db from '../db'
 
 class Posts {
   constructor(opt) {
@@ -18,6 +19,8 @@ class Posts {
     var localPath = path.join(this.library.localPath, fullName)
     localPath = await unusedFilename(localPath)
     fullName = path.basename(localPath)
+    // let stat = await fs.stat(localPath)
+    // console.log(stat)
     await fs.writeFile(localPath, '')
     return fullName
   }

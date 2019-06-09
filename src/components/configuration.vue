@@ -5,7 +5,8 @@
     <row>分支：<input type="text" v-model="configForm.branch" class="input" /></row>
     <!-- <row>邮箱：<input type="text" v-model="configForm.email" class="input" /></row> -->
     <row>token：<input type="text" v-model="configForm.token" class="input" /></row>
-    <row><button @click="exportFromIssues" class="button">从 issues 中导入博客</button></row>
+    <row>issues 地址：<input type="text" v-model="configForm.issuesAddress" class="input" /></row>
+    <button @click="exportFromIssues" class="button">从 issues 中导入博客</button>
     <button @click="onSave" class="button">保存</button>
     <!-- <el-form :model="configForm" class="demo-form-inline">
       <el-form-item label="仓库名">
@@ -33,18 +34,20 @@ export default {
         userName: '',
         // email: '',
         branch: '',
-        token: ''
+        token: '',
+        issuesAddress: ''
       }
     }
   },
 
   async created() {
-    this.configForm = await ipc.send('/github/detail')
+    this.configForm = await ipc.send('/github/detail') || {}
   },
 
   methods: {
     async exportFromIssues() {
-      const postName = await ipc.send('/github/exportFromIssues')
+      const { issuesAddress } = this.configForm
+      const postName = await ipc.send('/github/exportFromIssues', {issuesAddress})
     },
 
     async onSave() {

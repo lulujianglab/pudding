@@ -10,6 +10,20 @@ const _ = require('lodash')
 _.uniq([2, 1, 2]) // => [2, 1]
 ```
 
+```sh
+# install globally
+yarn global add vuepress@next # OR npm install -g vuepress@next
+
+# create a markdown file
+echo '# Hello VuePress' > README.md
+
+# start writing
+vuepress dev
+
+# build
+vuepress build
+```
+
 ### 表格
 
 GFM table
@@ -38,8 +52,8 @@ GFM Task List
 
 1. 列表项
 1. 列表项
-  1. 子列表项
-  1. 子列表项
+   1. 子列表项
+   1. 子列表项
 
 - 无序列表
 - 无序列表
@@ -49,3 +63,10 @@ GFM Task List
 
 `行内代码`
 
+### emoji
+
+:D  :)  :-)  :-(
+
+### imsize
+
+![test](./images/image.png =200x200)

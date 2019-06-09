@@ -2,7 +2,7 @@ import { app } from 'electron'
 import path from 'path'
 import fs from 'fs-extra'
 import dayjs from 'dayjs'
-// import db from './db'
+import db from './db'
 
 class Library {
   constructor(localPath) {
@@ -15,6 +15,7 @@ class Library {
     var docPath = app.getPath('documents')
     this.localPath = localPath || path.join(docPath, 'pudding')
     await fs.mkdirp(this.localPath)
+    await db.init(path.join(this.localPath, 'metadata'))
     this.imagePath = path.join(this.localPath, 'images')
     await fs.mkdirp(this.imagePath)
     await this.tryInitWelcomeFile()
@@ -27,16 +28,35 @@ class Library {
     files = files.filter(file => {
       return _.endsWith(file, '.md')
     })
-    // const config = db.get('syncSetting.github').value()
+
+    const config = db.get('posts').value()
     files = Promise.all(files.map(async file => {
-      // const mainItem = config.filter(item => (item.title === file))
-      // console.log('1111', mainItem)
+      let fileItem = config.filter(item => (item.fileName === file))
       let localPath = path.join(this.localPath, file)
       let stat = await fs.stat(localPath)
+      if (fileItem.length === 0) {
+        const newPost = {
+          title: path.basename(file, '.md'),
+          fileName: file,
+          createdAt: stat.ctime,
+          updatedAt: stat.mtime,
+          comments: 0,
+          state: 'open',
+          labels: [],
+          avatar_url: '',
+          login: ''
+        }
+        db.get('posts').push(newPost).write()
+      }
+      let createdAt = fileItem.length ? fileItem.createdAt : stat.ctime
+      let updatedAt = fileItem.length ? fileItem.updatedAt : stat.mtime
+
       return {
         fileName: file,
-        createdAt: dayjs(stat.ctime).format('YYYY-MM-DD hh:mm'),
-        updatedAt: dayjs(stat.mtime).format('YYYY-MM-DD hh:mm'),
+        // createdAt: dayjs(stat.ctime).format('YYYY-MM-DD hh:mm'),
+        // updatedAt: dayjs(stat.mtime).format('YYYY-MM-DD hh:mm'),
+        createdAt: dayjs(createdAt).format('YYYY-MM-DD hh:mm'),
+        updatedAt: dayjs(updatedAt).format('YYYY-MM-DD hh:mm'),
         postName: path.basename(file, '.md'),
         localPath
       }
