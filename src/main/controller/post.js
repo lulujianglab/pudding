@@ -19,9 +19,19 @@ class Posts {
     var localPath = path.join(this.library.localPath, fullName)
     localPath = await unusedFilename(localPath)
     fullName = path.basename(localPath)
-    // let stat = await fs.stat(localPath)
-    // console.log(stat)
     await fs.writeFile(localPath, '')
+    const newPost = {
+      title: path.basename(fullName, '.md'),
+      fileName: fullName,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      comments: 0,
+      state: 'open',
+      labels: [],
+      avatar_url: '',
+      login: ''
+    }
+    db.get('posts').push(newPost).write()
     return fullName
   }
 

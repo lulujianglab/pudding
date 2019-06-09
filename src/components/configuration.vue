@@ -5,6 +5,7 @@
     <row>分支：<input type="text" v-model="configForm.branch" class="input" /></row>
     <!-- <row>邮箱：<input type="text" v-model="configForm.email" class="input" /></row> -->
     <row>token：<input type="text" v-model="configForm.token" class="input" /></row>
+    <row>域名：<input type="text" v-model="configForm.domain" class="input" /></row>
     <row>issues 地址：<input type="text" v-model="configForm.issuesAddress" class="input" /></row>
     <button @click="exportFromIssues" class="button">从 issues 中导入博客</button>
     <button @click="onSave" class="button">保存</button>
@@ -35,7 +36,8 @@ export default {
         // email: '',
         branch: '',
         token: '',
-        issuesAddress: ''
+        issuesAddress: '',
+        domain: ''
       }
     }
   },

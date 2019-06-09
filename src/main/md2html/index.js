@@ -47,7 +47,6 @@ export default class Translate {
     opt = opt || {}
     this.library = opt.library
     this.localPath = opt.library.localPath
-    // this.toHtml()
     this.putAssets()
   }
 

@@ -5,7 +5,7 @@
       class="item flex-row"
       v-for="item in posts"
       :key="item.localPath">
-      <span>{{item.postName}}</span>
+      <span>{{item.title}}</span>
     </router-link>
   </column>
 </template>
