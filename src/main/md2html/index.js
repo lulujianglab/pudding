@@ -3,6 +3,7 @@ import fs from 'fs-extra'
 import db from '../db'
 import _ from 'lodash'
 import dayjs from 'dayjs'
+import 'dayjs/locale/de-ch'
 
 const MarkdownIt = require('markdown-it')
 const MarkdownItKatex = require('@iktakahiro/markdown-it-katex')
@@ -80,7 +81,7 @@ export default class Translate {
     await fs.writeFile(path.join(this.localPath, 'dist', 'index.html'), html)
 
     var readmeTemplate = await fs.readFile(path.join(__static, 'README.md'), 'utf8')
-    var sortPosts = _.groupBy(posts, post => dayjs(post.createdAt).format('YYYY'))
+    var sortPosts = _.groupBy(posts, post => dayjs(post.createdAt).format('MMM YYYY'))
     var readmeData = _.template(readmeTemplate)({ sortPosts, dayjs, domain, github })
     await fs.writeFile(path.join(this.localPath, 'dist', 'README.md'), readmeData)
 

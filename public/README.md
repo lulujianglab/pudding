@@ -1,9 +1,9 @@
 # blog
 
 <% for (var date in sortPosts) { %>
-## <%= date %>
+#### <%= date %>
 <% for (let post of sortPosts[date]) { %>
-* [<%= post.title %>](https://<%= domain %>/<%= post.title.replace(/ /g, '%20') %>.html) <%= dayjs(post.createdAt).format('YYYY-MM-DD') %> <% for (let label of post.labels) { %> `<%= label.name %>` <% } %>
+* [<%= post.title %>](https://<%= domain %>/<%= post.title.replace(/ /g, '%20') %>.html) <% for (let label of post.labels) { %> `<%= label.name %>` <% } %>
 <% } %>
 <% } %>
 Powered by PuddingNote
