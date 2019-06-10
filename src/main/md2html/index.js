@@ -56,14 +56,21 @@ export default class Translate {
     await fs.copy(assetsDir, path.join(this.localPath, 'dist/assets'))
   }
 
-  addBlogTile() {
-    let { domain, userName } = db.get('syncSetting.github').value()
-    domain = domain || userName
+  addBlogUrl() {
+    let { domain, repository, userName } = db.get('syncSetting.github').value()
+    if(!domain) {
+      if(!(/(\.github\.io)$/.test(repository))) {
+        domain = `${userName}.github.io/${repository}`
+      } else {
+        domain = repository
+      }
+    }
+    console.log('domain',domain)
     return domain
   }
 
   async toHtml() {
-    const domain = this.addBlogTile()
+    const domain = this.addBlogUrl()
     const github = db.get('syncSetting.github').value()
     const posts = await this.library.getPostsInfo()
     var templateDir = path.join(__static, 'themes/default')

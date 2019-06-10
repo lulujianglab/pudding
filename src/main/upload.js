@@ -14,6 +14,7 @@ export default class Upload {
     this.config = db.get('syncSetting.github').value()
     const {userName, token, repository} = this.config
     this.remoteUrl = `https://${userName}:${token}@github.com/${userName}/${repository}.git`
+    console.log('remoteUrl', this.remoteUrl)
     this.appDir = path.join(app.getPath('documents'), 'pudding')
     this.outputDir = path.join(this.appDir, 'dist')
     this.git = simpleGit(this.outputDir)
