@@ -49,7 +49,6 @@ export default class Translate {
     opt = opt || {}
     this.library = opt.library
     this.localPath = opt.library.localPath
-    this.putAssets()
   }
 
   async putAssets() {
@@ -57,43 +56,56 @@ export default class Translate {
     await fs.copy(assetsDir, path.join(this.localPath, 'dist/assets'))
   }
 
-  addBlogUrl() {
-    let { domain, repository, userName } = db.get('syncSetting.github').value()
-    if(!domain) {
-      if(!(/(\.github\.io)$/.test(repository))) {
-        domain = `${userName}.github.io/${repository}`
-      } else {
-        domain = repository
-      }
+  getBaseUrl() {
+    let { repository, userName } = db.get('syncSetting.github').value()
+    var host = `${userName}.github.io`
+    var baseURL = host
+    if (host !== repository) {
+      baseURL += `/${repository}`
     }
-    console.log('domain',domain)
-    return domain
+    return baseURL
   }
 
   async toHtml() {
-    const domain = this.addBlogUrl()
+    var distDir = path.join(this.localPath, 'dist')
+    if (await fs.exists(distDir)) {
+      await fs.remove(distDir)
+    }
+
+    await fs.mkdirp(distDir)
+
+    await this.putAssets()
+    const baseURL = this.getBaseUrl()
     const github = db.get('syncSetting.github').value()
     const posts = await this.library.getPostsInfo()
     var templateDir = path.join(__static, 'themes/default')
 
+    if (github.domain) {
+      await fs.writeFile(path.join(this.localPath, 'dist', 'CNAME'), github.domain)
+    }
+
     var indexTemplate = await fs.readFile(path.join(templateDir, 'index.html'), 'utf8')
-    var html = _.template(indexTemplate)({ posts, 'userName': domain })
+    var html = _.template(indexTemplate)({ posts, 'userName': github.userName })
     await fs.writeFile(path.join(this.localPath, 'dist', 'index.html'), html)
 
     var readmeTemplate = await fs.readFile(path.join(__static, 'README.md'), 'utf8')
     var sortPosts = _.groupBy(posts, post => dayjs(post.createdAt).format('MMM YYYY'))
-    var readmeData = _.template(readmeTemplate)({ sortPosts, dayjs, domain, github })
+    var readmeData = _.template(readmeTemplate)({ sortPosts, dayjs, baseURL, github })
     await fs.writeFile(path.join(this.localPath, 'dist', 'README.md'), readmeData)
 
     var postTemplate = await fs.readFile(path.join(templateDir, 'post.html'), 'utf8')
     var postCompiled = _.template(postTemplate)
+
+    const postDistDir = path.join(this.localPath, 'dist', 'posts')
+    await fs.mkdirp(postDistDir)
+
     for (let post of posts) {
       var postLocalPath = path.join(this.library.localPath, post.fileName)
       var mdContent = await fs.readFile(postLocalPath, 'utf8')
       var htmlContent = markdownIt.render(mdContent)
       var htmlPage = postCompiled({ post: { ...post, htmlContent } })
       var safeTitle = path.basename(post.fileName, '.md')
-      await fs.writeFile(path.join(this.localPath, 'dist', `${safeTitle}.html`), htmlPage)
+      await fs.writeFile(path.join(postDistDir, `${safeTitle}.html`), htmlPage)
     }
   }
 }

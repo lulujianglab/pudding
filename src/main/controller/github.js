@@ -26,7 +26,7 @@ class Github {
   async exportFromIssues(values) {
     const { issuesAddress } = values
     const { userName } = db.get('syncSetting.github').value()
-    let { data: posts } = await axios(`https://api.github.com/repos/${userName}/${issuesAddress}/issues`, {
+    let { data: posts } = await axios(`https://api.github.com/repos/${userName}/${issuesAddress}/issues?per_page=1000`, {
       // Authorization: `token ${token}`
     })
     posts = await Promise.all((posts || [])
