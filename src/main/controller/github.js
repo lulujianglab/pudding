@@ -4,7 +4,6 @@ import path from 'path'
 import fs from 'fs-extra'
 
 const escapeFile = require('escape-filename')
-const slugify = require('@sindresorhus/slugify')
 
 class Github {
   constructor(opt) {
@@ -34,11 +33,7 @@ class Github {
       .filter(item => item.state === 'open')
       .map(async item => {
         // 将 issues 写入 md 文件
-        // var title = escapeFileName(item.title)
         var title = escapeFile.escape(item.title)
-        // console.log('title1',title)
-        title = slugify(title)
-        // console.log('title2',title)
         let fileName = `${title}.md`
         var localPath = path.join(this.library.localPath, fileName)
         await fs.writeFile(localPath, item.body, 'utf8')
@@ -58,10 +53,6 @@ class Github {
     )
     db.set('posts', posts).write()
   }
-}
-
-function escapeFileName(str) {
-  return str.replace(/\//g, '\u2215')
 }
 
 export default Github
