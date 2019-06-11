@@ -63,6 +63,7 @@ export default class Translate {
     if (host !== repository) {
       baseURL += `/${repository}`
     }
+    console.log('post baseURL',baseURL)
     return baseURL
   }
 
@@ -85,7 +86,7 @@ export default class Translate {
     }
 
     var indexTemplate = await fs.readFile(path.join(templateDir, 'index.html'), 'utf8')
-    var html = _.template(indexTemplate)({ posts, 'userName': github.userName })
+    var html = _.template(indexTemplate)({ posts, 'userName': github.userName, dayjs })
     await fs.writeFile(path.join(this.localPath, 'dist', 'index.html'), html)
 
     var readmeTemplate = await fs.readFile(path.join(__static, 'README.md'), 'utf8')

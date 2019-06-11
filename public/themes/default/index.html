@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>布丁笔记</title>
+    <title><%= userName %> Blog</title>
     <meta charset="utf8">
     <link href="./assets/common.css" rel="stylesheet"></link>
   </head>
@@ -15,7 +15,7 @@
             <h1 class="post-title">
               <a href="./posts/<%= post.title %>.html" class="post-title-link"><%= post.title %></a>
             </h1>
-            <div class="post-time"><%= post.createdAt %></div>
+            <div class="post-time"><%= dayjs(post.createdAt).format('YYYY-MM-DD') %></div>
           </header>
           <div class="post-body">
               

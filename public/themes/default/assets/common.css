@@ -11,6 +11,7 @@ body {
   'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
   'Segoe UI Emoji', 'Segoe UI Symbol';
   min-width: 800px;  
+  background: #f9f9f9;
 }
 
 .wrapper {
@@ -34,10 +35,19 @@ body {
 }
 .content h1 {
   font-size: 28px;
+  border-left: 5px solid #06ba8e;
+  line-height: 1px;
+  /* margin: 23px 0; */
+  margin: 30px 0 16px 0;
+  padding: 16px 10px;
 }
 
 .content h2 {
   font-size: 24px;
+  border-left: 5px solid #06ba8e;
+  line-height: 1px;
+  margin: 26px 0 14px 0;
+  padding: 16px 10px;
 }
 
 .content h3 {
@@ -95,22 +105,37 @@ body {
   font-size: 15px;
 }
 
-.content blockquote {
+/* .content blockquote {
   margin: 0 0 18px;
   padding: 6px 0px 6px 16px;
   border-left: 5px solid #eee;
   opacity: .6;
   font-size: 15px;
+} */
+
+.content blockquote { 
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 2px 1px 0 hsla(0,4%,95%,.75);
+  border-radius: 8px;
+  padding: 15px;
+  list-style: none;
+  border-bottom: none;
+  margin: 0 0 18px;
+  font-size: 15px;
 }
 
 .content blockquote p {
+  margin: 0;
+  color: #80888c;
+}
+/* .content blockquote p {
   min-height: 24px;
   line-height: 24px;
   white-space: normal;
   margin-bottom: 5px;
   letter-spacing: .05em;
-
-}
+} */
 
 .content blockquote p:last-child {
   margin-bottom: 0;
