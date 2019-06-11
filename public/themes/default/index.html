@@ -6,9 +6,11 @@
     <link href="./assets/common.css" rel="stylesheet"></link>
   </head>
   <body>
-    <div style="background-image: url(./assets/images/index-poster.jpg)" class="poster"></div>
-    <div class="wrapper">
+    <div style="background-image: url(./assets/images/index-poster.jpg)" class="poster">
+      <div class="mask"></div>
       <h1 class="blog-title"><%= userName %> Blog</h1>
+    </div>
+    <div class="wrapper">
       <% for (let post of posts ) { %>
         <article class="post">
           <header class="post-header">
