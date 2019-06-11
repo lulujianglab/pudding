@@ -104,7 +104,7 @@ export default class Translate {
       var postLocalPath = path.join(this.library.localPath, post.fileName)
       var mdContent = await fs.readFile(postLocalPath, 'utf8')
       var htmlContent = markdownIt.render(mdContent)
-      var htmlPage = postCompiled({ post: { ...post, htmlContent } })
+      var htmlPage = postCompiled({ post: { ...post, htmlContent }, github })
       var safeTitle = path.basename(post.fileName, '.md')
       await fs.writeFile(path.join(postDistDir, `${safeTitle}.html`), htmlPage)
     }
