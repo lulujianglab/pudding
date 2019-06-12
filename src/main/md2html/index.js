@@ -49,7 +49,6 @@ export default class Translate {
     opt = opt || {}
     this.library = opt.library
     this.localPath = opt.library.localPath
-    this.btnFlag = false
   }
 
   async putAssets() {
@@ -66,26 +65,6 @@ export default class Translate {
     }
     console.log('post baseURL',baseURL)
     return baseURL
-  }
-
-  backTop () {
-    let timer = setInterval(() => {
-      let ispeed = Math.floor(-this.scrollTop / 5)
-      document.documentElement.scrollTop = document.body.scrollTop = this.scrollTop + ispeed
-      if (this.scrollTop === 0) {
-        clearInterval(timer)
-      }
-    }, 16)
-  }
-
-  scrollToTop () {
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-    this.scrollTop = scrollTop
-    if (this.scrollTop > 60) {
-      this.btnFlag = true
-    } else {
-      this.btnFlag = false
-    }
   }
 
   async toHtml() {
@@ -120,12 +99,11 @@ export default class Translate {
 
     const postDistDir = path.join(this.localPath, 'dist', 'posts')
     await fs.mkdirp(postDistDir)
-    const btnFlag = this.btnFlag
     for (let post of posts) {
       var postLocalPath = path.join(this.library.localPath, post.fileName)
       var mdContent = await fs.readFile(postLocalPath, 'utf8')
       var htmlContent = markdownIt.render(mdContent)
-      var htmlPage = postCompiled({ post: { ...post, htmlContent }, github, dayjs, backTop, btnFlag })
+      var htmlPage = postCompiled({ post: { ...post, htmlContent }, github, dayjs })
       var safeTitle = path.basename(post.fileName, '.md')
       await fs.writeFile(path.join(postDistDir, `${safeTitle}.html`), htmlPage)
     }

@@ -24,6 +24,26 @@
           </div>
         </article>
       <% } %>
+      <div class="top" id="top">
+        <a href="javascript:void(0)" onclick="toBackTop()">顶</a>
+      </div>
     </div>
+
+    <script>
+      function toBackTop(){
+        document.documentElement.scrollTop = 0
+      }
+  
+      function onScrollToTop() {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        if (scrollTop > 800) {
+          document.getElementById("top").style.display = 'block'
+        } else {
+          document.getElementById("top").style.display = 'none'
+        }
+      }
+  
+      window.onscroll = onScrollToTop
+    </script>
   </body>
 </html>
