@@ -16,7 +16,8 @@ body {
 
 .wrapper {
   width: 700px;
-  margin: 40px auto 0;
+  margin: 40px auto;
+  display: relative;
 }
 
 .title-wrapper {
@@ -203,6 +204,10 @@ body {
   padding-left: 2em;
 }
 
+.content li {
+  margin-bottom: 5px;
+}
+
 .content img {
   max-width: 100%
 }
@@ -280,4 +285,23 @@ body {
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,.5);
+}
+
+.top {
+  position: fixed;
+  z-index: 10;
+  width: 60px;
+  height: 60px;
+  background: #fff;
+  box-shadow: 0 10px 20px 0 hsla(0,4%,95%,.95);
+  border-radius: 50%;
+  bottom: 100px;
+  right: 100px;
+  line-height: 60px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.inner {
+
 }

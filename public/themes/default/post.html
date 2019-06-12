@@ -9,10 +9,15 @@
     <div class="wrapper">
       <div class="title-wrapper">
           <h1 class="title"><%= post.title %></h1>
-          <p class="post-date">📆 <%= dayjs(post.createdAt).format('YYYY-MM-DD') %></p>
+          <p class="post-date"><%= dayjs(post.createdAt).format('YYYY-MM-DD') %></p>
       </div>
       <div class="content">
           <%= post.htmlContent %>
+      </div>
+      <div class="top">
+        <div class="inner">
+          <a href="../../dist/index.html">首</a>
+        </div>
       </div>
     </div>
   </body>
