@@ -32,7 +32,7 @@ body {
   position: relative;
 }
 
-.title::before {
+/* .title::before {
   position: absolute;
   top: 0.9em;
   left: -0.3em;
@@ -43,6 +43,11 @@ body {
   background: hsla(165, 94%, 38%, 0.2);
   z-index: -1;
   border-radius: 0.6em 0.2em;
+} */
+
+.post-date {
+  font-size: 14px;
+  color: #777;
 }
 
 .content {
@@ -62,10 +67,23 @@ body {
 .content h2
 {
   position: relative;
-  text-indent: 0.7em;
+  text-indent: 0.3em;
 }
 
 .content h1::before,
+.content h2::before {
+  position: absolute;
+  top: 0.9em;
+  height: 0.8em;
+  width: 4em;
+  display: block;
+  content: " ";
+  background: hsla(165, 94%, 38%, 0.2);
+  z-index: -1;
+  border-radius: 0.6em 0.2em;
+}
+
+/* .content h1::before,
 .content h2::before
 {
   display: inline-block;
@@ -77,7 +95,7 @@ body {
   position: absolute;
   top: 0.4em;
   left: 0;
-}
+} */
 
 .content h2 {
   font-size: 24px;
@@ -85,6 +103,22 @@ body {
 
 .content h3 {
   font-size: 20px;
+  position: relative;
+  text-indent: 0.7em;
+}
+
+.content h3::before,
+.content h4::before
+{
+  display: inline-block;
+  content: " ";
+  width: 0.2em;
+  height: 0.9em;
+  border-radius: 0.1em;
+  background-color: hsla(165, 94%, 38%, 1);
+  position: absolute;
+  top: 0.4em;
+  left: 0;
 }
 
 .content h4 {

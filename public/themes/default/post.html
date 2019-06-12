@@ -9,6 +9,7 @@
     <div class="wrapper">
       <div class="title-wrapper">
           <h1 class="title"><%= post.title %></h1>
+          <p class="post-date">📆 <%= dayjs(post.createdAt).format('YYYY-MM-DD') %></p>
       </div>
       <div class="content">
           <%= post.htmlContent %>
