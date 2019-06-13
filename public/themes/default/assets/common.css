@@ -16,7 +16,8 @@ body {
 
 .wrapper {
   width: 700px;
-  margin: 40px auto;
+  margin: 0 auto;
+  padding: 40px 0;
   position: relative;
 }
 
@@ -273,7 +274,6 @@ body {
   height: 560px;
   position: relative;
   display: flex;
-  /* flex-direction: column; */
   justify-content: center;
   opacity: .9;
 }
@@ -287,33 +287,42 @@ body {
   background-color: rgba(0,0,0,.5);
 }
 
-.back {
+.scroll {
   position: fixed;
   z-index: 10;
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   background: #fff;
-  box-shadow: 0 10px 20px 0 hsla(0,4%,95%,.95);
+  box-shadow: 0 0 5px rgba(0,0,0,.05);
   border-radius: 50%;
-  bottom: 100px;
-  right: 100px;
-  line-height: 60px;
+  right: 60px;
+  line-height: 40px;
   text-align: center;
   cursor: pointer;
 }
 
-.top {
+.back {
+  bottom: 40px;
+}
+
+.post-top {
   display: none;
-  position: fixed;
-  z-index: 10;
-  width: 60px;
-  height: 60px;
-  background: #fff;
-  box-shadow: 0 10px 20px 0 hsla(0,4%,95%,.95);
-  border-radius: 50%;
-  bottom: 180px;
-  right: 100px;
-  line-height: 60px;
-  text-align: center;
-  cursor: pointer;
+  bottom: 92px;
+}
+
+.index-top {
+  display: none;
+  bottom: 40px;
+}
+
+.top a,
+.back a {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.iconfont {
+  /* font-size: 20px !important; */
+  color: #8cbb19;
 }

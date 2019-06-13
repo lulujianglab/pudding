@@ -4,6 +4,7 @@
     <title><%= userName %> Blog</title>
     <meta charset="utf8">
     <link href="./assets/common.css" rel="stylesheet"></link>
+    <link href="./assets/font.css" rel="stylesheet"></link>
   </head>
   <body>
     <div style="background-image: url(./assets/images/index-poster.jpg)" class="poster">
@@ -24,8 +25,10 @@
           </div>
         </article>
       <% } %>
-      <div class="top" id="top">
-        <a href="javascript:void(0)" onclick="toBackTop()">顶</a>
+      <div class="scroll index-top" id="top">
+        <a href="javascript:void(0)" onclick="toBackTop()">
+          <i class="iconfont icon-shangsanjiaoxing"></i>
+        </a>
       </div>
     </div>
 
@@ -36,7 +39,7 @@
   
       function onScrollToTop() {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        if (scrollTop > 800) {
+        if (scrollTop > 300) {
           document.getElementById("top").style.display = 'block'
         } else {
           document.getElementById("top").style.display = 'none'

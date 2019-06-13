@@ -4,6 +4,7 @@
     <title><%= post.title %> - <%= github.userName %> Blog</title>
     <link href="../assets/common.css" rel="stylesheet"></link>
     <link href="../assets/hl.css" rel="stylesheet"></link>
+    <link href="../assets/font.css" rel="stylesheet"></link>
   </head>
   <body>
     <div class="wrapper">
@@ -14,11 +15,15 @@
       <div class="content">
           <%= post.htmlContent %>
       </div>
-      <div class="top" id="top">
-        <a href="javascript:void(0)" onclick="toBackTop()">顶</a>
+      <div class="scroll post-top" id="top">
+        <a href="javascript:void(0)" onclick="toBackTop()">
+          <i class="iconfont icon-shangsanjiaoxing"></i>
+        </a>
       </div>
-      <div class="back">
-        <a href="../../">首</a>
+      <div class="scroll back">
+        <a href="../../">
+          <i class="iconfont icon-iconhuidaoshouye"></i>
+        </a>
       </div>
     </div>
 
@@ -29,7 +34,7 @@
   
       function onScrollToTop() {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        if (scrollTop > 800) {
+        if (scrollTop > 300) {
           document.getElementById("top").style.display = 'block'
         } else {
           document.getElementById("top").style.display = 'none'
