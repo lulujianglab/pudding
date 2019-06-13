@@ -287,6 +287,38 @@ body {
   background-color: rgba(0,0,0,.5);
 }
 
+.toc_nav {
+  position: absolute;
+  width: 280px;
+  top: 100px;
+  right: -400px;
+}
+
+.article_nav {
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 1;
+  max-height: calc(100vh - 40px); 
+  padding-right: 10px;
+  font-size: 14px;
+}
+
+.article_nav a {
+  width:100%;
+  line-height:22px;
+  display:inline-block;
+  color: #333;
+  font-weight: 400;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.article_nav .H1 {
+  color: #000;
+  font-weight: 600;
+}
+
 .scroll {
   position: fixed;
   z-index: 10;
@@ -323,6 +355,6 @@ body {
 }
 
 .iconfont {
-  /* font-size: 20px !important; */
-  color: #8cbb19;
+  /* color: #8cbb19; */
+  color: #666;
 }
