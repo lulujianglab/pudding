@@ -12,6 +12,7 @@ body {
   'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
   'Segoe UI Emoji', 'Segoe UI Symbol';
   min-width: 800px;
+  min-height: 800px;
 }
 
 .wrapper {
@@ -289,34 +290,34 @@ body {
 
 .toc_nav {
   position: absolute;
-  width: 280px;
+  width: 200px;
   top: 100px;
-  right: -400px;
+  left: 700px;
+  margin-left: 70px;
 }
 
 .article_nav {
+  color: #888;
   overflow-x: hidden;
   overflow-y: auto;
   z-index: 1;
-  max-height: calc(100vh - 40px); 
+  max-height: 290px;
+  width: 200px;
   padding-right: 10px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .article_nav a {
   width:100%;
-  line-height:22px;
-  display:inline-block;
-  color: #333;
+  display:block;
   font-weight: 400;
+  padding: 3px 10px 3px 16px;
+  line-height: 18px;
+  border-left: 2px solid #e8e8e8;
+  color: inherit;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-.article_nav .H1 {
-  color: #000;
-  font-weight: 600;
 }
 
 .scroll {
@@ -325,12 +326,17 @@ body {
   width: 40px;
   height: 40px;
   background: #fff;
-  box-shadow: 0 0 5px rgba(0,0,0,.05);
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
   border-radius: 50%;
-  right: 60px;
+  left: calc(50% + 420px);
   line-height: 40px;
-  text-align: center;
+  text-align: center; 
   cursor: pointer;
+}
+
+.scroll .iconfont {
+  font-size: 20px;
+  color:  #888;
 }
 
 .back {
@@ -352,9 +358,4 @@ body {
   width: 100%;
   height: 100%;
   display: block;
-}
-
-.iconfont {
-  /* color: #8cbb19; */
-  color: #666;
 }
