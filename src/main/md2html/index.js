@@ -85,6 +85,8 @@ export default class Translate {
       await fs.writeFile(path.join(this.localPath, 'dist', 'CNAME'), github.domain)
     }
 
+    await fs.copy(path.join(this.localPath, 'images'), path.join(this.localPath, 'dist', 'images'))
+
     var indexTemplate = await fs.readFile(path.join(templateDir, 'index.html'), 'utf8')
     var html = _.template(indexTemplate)({ posts, 'userName': github.userName, dayjs })
     await fs.writeFile(path.join(this.localPath, 'dist', 'index.html'), html)
