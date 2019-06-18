@@ -29,7 +29,9 @@ class Main {
     ipc.on('/posts/edit', (...args) => post.edit(...args))
 
     ipc.on('/github/detail', (...args) => github.show(...args))
+    ipc.on('/github/detailIssues', (...args) => github.showIssues(...args))
     ipc.on('/github/edit', (...args) => github.edit(...args))
+    ipc.on('/github/editIssues', (...args) => github.editIssues(...args))
     ipc.on('/github/exportFromIssues', (...args) => github.exportFromIssues(...args))
 
     ipc.on('/publish/github', (...args) => upload.post(...args))

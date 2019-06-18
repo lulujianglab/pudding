@@ -1,7 +1,7 @@
 <template>
   <div id="app" @dragenter.prevent @dragover.prevent @dragleave.prevent @drop.prevent>
     <column class="app-wrapper">
-      <Toolbar></Toolbar>
+      <!-- <Toolbar></Toolbar> -->
       <multipane class="flex-1 content pane-group">
         <Sidebar class="pane" style="min-width: 120px"></Sidebar>
         <multipane-resizer></multipane-resizer>
@@ -43,5 +43,9 @@ body {
 
 button, a, p {
   -webkit-app-region: no-drag;
+}
+
+.scroll-view {
+  padding: 20px 10px;
 }
 </style>

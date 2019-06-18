@@ -1,7 +1,8 @@
 <template>
   <column class="sidebar">
-   <button @click="upload">同步</button>
-   <button @click="translate">md2html</button>
+   <!-- <button @click="upload">同步</button>
+   <button @click="translate">md2html</button> -->
+   <img src="/app/logo.png" alt="" class="image" />
     <column
       v-for="item in menu"
       :key="item.title"
@@ -28,17 +29,33 @@
 
 <script>
 import ipc from 'electron-ipc-extra'
+import { shell, remote } from 'electron'
+import path,{ posix } from 'path'
 
 export default {
   data () {
     var defaultIcon = 'el-icon-my-wenjian'
     var menu = [
       {
-        title: '快速访问',
+        title: '文章相关',
         list: [
+          { name: '新建文章', path: '/posts/edit', icon: 'el-icon-my-xiangmu' },
           { name: '全部文章', path: '/posts', icon: 'el-icon-my-xiangmu1' },
+        ]
+      }, {
+        title: '功能相关',
+        list: [
+          { name: '同步', icon: 'el-icon-my-xiangmu1' },
+          { name: '从issues中导入blog', icon: 'el-icon-my-xiangmu1' },
+          { name: 'md2html', icon: 'el-icon-my-huishouzhan' },
+          { name: '预览', icon: 'el-icon-my-huishouzhan' },
           { name: '回收站', path: '/recycle', icon: 'el-icon-my-huishouzhan' },
-          { name: '配置', path: '/configuration', icon: 'el-icon-my-huishouzhan' }
+        ]
+      }, {
+        title: '配置相关',
+        list: [
+          { name: '同步配置', path: '/configuration', icon: 'el-icon-my-huishouzhan' },
+          { name: '导入配置', path: '/import', icon: 'el-icon-my-huishouzhan' }
         ]
       }
     ]
@@ -64,12 +81,36 @@ export default {
     async getTransferInfo () {
       this.transferInfo = await ipc.send('/transfer/info') || {}
     },
+
     async upload() {
       var ret = await ipc.send('/publish/github')
     },
+
+    async exportFromIssues() {
+      await ipc.send('/github/exportFromIssues')
+    },
+
     async translate() {
       await ipc.send('/publish/translate')
     },
+
+    async preview() {
+      await ipc.send('/publish/translate')
+      const docPath = remote.app.getPath('documents')
+      const indexPath = path.join(docPath, 'pudding', 'dist', 'index.html')
+      this.openBrowser(`file://${indexPath}`)
+    },
+
+    async addPost() {
+      const title = await ipc.send('/posts/create')
+      return {
+        path: '/posts/edit',
+        query: {
+          name: title
+        }
+      }
+    },
+
     isItemActive (item) {
       if (item.remotePath) {
         if (this.$route.query.path === item.remotePath) {
@@ -79,6 +120,7 @@ export default {
       }
       return item.path === this.$route.path
     },
+
     async clickItem (item) {
       var route = {
         path: item.path
@@ -91,8 +133,27 @@ export default {
           }
         }
       }
+      if (item.name === '新建文章') {
+        route = await this.addPost()
+      } else if (item.name === '同步') {
+        await this.upload()
+        return
+      } else if (item.name === 'md2html') {
+        await this.translate()
+        return
+      } else if (item.name === '从issues中导入blog') {
+        await this.exportFromIssues()
+        return
+      } else if (item.name === '预览') {
+        await this.preview()
+        return
+      }
       this.$router.push(route)
-    }
+    },
+
+    openBrowser(url) {
+      shell.openExternal(url)
+    },
   }
 }
 </script>
@@ -102,7 +163,19 @@ export default {
   width: 220px;
   background-color: #f5f5f4;
   white-space: nowrap; // 整个 sidebar 不能换行
-  border-right: 1px solid #ddd;
+  // border-right: 1px solid #ddd;
+  overflow-y: auto;
+}
+
+.group {
+  padding-bottom: 10px;
+}
+
+.image {
+  width: 100px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 20px auto;
 }
 
 .title {
@@ -121,9 +194,13 @@ export default {
   color: #333;
   text-decoration: none;
   line-height: 22px;
-  cursor: default;
+  cursor: pointer;
 }
 
+.item:hover {
+  background-color: hsla(165, 94%, 38%, 1);
+  opacity: 0.8;
+}
 .item-active {
   background-color: #dcdfe1;
 }

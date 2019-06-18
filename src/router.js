@@ -17,5 +17,9 @@ export default new Router({
       path: '/configuration',
       component: require('@/components/configuration').default
     },
+    {
+      path: '/import',
+      component: require('@/components/ImportIssues').default
+    },
   ]
 })

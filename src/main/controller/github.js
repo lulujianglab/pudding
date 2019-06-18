@@ -15,17 +15,24 @@ class Github {
     return db.get('syncSetting.github').value()
   }
 
+  async showIssues() {
+    return db.get('syncSetting.issues').value()
+  }
+
   async edit(config) {
     return db.set('syncSetting.github', config).write()
+  }
+
+  async editIssues(config) {
+    return db.set('syncSetting.issues', config).write()
   }
 
   async publish() {
 
   }
 
-  async exportFromIssues(values) {
-    const { issuesAddress } = values
-    const { userName } = db.get('syncSetting.github').value()
+  async exportFromIssues() {
+    const { userName, issuesAddress } = db.get('syncSetting.issues').value()
     let { data: posts } = await axios(`https://api.github.com/repos/${userName}/${issuesAddress}/issues?per_page=1000`, {
       // Authorization: `token ${token}`
     })

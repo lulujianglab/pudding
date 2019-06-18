@@ -17,7 +17,7 @@
 import ipc from 'electron-ipc-extra'
 import { clipboard, remote } from 'electron'
 import fs from 'fs-extra'
-import path,{ posix } from 'path'
+import path from 'path'
 import dayjs from 'dayjs'
 import MonacoEditor from 'vue-monaco'
 const { BrowserWindow } = require('electron').remote
