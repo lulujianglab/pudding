@@ -41,25 +41,36 @@ export default {
     var defaultIcon = 'el-icon-my-wenjian'
     var menu = [
       {
-        title: '文章相关',
+        title: '我的文章',
         list: [
-          { name: '新建文章', path: '/posts/edit', icon: 'el-icon-my-xiangmu' },
-          { name: '全部文章', path: '/posts', icon: 'el-icon-my-xiangmu1' },
+          { name: '全部文章', path: '/posts/all', icon: 'el-icon-my-xiangmu' },
+          { name: '公开博客', path: '/posts/public', icon: 'el-icon-my-xiangmu1' },
+          { name: '私人笔记', path: '/posts/private', icon: 'el-icon-my-xiangmu1' },
+          { name: '回收站', path: '/posts/recycle', icon: 'el-icon-my-xiangmu1' },
+        ]
+      }, 
+      {
+        title: '博客设置',
+        list: [
+          { name: '基础信息', icon: 'el-icon-my-xiangmu1' },
+          { name: '评论功能', icon: 'el-icon-my-xiangmu1' }
+        ]
+      },
+      {
+        title: '同步设置',
+        list: [
+          { name: 'Github', icon: 'el-icon-my-xiangmu1' }
+          // { name: '同步', icon: 'el-icon-my-xiangmu1' },
+          // { name: '从issues中导入blog', icon: 'el-icon-my-xiangmu1' },
+          // { name: 'md2html', icon: 'el-icon-my-huishouzhan' },
+          // { name: '预览', icon: 'el-icon-my-huishouzhan' },
+          // { name: '回收站', path: '/recycle', icon: 'el-icon-my-huishouzhan' },
         ]
       }, {
-        title: '功能相关',
+        title: '标签',
         list: [
-          { name: '同步', icon: 'el-icon-my-xiangmu1' },
-          { name: '从issues中导入blog', icon: 'el-icon-my-xiangmu1' },
-          { name: 'md2html', icon: 'el-icon-my-huishouzhan' },
-          { name: '预览', icon: 'el-icon-my-huishouzhan' },
-          { name: '回收站', path: '/recycle', icon: 'el-icon-my-huishouzhan' },
-        ]
-      }, {
-        title: '配置相关',
-        list: [
-          { name: '同步配置', path: '/configuration', icon: 'el-icon-my-huishouzhan' },
-          { name: '导入配置', path: '/import', icon: 'el-icon-my-huishouzhan' }
+          // { name: '同步配置', path: '/configuration', icon: 'el-icon-my-huishouzhan' },
+          // { name: '导入配置', path: '/import', icon: 'el-icon-my-huishouzhan' }
         ]
       }
     ]
@@ -219,8 +230,8 @@ export default {
 }
 
 .item:hover {
-  background-color: hsla(165, 94%, 38%, 1);
-  opacity: 0.8;
+  background-color: hsla(165, 94%, 38%, 0.5);
+  // opacity: 0.8;
 }
 .item-active {
   background-color: #dcdfe1;

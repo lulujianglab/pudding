@@ -11,23 +11,21 @@
       :data="posts"
       style="width: 100%"
     >
-      <el-table-column label="创建时间" width="180">
-        <template slot-scope="scope">
-          <i class="el-icon-time"></i>
-          <span style="margin-left: 10px">{{ dayjs(scope.row.createdAt).format('YYYY-MM-DD') }}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="文章标题" width="500">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.title }}</span>
+          <span class="title">{{ scope.row.title }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="创建时间" width="180">
+        <template slot-scope="scope">
+          <span>{{ dayjs(scope.row.createdAt).format('YYYY-MM-DD') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope" width="100">
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <span
+            class="button"
+            @click="handleDelete(scope.$index, scope.row)">删除</span>
         </template>
       </el-table-column>
     </el-table>
@@ -70,5 +68,23 @@ export default {
 
 .el-table {
   overflow-y: auto;
+}
+
+.title {
+  width: 480px;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.button {
+  color:lawngreen;
+  cursor: pointer;
+  letter-spacing: 2px;
+}
+
+.button:hover {
+  color:green;
 }
 </style>

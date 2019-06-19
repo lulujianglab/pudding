@@ -58,6 +58,11 @@
       
       function addAchor() {
         var allNodes = document.getElementById('content').childNodes
+        // var nodesH =  [...allNodes].map((item, index) => {
+        //   if(item.tagName && item.tagName.substr(0,1).toUpperCase() === "H") {
+        //     return item.tagName
+        //   }
+        // })
         var mapNodes = [...allNodes].forEach((item, index) => {
           if(item.tagName && item.tagName.substr(0,1).toUpperCase() === "H") {
             var contentH = item.innerHTML // 标题内容
