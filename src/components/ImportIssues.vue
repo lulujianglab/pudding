@@ -34,7 +34,11 @@ export default {
     // },
 
     async onSave() {
-      await ipc.send('/github/editIssues', this.configForm)
+      const result = await ipc.send('/github/editIssues', this.configForm)
+      this.$message.success('恭喜，保存成功 💐')
+      // if(result.syncSetting && JSON.stringify(result.syncSetting.issues !== '{}')) {
+      //   this.$message.success('恭喜，保存成功 💐')
+      // }
     }
   }
 }

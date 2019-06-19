@@ -47,6 +47,7 @@ export default {
   methods: {
     async onSave() {
       await ipc.send('/github/edit', this.configForm)
+      this.$message.success('恭喜，保存成功 💐')
     }
   }
 }

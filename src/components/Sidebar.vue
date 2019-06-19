@@ -1,5 +1,5 @@
 <template>
-  <column class="sidebar">
+  <column class="sidebar" v-loading="loading">
    <!-- <button @click="upload">同步</button>
    <button @click="translate">md2html</button> -->
    <img src="/app/logo.png" alt="" class="image" />
@@ -17,7 +17,8 @@
           :key="item.name">
           <row class="cross-align-center main-align-space-between">
             <row class="cross-align-center">
-              <i :class="item.icon" class="icon"></i><span>{{item.name}}</span>
+              <i :class="item.icon" class="icon"></i>
+              <span>{{item.name}}</span>
             </row>
             <row class="cross-align-center">{{transferInfo[item.transferType] || '&nbsp;'}}</row>
           </row>
@@ -31,6 +32,9 @@
 import ipc from 'electron-ipc-extra'
 import { shell, remote } from 'electron'
 import path,{ posix } from 'path'
+import { Promise } from 'q';
+import { resolve } from 'dns';
+import { setTimeout } from 'timers';
 
 export default {
   data () {
@@ -68,26 +72,43 @@ export default {
     })
     return {
       transferInfo: {},
-      menu
+      menu,
+      loading: false
     }
   },
   created () {
-    this.getTransferInfo()
-    ipc.on('/renderer/transfer/info', data => {
-      this.transferInfo = data
-    })
+    // this.getTransferInfo()
+    // ipc.on('/renderer/transfer/info', data => {
+    //   this.transferInfo = data
+    // })
   },
   methods: {
-    async getTransferInfo () {
-      this.transferInfo = await ipc.send('/transfer/info') || {}
-    },
+    // async getTransferInfo () {
+    //   this.transferInfo = await ipc.send('/transfer/info') || {}
+    // },
 
     async upload() {
       var ret = await ipc.send('/publish/github')
     },
 
     async exportFromIssues() {
-      await ipc.send('/github/exportFromIssues')
+      const { issuesAddress, token, userName } = await ipc.send('/github/detailIssues')
+      if (issuesAddress && token && userName) {
+        this.loading = true
+        await ipc.send('/github/exportFromIssues')
+        this.loading = false
+        this.$message.success('恭喜，导入成功 💐')
+      } else {
+        this.$message.warning('请先完成issues导入配置')
+        await this.sleep(1000)
+        this.$router.push('/import')
+      }
+    },
+
+    sleep(time) {
+      return new Promise(resolve => {
+        setTimeout(resolve, time)
+      })
     },
 
     async translate() {

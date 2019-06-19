@@ -1,17 +1,42 @@
 <template>
   <column class="wrapper">
-    <router-link
+    <!-- <router-link
       :to="{ path: '/posts/edit', query: { name: item.fileName } }"
       class="item flex-row"
       v-for="item in posts"
       :key="item.localPath">
       <span>{{item.title}}</span>
-    </router-link>
+    </router-link> -->
+    <el-table
+      :data="posts"
+      style="width: 100%"
+    >
+      <el-table-column label="创建时间" width="180">
+        <template slot-scope="scope">
+          <i class="el-icon-time"></i>
+          <span style="margin-left: 10px">{{ dayjs(scope.row.createdAt).format('YYYY-MM-DD') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="文章标题" width="500">
+        <template slot-scope="scope">
+          <span style="margin-left: 10px">{{ scope.row.title }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="scope" width="100">
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
   </column>
 </template>
 
 <script>
 import ipc from 'electron-ipc-extra'
+import dayjs from 'dayjs'
 
 export default {
   data() {
@@ -21,6 +46,12 @@ export default {
   },
   async created() {
     this.posts = await ipc.send('/posts/list')
+  },
+
+  methods: {
+    handleDelete(index, row) {
+      console.log(index, row)
+    }
   }
 }
 </script>
@@ -35,5 +66,9 @@ export default {
   padding: 2px 20px;
   font-size: 18px;
   color: #333;
+}
+
+.el-table {
+  overflow-y: auto;
 }
 </style>
