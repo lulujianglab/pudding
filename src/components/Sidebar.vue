@@ -52,14 +52,14 @@ export default {
       {
         title: '博客设置',
         list: [
-          { name: '基础信息', icon: 'el-icon-my-xiangmu1' },
-          { name: '评论功能', icon: 'el-icon-my-xiangmu1' }
+          { name: '基础信息', path: '/setting/info', icon: 'el-icon-my-xiangmu1' },
+          { name: '评论功能', path: '/setting/comment', icon: 'el-icon-my-xiangmu1' }
         ]
       },
       {
         title: '同步设置',
         list: [
-          { name: 'Github', icon: 'el-icon-my-xiangmu1' }
+          { name: 'Github', path: '/sync/github', icon: 'el-icon-my-xiangmu1' }
           // { name: '同步', icon: 'el-icon-my-xiangmu1' },
           // { name: '从issues中导入blog', icon: 'el-icon-my-xiangmu1' },
           // { name: 'md2html', icon: 'el-icon-my-huishouzhan' },
@@ -165,21 +165,21 @@ export default {
           }
         }
       }
-      if (item.name === '新建文章') {
-        route = await this.addPost()
-      } else if (item.name === '同步') {
-        await this.upload()
-        return
-      } else if (item.name === 'md2html') {
-        await this.translate()
-        return
-      } else if (item.name === '从issues中导入blog') {
-        await this.exportFromIssues()
-        return
-      } else if (item.name === '预览') {
-        await this.preview()
-        return
-      }
+      // if (item.name === '新建文章') {
+      //   route = await this.addPost()
+      // } else if (item.name === '同步') {
+      //   await this.upload()
+      //   return
+      // } else if (item.name === 'md2html') {
+      //   await this.translate()
+      //   return
+      // } else if (item.name === '从issues中导入blog') {
+      //   await this.exportFromIssues()
+      //   return
+      // } else if (item.name === '预览') {
+      //   await this.preview()
+      //   return
+      // }
       this.$router.push(route)
     },
 

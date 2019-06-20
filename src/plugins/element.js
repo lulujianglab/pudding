@@ -8,8 +8,9 @@ import {
   Loading,
   Button,
   Input,
-  Table,
-  TableColumn
+  Link,
+  Form,
+  FormItem
 } from 'element-ui'
 
 Vue.use(checkbox)
@@ -20,8 +21,9 @@ Vue.use(Loading.directive)
 
 Vue.use(Button)
 Vue.use(Input)
-Vue.use(Table)
-Vue.use(TableColumn)
+Vue.use(Link)
+Vue.use(Form)
+Vue.use(FormItem)
 
 Vue.prototype.$loading = Loading.service
 Vue.prototype.$msgbox = MessageBox
