@@ -1,10 +1,17 @@
 <template>
   <column class="wrapper">
-    <row>用户名：<input type="text" v-model="configForm.userName" class="input" /></row>
-    <row>issues 地址：<input type="text" v-model="configForm.issuesAddress" class="input" /></row>
-    <row>token：<input type="text" v-model="configForm.token" class="input" /></row>
-    <!-- <button @click="exportFromIssues" class="button">从 issues 中导入博客</button> -->
-    <button @click="onSave" class="button">保存</button>
+    <el-form :label-position="labelPosition" label-width="100px" :model="configForm">
+      <el-form-item label="用户名：">
+        <el-input v-model="configForm.userName"></el-input>
+      </el-form-item>
+      <el-form-item label="issues 地址">
+        <el-input v-model="configForm.issuesAddress"></el-input>
+      </el-form-item>
+      <el-form-item label="token">
+        <el-input v-model="configForm.token"></el-input>
+      </el-form-item>
+      <el-button type="primary" @click="importIssues" class="button" :loading="loading">导入</el-button>
+    </el-form>
   </column>
 </template>
 
@@ -19,7 +26,9 @@ export default {
         userName: '',
         issuesAddress: '',
         token: '',
-      }
+      },
+      labelPosition: 'right',
+      loading: false
     }
   },
 
@@ -28,14 +37,21 @@ export default {
   },
 
   methods: {
-    // async exportFromIssues() {
-    //   const { issuesAddress } = this.configForm
-    //   await ipc.send('/github/exportFromIssues')
-    // },
+    async importIssues() {
+      await this.onSave() // 保存配置项
+      const { issuesAddress, token, userName } = this.configForm
+      if (issuesAddress && token && userName) {
+        this.loading = true
+        await ipc.send('/github/exportFromIssues')
+        this.loading = false
+        this.$message.success('恭喜，导入成功 💐')
+      } else {
+        this.$message.warning('请先完成配置表单')
+      }
+    },
 
     async onSave() {
       const result = await ipc.send('/github/editIssues', this.configForm)
-      this.$message.success('恭喜，保存成功 💐')
       // if(result.syncSetting && JSON.stringify(result.syncSetting.issues !== '{}')) {
       //   this.$message.success('恭喜，保存成功 💐')
       // }
@@ -47,7 +63,7 @@ export default {
 <style scoped lang="scss">
 .wrapper {
   align-items:center;
-  padding-top: 20px;
+  padding-top: 140px;
   font-size: 16px;
 }
 
@@ -58,10 +74,32 @@ export default {
 }
 
 .button {
-  height: 26px;
-  padding: 0 8px;
+  padding: 6px 16px;
   border-radius: 4px;
   font-size: 16px;
-  margin: 20px 0 0 160px;
+  margin: 20px 0 0 100px;
+}
+
+.el-button--primary {
+  background-color: #fff;
+  border-color: #DCDFE6;
+  color: #666;
+}
+
+.el-button--primary:hover {
+  color: #4caf50;
+  background-color: #adedd780;
+  border: 0;
+}
+
+.el-form {
+  width: 480px;
+}
+
+.el-form-item--small.el-form-item {
+  margin-bottom: 28px;
+}
+.el-form-item__label {
+  letter-spacing: 1.5px;
 }
 </style>

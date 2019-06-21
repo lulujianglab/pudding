@@ -11,15 +11,15 @@ export default new Router({
     },
     {
       path: '/posts/public', // 公开博客
-      component: require('@/components/posts/Posts').default
+      component: require('@/components/posts/Open').default
     },
     {
       path: '/posts/private', // 私人笔记
-      component: require('@/components/posts/Posts').default
+      component: require('@/components/posts/Private').default
     },
     {
       path: '/posts/recycle', // 回收站
-      component: require('@/components/posts/Posts').default
+      component: require('@/components/posts/Recycle').default
     },
     {
       path: '/posts/:id', // 编辑文章

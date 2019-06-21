@@ -17,7 +17,7 @@
         <span class="text" @click="handleAdd()">十</span>
       </div>
     </div>
-    <div class="right">
+    <div class="right" v-if="show">
       <div class="review button">
         <i class="el-icon-edit"></i>
         <span class="text" @click="preview()">预览</span>
@@ -42,7 +42,8 @@ export default {
     }
   },
   props: {
-    posts: Array
+    posts: Array,
+    show: Boolean
   },
   methods: {
     async handleAdd() {

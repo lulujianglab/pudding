@@ -27,17 +27,13 @@
           </row>
         </div>
         <row class="side">
-          <div class="left" v-if="item.state === 'open'">
-            <div class="circle circle-open"></div>
-            <p class="status">公开</p>
-          </div>
-          <div class="left" v-else-if="item.state === 'private'">
-            <div class="circle circle-private"></div>
+          <div class="left">
+            <div class="circle circle-privite"></div>
             <p class="status">私密</p>
           </div>
           <div class="right">
-            <!-- <div class="operate" @click="handleReview(item.title)">预览</div> -->
-            <div class="operate" @click="updateStatus(item)">删除</div>
+            <div class="operate" @click="updateStatus(item, 'open')">设为公开</div>
+            <div class="operate" @click="updateStatus(item, 'recycle')">删除</div>
           </div>
         </row>
       </div>
@@ -62,7 +58,8 @@ export default {
     Element: Element
   },
   async created() {
-    this.posts = await ipc.send('/posts/list')
+    const allPosts = await ipc.send('/posts/list')
+    this.posts = (allPosts ||[]).filter(item => item.state === 'private')
   },
 
   methods: {
@@ -75,28 +72,23 @@ export default {
     changePosts(data) {
       this.posts = data
     },
-    updateStatus(item) {
-      item.state = 'recycle'
+    updateStatus(item, status) {
+      console.log('item', item)
+      if (status === 'open') {
+        item.state = 'open'
+      } else if (status === 'private') {
+        item.state = 'private'
+      }
       this.$message({
         type: 'success',
-        message: '删除成功!'
+        message: '更新成功!'
       })
     },
-    // async handleReview(title) {
-    //   await ipc.send('/publish/translate')
-    //   const docPath = remote.app.getPath('documents')
-    //   const postPath = path.join(docPath, 'pudding', 'dist', 'posts', title)
-    //   shell.openExternal(`file://${postPath}.html`)
-    // },
   }
 }
 </script>
 
 <style scoped lang="scss">
-// .content {
-//   -webkit-app-region: no-drag;
-//   flex-shrink: 0;
-// }
 
 .item {
   width: 100%;
@@ -182,9 +174,11 @@ export default {
 .circle-open {
   // background: #e34c26;
   background: #ffd951;
+  // background: #ffeeb1;
+  // background: #2b170e;
 }
 
-.circle-private {
+.circle-privite {
   background: #ffb7a4;
 }
 
