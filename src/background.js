@@ -65,7 +65,7 @@ app.on('ready', async () => {
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
     try {
-      // await installVueDevtools()
+      await installVueDevtools()
     } catch (e) {
       console.error('Vue Devtools failed to install:', e.toString())
     }
@@ -74,7 +74,7 @@ app.on('ready', async () => {
 })
 
 // Exit cleanly on request from parent process in development mode.
-if (isDevelopment) {
+if (isDevelopment) { 
   if (process.platform === 'win32') {
     process.on('message', data => {
       if (data === 'graceful-exit') {

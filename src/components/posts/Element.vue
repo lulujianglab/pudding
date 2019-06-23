@@ -5,9 +5,6 @@
         <el-input 
           v-model="input"
           placeholder="请输入文章标题"
-          @change="handleInput()"
-          @clear="handleClear()"
-          @blur="handleBlur()"
           suffix-icon="el-icon-search"
           clearable>
         </el-input>
@@ -36,14 +33,16 @@ import { shell, remote } from 'electron'
 import path,{ posix } from 'path'
 
 export default {
+  props: ['value'],
   data() {
     return {
       input: ''
     }
   },
-  props: {
-    posts: Array,
-    show: Boolean
+  watch: {
+    input(val) {
+      this.$emit('input', val)
+    }
   },
   methods: {
     async handleAdd() {
@@ -54,32 +53,6 @@ export default {
           name: title
         }
       })
-    },
-
-    async handleInput() {
-      if (!this.input) {
-        this.getPosts()
-      } else {
-        const filterPosts = (this.posts || []).filter(item => {
-          return new RegExp(this.input).test(item.title)
-        })
-        this.$emit('change', filterPosts)
-      }
-    },
-
-    async handleClear() {
-      this.getPosts()
-    },
-
-    async handleBlur() {
-      if(!this.input) {
-        this.getPosts()
-      }
-    },
-
-    async getPosts() {
-      const newPosts = await ipc.send('/posts/list')
-      this.$emit('change', newPosts)
     },
 
     async upload() {
