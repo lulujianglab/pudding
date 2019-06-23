@@ -43,23 +43,23 @@ export default {
       {
         title: '我的文章',
         list: [
-          { name: '全部文章', path: '/posts/all', icon: 'el-icon-my-xiangmu' },
-          { name: '公开博客', path: '/posts/public', icon: 'el-icon-my-xiangmu1' },
-          { name: '私人笔记', path: '/posts/private', icon: 'el-icon-my-xiangmu1' },
-          { name: '回收站', path: '/posts/recycle', icon: 'el-icon-my-xiangmu1' },
+          { name: '全部文章', path: '/posts/all', icon: 'el-icon-my-wenzhangshoufeiziyuan' },
+          { name: '公开博客', path: '/posts/public', icon: 'el-icon-my-gongkai1' },
+          { name: '私人笔记', path: '/posts/private', icon: 'el-icon-my-private' },
+          { name: '回收站', path: '/posts/recycle', icon: 'el-icon-my-zhuxiao' },
         ]
       }, 
       {
         title: '博客设置',
         list: [
-          { name: '基础信息', path: '/setting/info', icon: 'el-icon-my-xiangmu1' },
-          { name: '评论功能', path: '/setting/comment', icon: 'el-icon-my-xiangmu1' }
+          { name: '基础信息', path: '/setting/info', icon: 'el-icon-my-jichugongneng' },
+          { name: '评论功能', path: '/setting/comment', icon: 'el-icon-my-pinglun' }
         ]
       },
       {
         title: '同步设置',
         list: [
-          { name: 'Github', path: '/sync/github', icon: 'el-icon-my-xiangmu1' }
+          { name: 'Github', path: '/sync/github', icon: 'el-icon-my-github' }
           // { name: '同步', icon: 'el-icon-my-xiangmu1' },
           // { name: '从issues中导入blog', icon: 'el-icon-my-xiangmu1' },
           // { name: 'md2html', icon: 'el-icon-my-huishouzhan' },
@@ -219,11 +219,11 @@ export default {
 }
 
 .item {
-  color: #333;
+  font-weight: 500;
+  color: #666;
   font-size: 14px;
   padding: 2px 10px 2px 17px;
   display: block;
-  color: #333;
   text-decoration: none;
   line-height: 22px;
   cursor: pointer;
@@ -240,6 +240,7 @@ export default {
 .icon {
   width: 20px;
   text-align: center;
+  color: #777;
   margin-right: 3px;
 }
 </style>

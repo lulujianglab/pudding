@@ -19,11 +19,11 @@
     </div>
     <div class="right" v-if="show">
       <div class="review button">
-        <i class="el-icon-edit"></i>
+        <i class="el-icon-my-preview"></i>
         <span class="text" @click="preview()">预览</span>
       </div>
       <div class="upload button">
-        <i class="el-icon-edit"></i>
+        <i class="el-icon-my-tongbu"></i>
         <span class="text" @click="upload()">同步</span>
       </div>
     </div>
