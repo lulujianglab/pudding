@@ -9,19 +9,18 @@
           clearable>
         </el-input>
       </div>
-      <div class="edit button">
-        <!-- <i class="el-icon-edit"></i> -->
-        <span class="text" @click="handleAdd()">十</span>
+      <div class="edit button" @click="handleAdd()">
+        <span class="text">十</span>
       </div>
     </div>
     <div class="right" v-if="show">
-      <div class="review button">
+      <div class="review button" @click="preview()">
         <i class="el-icon-my-preview"></i>
-        <span class="text" @click="preview()">预览</span>
+        <span class="text">预览</span>
       </div>
-      <div class="upload button">
+      <div class="upload button" @click="upload()">
         <i class="el-icon-my-tongbu"></i>
-        <span class="text" @click="upload()">同步</span>
+        <span class="text">同步</span>
       </div>
     </div>
   </row>

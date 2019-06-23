@@ -1,6 +1,6 @@
 <template>
   <column class="wrapper">
-    <Element v-model="keyword"></Element>
+    <ToolBar v-model="keyword"></ToolBar>
     <div
       class="flex-row"
       v-for="item in filteredPosts"
@@ -46,7 +46,7 @@ import ipc from 'electron-ipc-extra'
 import { shell, remote } from 'electron'
 import path,{ posix } from 'path'
 import dayjs from 'dayjs'
-import Element from './Element'
+import ToolBar from './ToolBarPosts'
 
 export default {
   data() {
@@ -56,11 +56,10 @@ export default {
     }
   },
   components: {
-    Element: Element
+    ToolBar: ToolBar
   },
   async created() {
-    const allPosts = await ipc.send('/posts/list')
-    this.posts = (allPosts ||[]).filter(item => item.state === 'private')
+    await this.handleFetch()
   },
   computed: {
     filteredPosts() {
@@ -68,19 +67,19 @@ export default {
     }
   },
   methods: {
+    async handleFetch() {
+      const allPosts = await ipc.send('/posts/list')
+      this.posts = (allPosts ||[]).filter(item => item.state === 'private')
+    },
     handleEdit(fileName) {
       this.$router.push({
         path: '/posts/edit',
         query: { name: fileName }
       })
     },
-    updateStatus(item, status) {
-      console.log('item', item)
-      if (status === 'open') {
-        item.state = 'open'
-      } else if (status === 'private') {
-        item.state = 'private'
-      }
+    async updateStatus(item, state) {
+      const result = await ipc.send('/posts/updateState', {...item, state})
+      await this.handleFetch()
       this.$message({
         type: 'success',
         message: '更新成功!'

@@ -27,6 +27,7 @@ class Main {
     ipc.on('/posts/create', (...args) => post.create(...args))
     ipc.on('/posts/detail', (...args) => post.show(...args))
     ipc.on('/posts/edit', (...args) => post.edit(...args))
+    ipc.on('/posts/updateState', (...args) => post.updateState(...args))
 
     ipc.on('/github/detail', (...args) => github.show(...args))
     ipc.on('/github/detailIssues', (...args) => github.showIssues(...args))

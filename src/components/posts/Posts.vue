@@ -1,6 +1,6 @@
 <template>
   <column class="wrapper">
-    <Element v-model="keyword"></Element>
+    <ToolBar v-model="keyword"></ToolBar>
     <div
       class="flex-row"
       v-for="item in filteredPosts"
@@ -50,7 +50,7 @@ import ipc from 'electron-ipc-extra'
 import { shell, remote } from 'electron'
 import path,{ posix } from 'path'
 import dayjs from 'dayjs'
-import Element from './Element'
+import ToolBar from './ToolBarPosts'
 
 export default {
   data() {
@@ -60,10 +60,11 @@ export default {
     }
   },
   components: {
-    Element: Element
+    ToolBar,
   },
   async created() {
-    this.posts = await ipc.send('/posts/list')
+    const allPosts = await ipc.send('/posts/list')
+    this.posts = (allPosts ||[]).filter(item => item.state !== 'recycle')
   },
   computed: {
     filteredPosts() {

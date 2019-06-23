@@ -2,6 +2,7 @@ import Vue from 'vue'
 import {
   checkbox,
   checkboxGroup,
+  CheckboxButton,
   popover,
   Message,
   MessageBox,
@@ -10,11 +11,12 @@ import {
   Input,
   Link,
   Form,
-  FormItem
+  FormItem,
 } from 'element-ui'
 
 Vue.use(checkbox)
 Vue.use(checkboxGroup)
+Vue.use(CheckboxButton)
 Vue.use(popover)
 
 Vue.use(Loading.directive)

@@ -77,7 +77,7 @@ export default {
 .button:hover {
   color: #4caf50;
   background-color: #adedd780;
-  border: 0;
+  border: 1px solid #adedd780;
 }
 
 .issue-button {

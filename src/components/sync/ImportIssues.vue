@@ -89,7 +89,7 @@ export default {
 .el-button--primary:hover {
   color: #4caf50;
   background-color: #adedd780;
-  border: 0;
+  border: 1px solid #adedd780;
 }
 
 .el-form {

@@ -1,6 +1,6 @@
 <template>
   <column class="wrapper">
-    <Element v-model="keyword" :show="true"></Element>
+    <ToolBar v-model="keyword" :show="true"></ToolBar>
     <div
       class="flex-row"
       v-for="item in filteredPosts"
@@ -8,8 +8,8 @@
       <div class="item">
         <row class="main">
           <el-link type="info" style="color:#333">
-            <p 
-              class="title ellipsis" 
+            <p
+              class="title ellipsis"
               @click="handleEdit(item.fileName)">
               {{item.title}}
             </p>
@@ -18,7 +18,7 @@
         </row>
         <div v-if="item.labels.length !== 0">
           <row class="label-list">
-            <p 
+            <p
               class="label-item"
               v-for="label in item.labels"
               :key="label.name">
@@ -37,7 +37,7 @@
           </div>
           <div class="right">
             <div class="operate" @click="handleReview(item.title)">预览</div>
-            <div class="operate" @click="updateStatus(item, 'open')">设为私密</div>
+            <div class="operate" @click="updateStatus(item, 'private')">设为私密</div>
             <div class="operate" @click="updateStatus(item, 'recycle')">删除</div>
           </div>
         </row>
@@ -51,7 +51,7 @@ import ipc from 'electron-ipc-extra'
 import { shell, remote } from 'electron'
 import path,{ posix } from 'path'
 import dayjs from 'dayjs'
-import Element from './Element'
+import ToolBar from './ToolBarPosts'
 
 export default {
   data() {
@@ -61,11 +61,10 @@ export default {
     }
   },
   components: {
-    Element: Element
+    ToolBar: ToolBar
   },
   async created() {
-    const allPosts = await ipc.send('/posts/list')
-    this.posts = (allPosts ||[]).filter(item => item.state === 'open')
+    await this.handleFetch()
   },
   computed: {
     filteredPosts() {
@@ -73,19 +72,19 @@ export default {
     }
   },
   methods: {
+    async handleFetch() {
+      const allPosts = await ipc.send('/posts/list')
+      this.posts = (allPosts ||[]).filter(item => item.state === 'open')
+    },
     handleEdit(fileName) {
       this.$router.push({
         path: '/posts/edit',
         query: { name: fileName }
       })
     },
-    updateStatus(item, state) {
-      console.log('item', item)
-      if (status === 'open') {
-        item.state = 'open'
-      } else if (status === 'private') {
-        item.state = 'private'
-      }
+    async updateStatus(item, state) {
+      const result = await ipc.send('/posts/updateState', {...item, state})
+      await this.handleFetch()
       this.$message({
         type: 'success',
         message: '更新成功!'

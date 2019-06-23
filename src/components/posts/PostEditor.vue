@@ -1,5 +1,14 @@
 <template>
   <column class="editor-wrapper">
+    <ToolBar v-model="state"></ToolBar>
+    <div class="input">
+      <el-input 
+        v-model="title"
+        placeholder="文章标题"
+        suffix-icon="el-icon-search"
+        clearable>
+      </el-input>
+    </div>
     <monaco-editor
       @change="edited = true"
       ref="editor"
@@ -9,7 +18,7 @@
       @paste.native="handlePaste"
       v-model="post.content"
       language="markdown">
-    </monaco-editor>
+    </monaco-editor>  
   </column>
 </template>
 
@@ -20,11 +29,13 @@ import fs from 'fs-extra'
 import path from 'path'
 import dayjs from 'dayjs'
 import MonacoEditor from 'vue-monaco'
+import ToolBar from './ToolBarEditor'
 const { BrowserWindow } = require('electron').remote
 
 export default {
   components: {
-    MonacoEditor
+    MonacoEditor,
+    ToolBar
   },
   mounted() {
     var editor = this.$refs.editor.getMonaco() // 获取实例
@@ -32,7 +43,9 @@ export default {
   },
   data() {
     return {
+      title: '',
       post: {},
+      state: false,
       edited: false,
       options: {
         automaticLayout: true, // 自动 resize
@@ -64,7 +77,7 @@ export default {
   },
   computed: {
     name() {
-      return this.$route.query.name
+      return `${this.title}.md`
     },
     windowTitle() {
       var title = ['布丁笔记']
@@ -86,14 +99,18 @@ export default {
     }
   },
   async created() {
-    this.post = await ipc.send('/posts/detail', this.$route.query.name)
-    const win = BrowserWindow.getAllWindows()[0]
-    win.setRepresentedFilename(this.post.localPath)
-    win.setDocumentEdited(true)
+    console.log('this.title',this.title, this.$route.query.name)
+    if (!this.title) {
+      this.title = path.basename(this.$route.query.name, '.md')
+      this.post = await ipc.send('/posts/detail', this.$route.query.name)
+      const win = BrowserWindow.getAllWindows()[0]
+      win.setRepresentedFilename(this.post.localPath)
+      win.setDocumentEdited(true)
+    } 
   },
   methods: {
     async savePost() {
-      var post = await ipc.send('/posts/edit', this.post)
+      var post = await ipc.send('/posts/edit', this.post, this.title, this.state)
       this.edited = false
     },
     async onKeydown(ev) {
@@ -103,7 +120,6 @@ export default {
         }
       }
     },
-
     async handlePaste(e) {
       // 判断是否有图片格式的粘贴文件
       if (e.clipboardData && e.clipboardData.items[0] && e.clipboardData.items[0].type && e.clipboardData.items[0].type.indexOf('image') > -1) { 
@@ -139,6 +155,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.input {
+  width: 600px;
+  margin: 0 0 20px 40px;
+}
+
 .editor {
   width: 100%;
   height: 100%;
