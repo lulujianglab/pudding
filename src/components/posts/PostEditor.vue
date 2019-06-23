@@ -20,6 +20,7 @@ import fs from 'fs-extra'
 import path from 'path'
 import dayjs from 'dayjs'
 import MonacoEditor from 'vue-monaco'
+
 const { BrowserWindow } = require('electron').remote
 
 export default {
@@ -35,6 +36,10 @@ export default {
       post: {},
       edited: false,
       options: {
+        minimap: {
+          enabled: false
+        },
+        theme: 'pudding',
         automaticLayout: true, // 自动 resize
         acceptSuggestionOnCommitCharacter: false,
         acceptSuggestionOnEnter: 'off',
@@ -150,14 +155,6 @@ export default {
 </style>
 
 <style lang="scss">
-.mtk1 {
-  color: #666 !important;
-}
-
-.mtk6 {
-  color: #333 !important;
-}
-
 .monaco-editor {
   background-color: #ffffff !important;
 }
