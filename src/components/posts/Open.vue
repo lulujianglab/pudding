@@ -1,9 +1,9 @@
 <template>
   <column class="wrapper">
-    <Element v-model="keyword"></Element>
+    <Element :posts="posts" @change="changePosts" :show="true"></Element>
     <div
       class="flex-row"
-      v-for="item in filteredPosts"
+      v-for="item in posts"
       :key="item.localPath">
       <div class="item">
         <row class="main">
@@ -36,11 +36,15 @@
             <p class="status">私密</p>
           </div>
           <div class="right">
-            <!-- <div class="operate" @click="handleReview(item.title)">预览</div> -->
-            <div class="operate" @click="updateStatus(item)">删除</div>
+            <div class="operate" @click="handleReview(item.title)">预览</div>
+            <div class="operate" @click="updateStatus(item, 'open')">设为私密</div>
+            <div class="operate" @click="updateStatus(item, 'recycle')">删除</div>
           </div>
         </row>
       </div>
+      <!-- <span
+        class="button"
+        @click="handleDelete(scope.$index, scope.row)">删除</span> -->
     </div>
   </column>
 </template>
@@ -55,7 +59,6 @@ import Element from './Element'
 export default {
   data() {
     return {
-      keyword: '',
       posts: []
     }
   },
@@ -63,13 +66,10 @@ export default {
     Element: Element
   },
   async created() {
-    this.posts = await ipc.send('/posts/list')
+    const allPosts = await ipc.send('/posts/list')
+    this.posts = (allPosts ||[]).filter(item => item.state === 'open')
   },
-  computed: {
-    filteredPosts() {
-      return this.posts.filter(post => post.title.includes(this.keyword))
-    }
-  },
+
   methods: {
     handleEdit(fileName) {
       this.$router.push({
@@ -80,19 +80,24 @@ export default {
     changePosts(data) {
       this.posts = data
     },
-    updateStatus(item) {
-      item.state = 'recycle'
+    updateStatus(item, state) {
+      console.log('item', item)
+      if (status === 'open') {
+        item.state = 'open'
+      } else if (status === 'private') {
+        item.state = 'private'
+      }
       this.$message({
         type: 'success',
-        message: '删除成功!'
+        message: '更新成功!'
       })
     },
-    // async handleReview(title) {
-    //   await ipc.send('/publish/translate')
-    //   const docPath = remote.app.getPath('documents')
-    //   const postPath = path.join(docPath, 'pudding', 'dist', 'posts', title)
-    //   shell.openExternal(`file://${postPath}.html`)
-    // },
+    async handleReview(title) {
+      await ipc.send('/publish/translate')
+      const docPath = remote.app.getPath('documents')
+      const postPath = path.join(docPath, 'pudding', 'dist', 'posts', title)
+      shell.openExternal(`file://${postPath}.html`)
+    },
   }
 }
 </script>

@@ -1,7 +1,6 @@
 <template>
   <column class="wrapper">
-    <!-- <row>issues 地址：<input type="text" v-model="configForm.issuesAddress" class="input" /></row> -->
-    <!-- <button @click="exportFromIssues" class="button">从 issues 中导入博客</button> -->
+    <div @click="importFromIssues" class="issue-button">从 issues 中导入博客</div>
     <el-form :label-position="labelPosition" label-width="80px" :model="configForm">
       <el-form-item label="仓库名">
         <el-input v-model="configForm.repository"></el-input>
@@ -49,6 +48,10 @@ export default {
     async onSave() {
       await ipc.send('/github/edit', this.configForm)
       this.$message.success('恭喜，保存成功 💐')
+    },
+
+    importFromIssues() {
+      this.$router.push('/sync/import')
     }
   }
 }
@@ -58,7 +61,7 @@ export default {
 .wrapper {
   align-items:center;
   padding-top: 20px;
-  padding-top: 100px;
+  padding-top: 80px;
 }
 
 .button {
@@ -75,6 +78,21 @@ export default {
   color: #4caf50;
   background-color: #adedd780;
   border: 0;
+}
+
+.issue-button {
+  background-color: #f7c101;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin-left: 320px;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+.issue-button:hover {
+  background-color: #ffd951;
 }
 
 .el-form {
