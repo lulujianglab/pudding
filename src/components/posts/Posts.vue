@@ -77,9 +77,6 @@ export default {
         query: { name: fileName }
       })
     },
-    changePosts(data) {
-      this.posts = data
-    },
     updateStatus(item) {
       item.state = 'recycle'
       this.$message({

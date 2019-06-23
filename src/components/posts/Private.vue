@@ -1,9 +1,9 @@
 <template>
   <column class="wrapper">
-    <Element :posts="posts" @change="changePosts"></Element>
+    <Element v-model="keyword"></Element>
     <div
       class="flex-row"
-      v-for="item in posts"
+      v-for="item in filteredPosts"
       :key="item.localPath">
       <div class="item">
         <row class="main">
@@ -51,6 +51,7 @@ import Element from './Element'
 export default {
   data() {
     return {
+      keyword: '',
       posts: []
     }
   },
@@ -61,16 +62,17 @@ export default {
     const allPosts = await ipc.send('/posts/list')
     this.posts = (allPosts ||[]).filter(item => item.state === 'private')
   },
-
+  computed: {
+    filteredPosts() {
+      return this.posts.filter(post => post.title.includes(this.keyword))
+    }
+  },
   methods: {
     handleEdit(fileName) {
       this.$router.push({
         path: '/posts/edit',
         query: { name: fileName }
       })
-    },
-    changePosts(data) {
-      this.posts = data
     },
     updateStatus(item, status) {
       console.log('item', item)

@@ -1,9 +1,9 @@
 <template>
   <column class="wrapper">
-    <Element :posts="posts" @change="changePosts" :show="true"></Element>
+    <Element v-model="keyword" :show="true"></Element>
     <div
       class="flex-row"
-      v-for="item in posts"
+      v-for="item in filteredPosts"
       :key="item.localPath">
       <div class="item">
         <row class="main">
@@ -42,9 +42,6 @@
           </div>
         </row>
       </div>
-      <!-- <span
-        class="button"
-        @click="handleDelete(scope.$index, scope.row)">删除</span> -->
     </div>
   </column>
 </template>
@@ -59,6 +56,7 @@ import Element from './Element'
 export default {
   data() {
     return {
+      keyword: '',
       posts: []
     }
   },
@@ -69,16 +67,17 @@ export default {
     const allPosts = await ipc.send('/posts/list')
     this.posts = (allPosts ||[]).filter(item => item.state === 'open')
   },
-
+  computed: {
+    filteredPosts() {
+      return this.posts.filter(post => post.title.includes(this.keyword))
+    }
+  },
   methods: {
     handleEdit(fileName) {
       this.$router.push({
         path: '/posts/edit',
         query: { name: fileName }
       })
-    },
-    changePosts(data) {
-      this.posts = data
     },
     updateStatus(item, state) {
       console.log('item', item)

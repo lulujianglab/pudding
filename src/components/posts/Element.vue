@@ -33,7 +33,7 @@ import { shell, remote } from 'electron'
 import path,{ posix } from 'path'
 
 export default {
-  props: ['value'],
+  props: ['value', 'show'],
   data() {
     return {
       input: ''
