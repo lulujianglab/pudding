@@ -48,6 +48,10 @@ export default {
       state: false,
       edited: false,
       options: {
+        minimap: {
+          enabled: false
+        },
+        theme: 'pudding',
         automaticLayout: true, // 自动 resize
         acceptSuggestionOnCommitCharacter: false,
         acceptSuggestionOnEnter: 'off',
@@ -171,14 +175,6 @@ export default {
 </style>
 
 <style lang="scss">
-.mtk1 {
-  color: #666 !important;
-}
-
-.mtk6 {
-  color: #333 !important;
-}
-
 .monaco-editor {
   background-color: #ffffff !important;
 }
