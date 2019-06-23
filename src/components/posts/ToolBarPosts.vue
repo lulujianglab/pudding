@@ -45,11 +45,11 @@ export default {
   },
   methods: {
     async handleAdd() {
-      const title = await ipc.send('/posts/create')
+      const id = await ipc.send('/posts/create')
       this.$router.push({
         path: '/posts/edit',
         query: {
-          name: title
+          id,
         }
       })
     },

@@ -10,7 +10,7 @@
           <el-link type="info" style="color:#333">
             <p 
               class="title ellipsis" 
-              @click="handleEdit(item.fileName)">
+              @click="handleEdit(item.id)">
               {{item.title}}
             </p>
           </el-link>
@@ -27,13 +27,13 @@
           </row>
         </div>
         <row class="side">
-          <div class="left" v-if="item.state === 'open'">
-            <div class="circle circle-open"></div>
-            <p class="status">公开</p>
-          </div>
-          <div class="left" v-else-if="item.state === 'private'">
+          <div class="left" v-if="item.private">
             <div class="circle circle-private"></div>
             <p class="status">私密</p>
+          </div>
+          <div class="left" v-else>
+            <div class="circle circle-open"></div>
+            <p class="status">公开</p>
           </div>
           <div class="right">
             <!-- <div class="operate" @click="handleReview(item.title)">预览</div> -->
@@ -72,10 +72,11 @@ export default {
     }
   },
   methods: {
-    handleEdit(fileName) {
+    async handleEdit(id) {
+      console.log('id',id)
       this.$router.push({
         path: '/posts/edit',
-        query: { name: fileName }
+        query: { id }
       })
     },
     updateStatus(item) {

@@ -1,9 +1,9 @@
 <template>
-  <column class="editor-wrapper">
-    <ToolBar v-model="state"></ToolBar>
+  <column v-if="post" class="editor-wrapper">
+    <ToolBarEditor v-model="post.private"></ToolBarEditor>
     <div class="input">
       <el-input 
-        v-model="title"
+        v-model="post.title"
         placeholder="文章标题"
         suffix-icon="el-icon-search"
         clearable>
@@ -29,13 +29,13 @@ import fs from 'fs-extra'
 import path from 'path'
 import dayjs from 'dayjs'
 import MonacoEditor from 'vue-monaco'
-import ToolBar from './ToolBarEditor'
+import ToolBarEditor from './ToolBarEditor'
 const { BrowserWindow } = require('electron').remote
 
 export default {
   components: {
     MonacoEditor,
-    ToolBar
+    ToolBarEditor
   },
   mounted() {
     var editor = this.$refs.editor.getMonaco() // 获取实例
@@ -43,9 +43,7 @@ export default {
   },
   data() {
     return {
-      title: '',
       post: {},
-      state: false,
       edited: false,
       options: {
         minimap: {
@@ -81,7 +79,7 @@ export default {
   },
   computed: {
     name() {
-      return `${this.title}.md`
+      return this.post.fileName
     },
     windowTitle() {
       var title = ['布丁笔记']
@@ -103,18 +101,21 @@ export default {
     }
   },
   async created() {
-    console.log('this.title',this.title, this.$route.query.name)
-    if (!this.title) {
-      this.title = path.basename(this.$route.query.name, '.md')
-      this.post = await ipc.send('/posts/detail', this.$route.query.name)
-      const win = BrowserWindow.getAllWindows()[0]
-      win.setRepresentedFilename(this.post.localPath)
-      win.setDocumentEdited(true)
-    } 
+    console.log('id',this.$route.query.id)
+    this.post = await ipc.send('/posts/detail', this.$route.query.id)
+    console.log('this.post',this.post)
+    const win = BrowserWindow.getAllWindows()[0]
+    win.setRepresentedFilename(this.post.localPath)
+    win.setDocumentEdited(true)
   },
   methods: {
     async savePost() {
+      console.log('11111',this.post, this.title, this.state)
       var post = await ipc.send('/posts/edit', this.post, this.title, this.state)
+      this.post.fileName = post.fileName
+      console.log('post*****',post)
+      // this.post = post
+      // this.title = path.basename(this.post.fileName, '.md')
       this.edited = false
     },
     async onKeydown(ev) {

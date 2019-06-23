@@ -4,7 +4,7 @@
       <div class="button" @click="back()">返回</div>
     </div>
     <div class="right">
-      <el-checkbox v-model="checked">私密</el-checkbox>
+      <el-checkbox :value="value" @input="input">私密</el-checkbox>
       <div class="save button">
         <span class="text" @click="save()">保存</span>
       </div>
@@ -21,18 +21,16 @@ import { shell, remote } from 'electron'
 import path,{ posix } from 'path'
 
 export default {
+  props: ['value'],
   data() {
     return {
-      checked: false,
       title: ''
     }
   },
-  watch: {
-    checked(val) {
-      this.$emit('input', val)
-    }
-  },
   methods: {
+    input(val) {
+      this.$emit('input', val)
+    },
     back() {
       this.$router.go(-1)
     },

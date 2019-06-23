@@ -2,7 +2,7 @@ import db from '../db'
 import axios from 'axios'
 import path from 'path'
 import fs from 'fs-extra'
-
+const shortid = require('shortid')
 const escapeFile = require('escape-filename')
 
 class Github {
@@ -46,6 +46,7 @@ class Github {
         await fs.writeFile(localPath, item.body, 'utf8')
         // 存入 db
         return {
+          id: shortid.generate(),
           title,
           fileName,
           createdAt: item.created_at,
@@ -58,7 +59,7 @@ class Github {
         }
       })
     )
-    db.set('posts', posts).write()
+    db.get('posts').push(...posts).write()
   }
 }
 

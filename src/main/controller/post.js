@@ -2,6 +2,7 @@ import path from 'path'
 import unusedFilename from 'unused-filename'
 import fs from 'fs-extra'
 import db from '../db'
+const shortid = require('shortid')
 
 class Posts {
   constructor(opt) {
@@ -13,15 +14,6 @@ class Posts {
     return this.library.getPostsInfo()
   }
 
-  async create2(name) {
-    name = name || '未命名'
-    var fileName = `${name}.md`
-    var localPath = path.join(this.library.localPath, fileName)
-    localPath = await unusedFilename(localPath)
-    fileName = path.basename(localPath)
-    return fileName
-  }
-
   async create(name) {
     name = name || '未命名'
     var fileName = `${name}.md`
@@ -30,66 +22,50 @@ class Posts {
     fileName = path.basename(localPath)
     await fs.writeFile(localPath, '')
     const newPost = {
+      id: shortid.generate(),
       title: path.basename(fileName, '.md'),
-      fileName,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       comments: 0,
-      state: 'open',
+      private: false,
       labels: [],
       avatar_url: '',
       login: ''
     }
     await db.get('posts').push(newPost).write()
-    return fileName
+    return newPost.id
   }
 
-  async show(fileName) {
-    var localPath = path.join(this.library.localPath, fileName)
-    // const result = await fs.exists(localPath)
-    // let content = ''
-    // if (result) {
-    //   content = await fs.readFile(localPath, 'utf8')
-    // }
+  async show(id) {
+    const post = db.get('posts').find({id}).value()
+    console.log('show', post)
+    var localPath = path.join(this.library.localPath, `${post.title}.md`)
     var content = await fs.readFile(localPath, 'utf8')
     return {
-      content,
-      localPath,
-      fileName
+      ...post,
+      content
     }
   }
 
-  async edit(post, title, state) {
-    console.log('post',post,title)
-    let { localPath, content, fileName } = post
-    if(path.basename(fileName, '.md') !== title) {
-      var newLocalPath = path.join(this.library.localPath, `${title}.md`)
-      await fs.move(localPath, newLocalPath)
-      await fs.writeFile(newLocalPath, content, 'utf8')
+  async edit(post) {
+    console.log('post', post)
+    var rawPost = db.get('posts').find({ id: post.id }).value()
+    var newLocalPath = path.join(this.library.localPath, `${post.title}.md`)
+    if (rawPost.title !== post.title) {
+      console.log('改名', rawPost.title, post.title)
+      var fromLocalPath = path.join(this.library.localPath, `${rawPost.title}.md`) 
+      await fs.move(fromLocalPath, newLocalPath)
+      await fs.writeFile(newLocalPath, post.content, 'utf8')
     } else {
-      await fs.writeFile(localPath, content, 'utf8')
+      await fs.writeFile(newLocalPath, post.content, 'utf8')
     }
-    
-    db.get('posts').find({ fileName: post.fileName }).assign({ title, fileName: `${title}.md`, state}).write()
-    // await fs.writeFile(localPath, content, 'utf8')
-    // const newPost = {
-    //   title,
-    //   fileName: `${title}.md`,
-    //   createdAt: new Date().toISOString(),
-    //   updatedAt: new Date().toISOString(),
-    //   comments: 0,
-    //   state: 'open',
-    //   labels: [],
-    //   avatar_url: '',
-    //   login: ''
-    // }
-    // db.get('posts').push(newPost).write()
-    
+    delete post.content
+    this.updateMeta(post)   
     return post
   }
 
-  async updateState(post) {
-    return db.get('posts').find({ title: post.title }).assign({ state: post.state}).write()
+  async updateMeta(post) {
+    return db.get('posts').find({ id: post.id }).assign(post).write()
   }
 }
 

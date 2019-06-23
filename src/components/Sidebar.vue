@@ -46,7 +46,7 @@ export default {
           { name: '全部文章', path: '/posts/all', icon: 'el-icon-my-wenzhangshoufeiziyuan' },
           { name: '公开博客', path: '/posts/public', icon: 'el-icon-my-gongkai1' },
           { name: '私人笔记', path: '/posts/private', icon: 'el-icon-my-private' },
-          { name: '回收站', path: '/posts/recycle', icon: 'el-icon-my-zhuxiao' },
+          // { name: '回收站', path: '/posts/recycle', icon: 'el-icon-my-zhuxiao' },
         ]
       }, 
       {

@@ -74,7 +74,7 @@ export default {
   methods: {
     async handleFetch() {
       const allPosts = await ipc.send('/posts/list')
-      this.posts = (allPosts ||[]).filter(item => item.state === 'open')
+      this.posts = (allPosts ||[]).filter(item => !item.private)
     },
     handleEdit(fileName) {
       this.$router.push({
@@ -83,7 +83,8 @@ export default {
       })
     },
     async updateStatus(item, state) {
-      const result = await ipc.send('/posts/updateState', {...item, state})
+      item.private = state === 'private'
+      const result = await ipc.send('/posts/update_meta', item)
       await this.handleFetch()
       this.$message({
         type: 'success',
