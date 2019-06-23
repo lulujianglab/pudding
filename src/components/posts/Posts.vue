@@ -1,9 +1,9 @@
 <template>
   <column class="wrapper">
-    <Element :posts="posts" @change="changePosts"></Element>
+    <Element v-model="keyword"></Element>
     <div
       class="flex-row"
-      v-for="item in posts"
+      v-for="item in filteredPosts"
       :key="item.localPath">
       <div class="item">
         <row class="main">
@@ -54,6 +54,7 @@ import Element from './Element'
 export default {
   data() {
     return {
+      keyword: '',
       posts: []
     }
   },
@@ -63,7 +64,11 @@ export default {
   async created() {
     this.posts = await ipc.send('/posts/list')
   },
-
+  computed: {
+    filteredPosts() {
+      return this.posts.filter(post => post.title.includes(this.keyword))
+    }
+  },
   methods: {
     handleEdit(fileName) {
       this.$router.push({
