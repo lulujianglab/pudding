@@ -48,11 +48,11 @@ class Github {
         return {
           id: shortid.generate(),
           title,
-          fileName,
+          // fileName,
           createdAt: item.created_at,
           updatedAt: item.updated_at,
           comments: item.comments,
-          state: item.state,
+          private: false,
           labels: item.labels,
           avatar_url: item.user.avatar_url,
           login: item.user.login

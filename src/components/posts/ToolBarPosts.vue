@@ -55,7 +55,20 @@ export default {
     },
 
     async upload() {
-      var ret = await ipc.send('/publish/github')
+      const { repository, userName, branch, token, domain } = await ipc.send('/github/detail') || {}
+      if (userName && repository && branch && token && domain) {
+        await ipc.send('/publish/github')
+      } else {
+        this.$message.warning('请先完成 github 表单配置')
+        await this.sleep(1000)
+        this.$router.push('/sync/github')
+      }
+    },
+
+    sleep(time) {
+      return new Promise(resolve => {
+        setTimeout(resolve, time)
+      })
     },
 
     async preview() {

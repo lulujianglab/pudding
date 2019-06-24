@@ -1,6 +1,6 @@
 <template>
   <column v-if="post" class="editor-wrapper">
-    <ToolBarEditor v-model="post.private"></ToolBarEditor>
+    <ToolBarEditor v-model="post.private" :savePost="savePost" :title="post.title"></ToolBarEditor>
     <div class="input">
       <el-input 
         v-model="post.title"
@@ -79,7 +79,7 @@ export default {
   },
   computed: {
     name() {
-      return this.post.fileName
+      return this.post.name
     },
     windowTitle() {
       var title = ['布丁笔记']
@@ -110,12 +110,9 @@ export default {
   },
   methods: {
     async savePost() {
-      console.log('11111',this.post, this.title, this.state)
-      var post = await ipc.send('/posts/edit', this.post, this.title, this.state)
-      this.post.fileName = post.fileName
+      var post = await ipc.send('/posts/edit', this.post)
+      // this.post.fileName = post.fileName
       console.log('post*****',post)
-      // this.post = post
-      // this.title = path.basename(this.post.fileName, '.md')
       this.edited = false
     },
     async onKeydown(ev) {

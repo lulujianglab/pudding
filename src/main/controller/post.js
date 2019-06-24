@@ -43,8 +43,14 @@ class Posts {
     var content = await fs.readFile(localPath, 'utf8')
     return {
       ...post,
-      content
+      content,
+      localPath
     }
+  }
+
+  async delete(item) {
+    console.log('item',item)
+    db.get('posts').remove({ title: item.title }).write()
   }
 
   async edit(post) {
@@ -54,12 +60,11 @@ class Posts {
     if (rawPost.title !== post.title) {
       console.log('改名', rawPost.title, post.title)
       var fromLocalPath = path.join(this.library.localPath, `${rawPost.title}.md`) 
-      await fs.move(fromLocalPath, newLocalPath)
-      await fs.writeFile(newLocalPath, post.content, 'utf8')
-    } else {
-      await fs.writeFile(newLocalPath, post.content, 'utf8')
+      await fs.move(fromLocalPath, newLocalPath) 
     }
+    await fs.writeFile(newLocalPath, post.content, 'utf8')
     delete post.content
+    delete post.localPath
     this.updateMeta(post)   
     return post
   }

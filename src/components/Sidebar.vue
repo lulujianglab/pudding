@@ -43,10 +43,9 @@ export default {
       {
         title: '我的文章',
         list: [
-          { name: '全部文章', path: '/posts/all', icon: 'el-icon-my-wenzhangshoufeiziyuan' },
-          { name: '公开博客', path: '/posts/public', icon: 'el-icon-my-gongkai1' },
-          { name: '私人笔记', path: '/posts/private', icon: 'el-icon-my-private' },
-          // { name: '回收站', path: '/posts/recycle', icon: 'el-icon-my-zhuxiao' },
+          { name: '全部文章', path: '/posts/list/all', icon: 'el-icon-my-wenzhangshoufeiziyuan' },
+          { name: '公开博客', path: '/posts/list/public', icon: 'el-icon-my-gongkai1' },
+          { name: '私人笔记', path: '/posts/list/private', icon: 'el-icon-my-private' },
         ]
       }, 
       {
@@ -64,7 +63,6 @@ export default {
           // { name: '从issues中导入blog', icon: 'el-icon-my-xiangmu1' },
           // { name: 'md2html', icon: 'el-icon-my-huishouzhan' },
           // { name: '预览', icon: 'el-icon-my-huishouzhan' },
-          // { name: '回收站', path: '/recycle', icon: 'el-icon-my-huishouzhan' },
         ]
       }, {
         title: '标签',

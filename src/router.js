@@ -6,20 +6,8 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/posts/all', // 全部文章
+      path: '/posts/list/:tag',
       component: require('@/components/posts/Posts').default
-    },
-    {
-      path: '/posts/public', // 公开博客
-      component: require('@/components/posts/Open').default
-    },
-    {
-      path: '/posts/private', // 私人笔记
-      component: require('@/components/posts/Private').default
-    },
-    {
-      path: '/posts/recycle', // 回收站
-      component: require('@/components/posts/Recycle').default
     },
     {
       path: '/posts/:id', // 编辑文章

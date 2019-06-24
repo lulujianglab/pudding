@@ -1,6 +1,6 @@
 <template>
   <column class="wrapper">
-    <ToolBar v-model="keyword"></ToolBar>
+    <ToolBar v-model="keyword" :show="tag === 'public'"></ToolBar>
     <div
       class="flex-row"
       v-for="item in filteredPosts"
@@ -36,8 +36,10 @@
             <p class="status">公开</p>
           </div>
           <div class="right">
-            <!-- <div class="operate" @click="handleReview(item.title)">预览</div> -->
-            <div class="operate" @click="updateStatus(item)">删除</div>
+            <div class="operate" @click="handleReview(item.title)" v-if="tag === 'public'">预览</div>
+            <div class="operate" @click="updateStatus(item, 'private')" v-if="tag === 'public'">设为私密</div>
+            <div class="operate" @click="updateStatus(item, 'open')" v-if="tag === 'private'">设为公开</div>
+            <div class="operate" @click="todelete(item)">删除</div>
           </div>
         </row>
       </div>
@@ -55,6 +57,7 @@ import ToolBar from './ToolBarPosts'
 export default {
   data() {
     return {
+      tag: '',
       keyword: '',
       posts: []
     }
@@ -63,44 +66,66 @@ export default {
     ToolBar,
   },
   async created() {
-    const allPosts = await ipc.send('/posts/list')
-    this.posts = (allPosts ||[]).filter(item => item.state !== 'recycle')
+    await this.handleFetch()
   },
   computed: {
     filteredPosts() {
       return this.posts.filter(post => post.title.includes(this.keyword))
     }
   },
+  watch: {
+    '$route': 'handleFetch'
+  },
   methods: {
+    async handleFetch() {
+      this.tag = this.$route.params.tag
+      var allPosts = await ipc.send('/posts/list')
+      this.posts = allPosts
+      if (this.tag === 'private') {
+        this.posts = await (allPosts ||[]).filter(item => item.private)
+      } else if (this.tag === 'public') {
+        this.posts = await (allPosts ||[]).filter(item => !item.private)
+      }
+    },
     async handleEdit(id) {
-      console.log('id',id)
       this.$router.push({
         path: '/posts/edit',
         query: { id }
       })
     },
-    updateStatus(item) {
-      item.state = 'recycle'
+    async updateStatus(item, state) {
+      item.private = state === 'private'
+      const result = await ipc.send('/posts/update_meta', item)
+      await this.handleFetch()
       this.$message({
         type: 'success',
-        message: '删除成功!'
+        message: '更新成功!'
       })
     },
-    // async handleReview(title) {
-    //   await ipc.send('/publish/translate')
-    //   const docPath = remote.app.getPath('documents')
-    //   const postPath = path.join(docPath, 'pudding', 'dist', 'posts', title)
-    //   shell.openExternal(`file://${postPath}.html`)
-    // },
+    todelete(item) {
+      const docPath = remote.app.getPath('documents')
+      const fullPath = path.join(docPath, 'pudding', `${item.title}.md`)
+      const ret = shell.moveItemToTrash(fullPath)      
+      if (ret) {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+        ipc.send('/posts/delete', item)
+        this.handleFetch()
+      }
+    },
+    async handleReview(title) {
+      await ipc.send('/publish/translate')
+      const docPath = remote.app.getPath('documents')
+      const postPath = path.join(docPath, 'pudding', 'dist', 'posts', title)
+      shell.openExternal(`file://${postPath}.html`)
+    },
   }
 }
 </script>
 
 <style scoped lang="scss">
-// .content {
-//   -webkit-app-region: no-drag;
-//   flex-shrink: 0;
-// }
 
 .item {
   width: 100%;

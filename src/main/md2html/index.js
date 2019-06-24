@@ -85,7 +85,7 @@ export default class Translate {
   async handleIndexHtml(github, posts) {
     var templateDir = path.join(__static, 'themes/default')
     var indexTemplate = await fs.readFile(path.join(templateDir, 'index.html'), 'utf8')
-    var html = _.template(indexTemplate)({ posts, 'userName': github.userName, dayjs })
+    var html = _.template(indexTemplate)({ posts, 'userName': (github.userName ? `${github.userName} Blog` : '布丁笔记'), dayjs })
     await fs.writeFile(path.join(this.localPath, 'dist', 'index.html'), html)
   }
 
@@ -97,13 +97,14 @@ export default class Translate {
     const postDistDir = path.join(this.localPath, 'dist', 'posts')
     await fs.mkdirp(postDistDir)
     for (let post of posts) {
-      if (post.state === 'open') {
-        var postLocalPath = path.join(this.library.localPath, post.fileName)
+      if (!post.private) {
+        var fileName = `${post.title}.md`
+        var postLocalPath = path.join(this.library.localPath, fileName)
         var mdContent = await fs.readFile(postLocalPath, 'utf8')
         var htmlContent = markdownIt.render(mdContent)
         var htmlPage = postCompiled({ post: { ...post, htmlContent }, github, dayjs })
-        var safeTitle = path.basename(post.fileName, '.md')
-        await fs.writeFile(path.join(postDistDir, `${safeTitle}.html`), htmlPage)
+        // var safeTitle = path.basename(fileName, '.md')
+        await fs.writeFile(path.join(postDistDir, `${post.title}.html`), htmlPage)
       }
     }
   }
@@ -130,5 +131,6 @@ export default class Translate {
     await this.handleREADME(github, posts)
     // 依次将post md文件render为html，并编译完成放入posts目录下
     await this.handlePostHtml(github, posts)
+    return true
   }
 }

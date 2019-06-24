@@ -5,11 +5,11 @@
     </div>
     <div class="right">
       <el-checkbox :value="value" @input="input">私密</el-checkbox>
-      <div class="save button">
-        <span class="text" @click="save()">保存</span>
+      <div class="save button" @click="save()">
+        <span class="text">保存</span>
       </div>
-      <div class="review button">
-        <span class="text" @click="preview()">预览</span>
+      <div class="review button" @click="show ? preview() : ''">
+        <span class="text">预览</span>
       </div>
     </div>
   </row>
@@ -21,24 +21,28 @@ import { shell, remote } from 'electron'
 import path,{ posix } from 'path'
 
 export default {
-  props: ['value'],
+  props: ['value', 'savePost', 'title'],
   data() {
     return {
-      title: ''
+      show: true
     }
   },
   methods: {
     input(val) {
       this.$emit('input', val)
+      this.show = !val
+      console.log('this.show ',this.show )
     },
     back() {
       this.$router.go(-1)
     },
 
     async save() {
+      this.savePost()
     },
 
     async preview() {
+      console.log('11111')
       await ipc.send('/publish/translate')
       const docPath = remote.app.getPath('documents')
       const postPath = path.join(docPath, 'pudding', 'dist', 'posts', this.title)
