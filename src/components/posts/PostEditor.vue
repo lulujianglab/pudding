@@ -16,6 +16,9 @@
         :label="item"
         :value="item">
       </el-option>
+      <!-- 空标签占位 -->
+      <el-option value="" />
+      <el-option class="add" value="">添加新标签</el-option>
     </el-select>
     </div>
     <monaco-editor
@@ -200,6 +203,15 @@ export default {
 
 .editor-wrapper {
   padding-top: 20px;
+}
+
+.add {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #F5F7FA;
+  background: #fff;
+  z-index: 999;
 }
 
 .el-input {
