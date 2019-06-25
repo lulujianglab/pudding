@@ -8,7 +8,7 @@
       <div class="save button" @click="save()">
         <span class="text">保存</span>
       </div>
-      <div class="review button" @click="show ? preview() : ''">
+      <div class="review button" @click="preview()" v-if="show">
         <span class="text">预览</span>
       </div>
     </div>
@@ -31,7 +31,6 @@ export default {
     input(val) {
       this.$emit('input', val)
       this.show = !val
-      console.log('this.show ',this.show )
     },
     back() {
       this.$router.go(-1)
@@ -42,7 +41,6 @@ export default {
     },
 
     async preview() {
-      console.log('11111')
       await ipc.send('/publish/translate')
       const docPath = remote.app.getPath('documents')
       const postPath = path.join(docPath, 'pudding', 'dist', 'posts', this.title)
@@ -54,22 +52,24 @@ export default {
 
 <style lang="scss" scoped>
 .element {
-  margin: 20px 40px 20px 40px;
-  padding-bottom: 30px;
+  // margin: 20px 40px 20px 40px;
+  margin: 0 40px 28px;
+  // padding-bottom: 30px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #f0f0f0;
+  // border-bottom: 1px solid #f0f0f0;
 }
 
 .left,
 .right {
   display: flex;
+  width: 284px;
 }
 
 .button {
-  padding: 6px 16px;
+  padding: 4px 16px;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 14px;
   border: 1px solid #DCDFE6;
   cursor: pointer;
 }

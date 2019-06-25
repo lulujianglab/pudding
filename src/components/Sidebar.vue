@@ -1,7 +1,5 @@
 <template>
   <column class="sidebar" v-loading="loading">
-   <!-- <button @click="upload">同步</button>
-   <button @click="translate">md2html</button> -->
    <img src="/app/logo.png" alt="" class="image" />
     <column
       v-for="item in menu"
@@ -32,14 +30,21 @@
 import ipc from 'electron-ipc-extra'
 import { shell, remote } from 'electron'
 import path,{ posix } from 'path'
-import { Promise } from 'q';
-import { resolve } from 'dns';
-import { setTimeout } from 'timers';
+import _ from 'lodash'
 
 export default {
   data () {
+    return {
+      transferInfo: {},
+      menu: [],
+      loading: false,
+      labels: [],
+    }
+  },
+  async created () {
     var defaultIcon = 'el-icon-my-wenjian'
-    var menu = [
+    this.labels = await this.getPostsLabel()
+    this.menu = [
       {
         title: '我的文章',
         list: [
@@ -59,86 +64,31 @@ export default {
         title: '同步设置',
         list: [
           { name: 'Github', path: '/sync/github', icon: 'el-icon-my-github' }
-          // { name: '同步', icon: 'el-icon-my-xiangmu1' },
-          // { name: '从issues中导入blog', icon: 'el-icon-my-xiangmu1' },
-          // { name: 'md2html', icon: 'el-icon-my-huishouzhan' },
-          // { name: '预览', icon: 'el-icon-my-huishouzhan' },
         ]
       }, {
         title: '标签',
-        list: [
-          // { name: '同步配置', path: '/configuration', icon: 'el-icon-my-huishouzhan' },
-          // { name: '导入配置', path: '/import', icon: 'el-icon-my-huishouzhan' }
-        ]
+        list: this.labels
       }
     ]
-    menu.forEach(item => {
+    this.menu.forEach(item => {
       if (item.list) {
         item.list.forEach(item => {
           item.icon = item.icon || defaultIcon
         })
       }
     })
-    return {
-      transferInfo: {},
-      menu,
-      loading: false
-    }
-  },
-  created () {
-    // this.getTransferInfo()
-    // ipc.on('/renderer/transfer/info', data => {
-    //   this.transferInfo = data
-    // })
   },
   methods: {
-    // async getTransferInfo () {
-    //   this.transferInfo = await ipc.send('/transfer/info') || {}
-    // },
-
-    async upload() {
-      var ret = await ipc.send('/publish/github')
-    },
-
-    async exportFromIssues() {
-      const { issuesAddress, token, userName } = await ipc.send('/github/detailIssues')
-      if (issuesAddress && token && userName) {
-        this.loading = true
-        await ipc.send('/github/exportFromIssues')
-        this.loading = false
-        this.$message.success('恭喜，导入成功 💐')
-      } else {
-        this.$message.warning('请先完成issues导入配置')
-        await this.sleep(1000)
-        this.$router.push('/import')
-      }
-    },
-
-    sleep(time) {
-      return new Promise(resolve => {
-        setTimeout(resolve, time)
+    async getPostsLabel() {
+      var allPosts = await ipc.send('/posts/list')
+      var labels = (allPosts || []).map(post => {
+        return post.labels.map(label => {
+          return label.name
+        })
       })
-    },
-
-    async translate() {
-      await ipc.send('/publish/translate')
-    },
-
-    async preview() {
-      await ipc.send('/publish/translate')
-      const docPath = remote.app.getPath('documents')
-      const indexPath = path.join(docPath, 'pudding', 'dist', 'index.html')
-      this.openBrowser(`file://${indexPath}`)
-    },
-
-    async addPost() {
-      const title = await ipc.send('/posts/create')
-      return {
-        path: '/posts/edit',
-        query: {
-          name: title
-        }
-      }
+      return Array.from(new Set(_.flattenDeep(labels))).map(item => ({
+        name: item, path: `/posts/list/${item}`, icon: 'el-icon-my-gongkai1'
+      }))
     },
 
     isItemActive (item) {
@@ -163,21 +113,6 @@ export default {
           }
         }
       }
-      // if (item.name === '新建文章') {
-      //   route = await this.addPost()
-      // } else if (item.name === '同步') {
-      //   await this.upload()
-      //   return
-      // } else if (item.name === 'md2html') {
-      //   await this.translate()
-      //   return
-      // } else if (item.name === '从issues中导入blog') {
-      //   await this.exportFromIssues()
-      //   return
-      // } else if (item.name === '预览') {
-      //   await this.preview()
-      //   return
-      // }
       this.$router.push(route)
     },
 
@@ -228,7 +163,7 @@ export default {
 }
 
 .item:hover {
-  background-color: hsla(165, 94%, 38%, 0.5);
+  background-color: #ecefef;
   // opacity: 0.8;
 }
 .item-active {

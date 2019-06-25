@@ -2,12 +2,21 @@
   <column v-if="post" class="editor-wrapper">
     <ToolBarEditor v-model="post.private" :savePost="savePost" :title="post.title"></ToolBarEditor>
     <div class="input">
-      <el-input 
+      <el-input
+        class="title"
         v-model="post.title"
         placeholder="文章标题"
         suffix-icon="el-icon-search"
         clearable>
       </el-input>
+      <el-select class="bable" v-model="selectedLabels" multiple placeholder="请添加标签">
+      <el-option
+        v-for="item in labels"
+        :key="item"
+        :label="item"
+        :value="item">
+      </el-option>
+    </el-select>
     </div>
     <monaco-editor
       @change="edited = true"
@@ -45,6 +54,8 @@ export default {
     return {
       post: {},
       edited: false,
+      labels: [],
+      selectedLabels: [],
       options: {
         minimap: {
           enabled: false
@@ -101,6 +112,7 @@ export default {
     }
   },
   async created() {
+    this.labels = await this.getPostsLabel()
     console.log('id',this.$route.query.id)
     this.post = await ipc.send('/posts/detail', this.$route.query.id)
     console.log('this.post',this.post)
@@ -109,6 +121,15 @@ export default {
     win.setDocumentEdited(true)
   },
   methods: {
+    async getPostsLabel() {
+      var allPosts = await ipc.send('/posts/list')
+      var labels = (allPosts || []).map(post => {
+        return post.labels.map(label => {
+          return label.name
+        })
+      })
+      return Array.from(new Set(_.flattenDeep(labels)))
+    },
     async savePost() {
       var post = await ipc.send('/posts/edit', this.post)
       // this.post.fileName = post.fileName
@@ -158,8 +179,18 @@ export default {
 
 <style lang="scss" scoped>
 .input {
-  width: 600px;
-  margin: 0 0 20px 40px;
+  // width: 600px;
+  margin: 0 40px 20px 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  width: 480px;
+}
+
+.label {
+  flex: 1;
 }
 
 .editor {
@@ -169,6 +200,10 @@ export default {
 
 .editor-wrapper {
   padding-top: 20px;
+}
+
+.el-input {
+  margin-right: 20px;
 }
 </style>
 

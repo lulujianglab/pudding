@@ -80,11 +80,14 @@ export default {
     async handleFetch() {
       this.tag = this.$route.params.tag
       var allPosts = await ipc.send('/posts/list')
-      this.posts = allPosts
       if (this.tag === 'private') {
         this.posts = await (allPosts ||[]).filter(item => item.private)
       } else if (this.tag === 'public') {
         this.posts = await (allPosts ||[]).filter(item => !item.private)
+      } else if (this.tag === 'all') {
+        this.posts = allPosts
+      } else {
+        this.posts = await (allPosts ||[]).filter(item => item.labels.some(label => label.name === this.tag))
       }
     },
     async handleEdit(id) {
