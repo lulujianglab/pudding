@@ -9,7 +9,7 @@
         suffix-icon="el-icon-search"
         clearable>
       </el-input>
-      <el-select class="bable" v-model="selectedLabels" multiple placeholder="请添加标签">
+      <el-select class="lable" v-model="selectedLabels" multiple placeholder="请添加标签">
       <el-option
         v-for="item in labels"
         :key="item"
@@ -17,8 +17,11 @@
         :value="item">
       </el-option>
       <!-- 空标签占位 -->
-      <el-option value="" />
-      <el-option class="add" value="">添加新标签</el-option>
+      <el-option class="item" value=""/>
+      <div class="bottom">
+        <el-input class="label-input" v-model="input" placeholder="请输入标签"></el-input>
+        <div class="label-button" @click="addLabel()">新增</div>
+      </div>
     </el-select>
     </div>
     <monaco-editor
@@ -59,6 +62,7 @@ export default {
       edited: false,
       labels: [],
       selectedLabels: [],
+      input: '',
       options: {
         minimap: {
           enabled: false
@@ -171,6 +175,9 @@ export default {
       }else {
         return
       }
+    },
+    async addLabel() {
+      console.log('lable', this.input)
     }
   },
   destroyed() {
@@ -190,6 +197,7 @@ export default {
 
 .title {
   width: 480px;
+  margin-right: 20px;
 }
 
 .label {
@@ -205,17 +213,52 @@ export default {
   padding-top: 20px;
 }
 
-.add {
+.item {
+  margin-bottom: 12px;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
   position: absolute;
   bottom: 0;
   width: 100%;
   border-top: 1px solid #F5F7FA;
   background: #fff;
   z-index: 999;
+  padding: 10px 20px;
 }
 
-.el-input {
-  margin-right: 20px;
+.label-input {
+  width: 100px;
+}
+
+.label-button {
+  padding: 0 6px;
+  border-radius: 4px;
+  border: 1px solid #F5F7FA;
+  font-size: 12px;
+  line-height: 32px;
+  height: 32px;
+}
+
+.label-button:hover {
+  color: #4caf50;
+  background-color: #adedd780;
+  border: 1px solid #adedd780;
+}
+
+.el-select .el-input.is-focus .el-input__inner {
+  border-color: #4caf50;
+}
+
+.el-select .el-input__inner:focus {
+  border-color: #4caf50;
+}
+
+.el-input.is-active .el-input__inner, 
+.el-input__inner:focus {
+  border-color: #4caf50;
 }
 </style>
 
