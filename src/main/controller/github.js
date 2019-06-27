@@ -43,6 +43,8 @@ class Github {
         var title = escapeFile.escape(item.title)
         let fileName = `${title}.md`
         var localPath = path.join(this.library.localPath, fileName)
+        // 删除db里边的原有记录
+        await db.get('posts').remove({ title }).write()
         await fs.writeFile(localPath, item.body, 'utf8')
         // 存入 db
         return {
