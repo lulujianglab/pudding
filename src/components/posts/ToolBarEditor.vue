@@ -5,7 +5,7 @@
     </div>
     <div class="right">
       <el-checkbox :value="value" @input="input">私密</el-checkbox>
-      <div class="save button" @click="save()">
+      <div class="save button" @click="save()" v-if="title">
         <span class="text">保存</span>
       </div>
       <div class="review button" @click="preview()" v-if="show">
@@ -66,6 +66,10 @@ export default {
   width: 284px;
 }
 
+.right {
+  position: relative;
+}
+
 .button {
   padding: 4px 16px;
   border-radius: 4px;
@@ -81,7 +85,9 @@ export default {
 }
 
 .review {
-  margin-left: 60px
+  margin-left: 60px;
+  position: absolute;
+  right: 0;
 }
 
 .el-checkbox {
