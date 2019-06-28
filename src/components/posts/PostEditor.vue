@@ -122,7 +122,6 @@ export default {
     this.labels = await this.getPostsLabel()
     console.log('id',this.$route.query.id)
     this.post = await ipc.send('/posts/detail', this.$route.query.id)
-    console.log('this.post',this.post)
     const win = BrowserWindow.getAllWindows()[0]
     win.setRepresentedFilename(this.post.localPath)
     win.setDocumentEdited(true)

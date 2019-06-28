@@ -38,7 +38,6 @@ class Posts {
 
   async show(id) {
     const post = db.get('posts').find({id}).value()
-    console.log('show', post)
     var localPath = path.join(this.library.localPath, `${post.title}.md`)
     var content = await fs.readFile(localPath, 'utf8')
     return {
@@ -49,23 +48,27 @@ class Posts {
   }
 
   async delete(item) {
-    console.log('item',item)
+    console.log('删除文章',item)
     db.get('posts').remove({ title: item.title }).write()
   }
 
   async edit(post) {
-    console.log('post', post)
     var rawPost = db.get('posts').find({ id: post.id }).value()
     var newLocalPath = path.join(this.library.localPath, `${post.title}.md`)
     if (rawPost.title !== post.title) {
       console.log('改名', rawPost.title, post.title)
-      var fromLocalPath = path.join(this.library.localPath, `${rawPost.title}.md`) 
-      await fs.move(fromLocalPath, newLocalPath) 
+      var fromLocalPath = path.join(this.library.localPath, `${rawPost.title}.md`)
+      await fs.rename(fromLocalPath, newLocalPath, (err) => {
+        if (err) throw err
+        console.log('改名成功')
+      })
     }
     await fs.writeFile(newLocalPath, post.content, 'utf8')
+    console.log('内容更新完成')
     delete post.content
     delete post.localPath
-    this.updateMeta(post)   
+    this.updateMeta(post)
+    console.log('数据更新完成')  
     return post
   }
 
