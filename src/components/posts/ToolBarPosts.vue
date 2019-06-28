@@ -15,12 +15,12 @@
     </div>
     <div class="right" v-if="show">
       <div class="review button" @click="preview()">
-        <i class="el-icon-my-preview"></i>
+        <!-- <i class="el-icon-my-preview"></i> -->
         <span class="text">预览</span>
       </div>
       <div class="upload button" @click="upload()">
-        <i class="el-icon-my-tongbu"></i>
-        <span class="text">同步</span>
+        <!-- <i class="el-icon-my-tongbu"></i> -->
+        <el-button type="primary" class="text" :loading="loading">同步</el-button>
       </div>
     </div>
   </row>
@@ -35,7 +35,8 @@ export default {
   props: ['value', 'show'],
   data() {
     return {
-      input: ''
+      input: '',
+      loading: false
     }
   },
   watch: {
@@ -57,7 +58,11 @@ export default {
     async upload() {
       const { repository, userName, branch, token, domain } = await ipc.send('/github/detail') || {}
       if (userName && repository && branch && token && domain) {
+        this.loading = true
+        await ipc.send('/publish/translate')
         await ipc.send('/publish/github')
+        this.loading = false
+        this.$message.success('恭喜，同步成功 💐')
       } else {
         this.$message.warning('请先完成 github 表单配置')
         await this.sleep(1000)
@@ -142,7 +147,15 @@ export default {
   background-color: #ffd951;
 }
 
-.text {
-  // padding-left: 6px;
+.el-button--primary {
+  width: 80px;
+  background-color: #f7c101;
+  border: 0;
+  color: #fff;
+}
+
+.el-button--primary:hover {
+  background-color: #ffd951;
+  border: 0;
 }
 </style>
