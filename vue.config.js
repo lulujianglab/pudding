@@ -5,13 +5,25 @@ var features = ['accessibilityHelp', 'bracketMatching', 'caretOperations', 'clip
 features = features.map(item => `!${item}`)
 
 // console.log(features)
+const productName = '布丁笔记'
 
 module.exports = {
   lintOnSave: false,
   pluginOptions: {
     electronBuilder: {
       mainProcessFile: 'src/background.js',
-      mainProcessWatch: ['src/main']
+      mainProcessWatch: ['src/main'],
+      builderOptions: {
+        productName: productName,
+        nsis: {
+          oneClick: false,
+          allowElevation: true,
+          allowToChangeInstallationDirectory: true,
+          createDesktopShortcut: true,
+          createStartMenuShortcut: true,
+          shortcutName: productName, // 图标名称
+        }
+      }
     }
   },
   configureWebpack: {
