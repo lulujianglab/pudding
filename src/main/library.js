@@ -27,6 +27,10 @@ class Library {
     }).value()
   }
 
+  async getLabelsList() {
+    return await db.get('labels').value()
+  }
+
   async tryInitWelcomeFile() {
     var name = 'Welcome.md'
     var welcomePath = path.join(this.localPath, name)

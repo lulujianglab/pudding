@@ -20,6 +20,7 @@ class DB {
     var db = await low(adapter)
     db.defaults({
       posts: [], // 文章列表, title, name, content, createdAt, updatedAt
+      labels: [],
       syncSetting: {
         issues: {},
         github: {}, // github

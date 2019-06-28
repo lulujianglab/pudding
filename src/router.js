@@ -6,7 +6,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/posts/list/:tag',
+      path: '/posts/list/:tag', // 文章列表
       component: require('@/components/posts/Posts').default
     },
     {
@@ -28,6 +28,10 @@ export default new Router({
     {
       path: '/sync/import', // 导入issues
       component: require('@/components/sync/ImportIssues').default
+    },
+    {
+      path: '/labels/list', // 标签列表
+      component: require('@/components/labels/List').default
     },
   ]
 })

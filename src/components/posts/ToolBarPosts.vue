@@ -123,7 +123,7 @@ export default {
   // width: 120px;
   height: 32px;
   line-height: 32px;
-  margin-right: 20px;
+  margin-left: 20px;
   text-align: center;
   cursor: pointer;
 }

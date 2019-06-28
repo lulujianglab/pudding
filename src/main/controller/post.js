@@ -14,6 +14,41 @@ class Posts {
     return this.library.getPostsInfo()
   }
 
+  async listLabel() {
+    return this.library.getLabelsList()
+  }
+
+  async addLabel(label) {
+    console.log('新增标签', label)
+    const newLabels = []
+    const oldLabels = await this.library.getLabelsList()
+    const labelsSet = new Set(oldLabels)
+    if (label) {
+      if (Array.isArray(label)) {
+        label.map(item => {
+          if(!labelsSet.has(item)) {
+            newLabels.push(item)
+          }
+        })
+        await db.get('labels').push(...newLabels).write()
+      } else {
+        if(!labelsSet.has(label)) {
+          await db.get('labels').push(label).write()
+        }
+      }
+    }
+  }
+
+  async deleteLabel(label) {
+    console.log('删除标签', label)
+    const labels = await this.library.getLabelsList()
+    const index = labels.indexOf(label)
+    labels.splice(index, 1)
+    // await db.get('labels').remove(label).write()
+    await db.set('labels', labels).write()
+    return true
+  }
+
   async create(name) {
     name = name || '未命名'
     var fileName = `${name}.md`

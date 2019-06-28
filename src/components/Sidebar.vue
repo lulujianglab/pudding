@@ -67,7 +67,10 @@ export default {
         ]
       }, {
         title: '标签',
-        list: this.labels
+        // list: this.labels
+        list: [
+          { name: '标签管理', path: '/labels/list', icon: 'el-icon-my-wenzhangshoufeiziyuan' }
+        ]
       }
     ]
     this.menu.forEach(item => {
@@ -77,6 +80,7 @@ export default {
         })
       }
     })
+    this.putLabels()
   },
   methods: {
     async getPostsLabel() {
@@ -86,9 +90,14 @@ export default {
           return label.name
         })
       })
-      return Array.from(new Set(_.flattenDeep(labels))).map(item => ({
-        name: item, path: `/posts/list/${item}`, icon: 'el-icon-my-gongkai1'
-      }))
+      // return Array.from(new Set(_.flattenDeep(labels))).map(item => ({
+      //   name: item, path: `/posts/list/${item}`, icon: 'el-icon-my-gongkai1'
+      // }))
+      return Array.from(new Set(_.flattenDeep(labels)))
+    },
+
+    async putLabels() {
+      await ipc.send('/posts/addLabel', this.labels)
     },
 
     isItemActive (item) {

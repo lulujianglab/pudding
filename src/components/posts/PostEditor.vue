@@ -1,28 +1,30 @@
 <template>
   <column v-if="post" class="editor-wrapper">
     <ToolBarEditor v-model="post.private" :savePost="savePost" :title="post.title"></ToolBarEditor>
-    <div class="input">
+    <div class="header">
       <el-input
         class="title"
         v-model="post.title"
         placeholder="文章标题"
-        suffix-icon="el-icon-search"
         clearable>
       </el-input>
-      <el-select class="lable" v-model="selectedLabels" multiple placeholder="请添加标签">
-      <el-option
-        v-for="item in labels"
-        :key="item"
-        :label="item"
-        :value="item">
-      </el-option>
-      <!-- 空标签占位 -->
-      <el-option class="item" value=""/>
-      <div class="bottom">
-        <el-input class="label-input" v-model="input" placeholder="请输入标签"></el-input>
-        <div class="label-button" @click="addLabel()">新增</div>
+      <div class="right">
+        <el-select class="lable" v-model="selectedLabels" filterable multiple placeholder="请添加标签">
+          <el-option
+            v-for="item in labels"
+            :key="item"
+            :label="item"
+            :value="item">
+          </el-option>
+          <!-- 空标签占位 -->
+          <!-- <el-option class="item" value=""/> -->
+          <!-- <div class="bottom"> -->
+            <!-- <el-input class="label-input" v-model="label" placeholder="请选择标签"></el-input> -->
+            <!-- <div class="label-button" @click="addLabel()">新增</div> -->
+          <!-- </div> -->
+        </el-select>
+        <div class="edit button" @click="handleEdit()">编辑标签</div>
       </div>
-    </el-select>
     </div>
     <monaco-editor
       @change="edited = true"
@@ -62,7 +64,7 @@ export default {
       edited: false,
       labels: [],
       selectedLabels: [],
-      input: '',
+      label: '',
       options: {
         minimap: {
           enabled: false
@@ -122,22 +124,19 @@ export default {
     this.labels = await this.getPostsLabel()
     console.log('id',this.$route.query.id)
     this.post = await ipc.send('/posts/detail', this.$route.query.id)
+    this.selectedLabels = this.post.labels.map(label => label.name)
     const win = BrowserWindow.getAllWindows()[0]
     win.setRepresentedFilename(this.post.localPath)
     win.setDocumentEdited(true)
   },
   methods: {
     async getPostsLabel() {
-      var allPosts = await ipc.send('/posts/list')
-      var labels = (allPosts || []).map(post => {
-        return post.labels.map(label => {
-          return label.name
-        })
-      })
-      return Array.from(new Set(_.flattenDeep(labels)))
+      var labels = await ipc.send('/posts/listLabel')
+      return labels
     },
     async savePost() {
-      var post = await ipc.send('/posts/edit', this.post)
+      this.post.labels = this.selectedLabels.map(item => ({ name: item }))
+      var post = await ipc.send('/posts/edit', this.post, this.selectedLabels)
       // this.post.fileName = post.fileName
       console.log('post*****',post)
       this.edited = false
@@ -175,8 +174,12 @@ export default {
         return
       }
     },
+    async handleEdit() {
+      this.$router.push('/labels/list')
+    },
     async addLabel() {
-      console.log('lable', this.input)
+      await ipc.send('/posts/addLabel', this.label)
+      this.labels = await ipc.send('/posts/listLabel')
     }
   },
   destroyed() {
@@ -187,16 +190,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.input {
+.header {
   // width: 600px;
   margin: 0 40px 20px 40px;
   display: flex;
   justify-content: space-between;
 }
 
+.right {
+  display: flex;
+}
+
 .title {
-  width: 480px;
-  margin-right: 20px;
+  min-width: 360px;
+  margin-right: 40px;
 }
 
 .label {
@@ -245,6 +252,34 @@ export default {
   color: #4caf50;
   background-color: #adedd780;
   border: 1px solid #adedd780;
+}
+
+.button {
+  border: 1px solid #DCDFE6;
+  border-radius: 4px;
+  height: 32px;
+  line-height: 32px;
+  margin-left: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.edit {
+  width: 80px;
+  // background-color: #f7c101;
+  // color: #fff;
+  // border: 0;
+}
+
+.edit:hover {
+  // background-color: #ffd951;
+  color: #4caf50;
+  background-color: #adedd780;
+  border: 1px solid #adedd780;
+}
+
+.el-select {
+  width: 300px;
 }
 
 .el-select .el-input.is-focus .el-input__inner {

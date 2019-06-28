@@ -1,4 +1,3 @@
-import { app } from 'electron'
 import ipc from 'electron-ipc-extra'
 import Library from './library'
 import _ from 'lodash'
@@ -29,6 +28,9 @@ class Main {
     ipc.on('/posts/delete', (...args) => post.delete(...args))
     ipc.on('/posts/edit', (...args) => post.edit(...args))
     ipc.on('/posts/update_meta', (...args) => post.updateMeta(...args))
+    ipc.on('/posts/listLabel', (...args) => post.listLabel(...args))
+    ipc.on('/posts/addLabel', (...args) => post.addLabel(...args))
+    ipc.on('/posts/deleteLabel', (...args) => post.deleteLabel(...args))
     
     ipc.on('/github/detail', (...args) => github.show(...args))
     ipc.on('/github/detailIssues', (...args) => github.showIssues(...args))

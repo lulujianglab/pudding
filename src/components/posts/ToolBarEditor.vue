@@ -74,11 +74,15 @@ export default {
   padding: 4px 16px;
   border-radius: 4px;
   font-size: 14px;
+  // background-color: #f7c101;
+  // color: #fff;
+  // border: 0;
   border: 1px solid #DCDFE6;
   cursor: pointer;
 }
 
 .button:hover {
+  // background-color: #ffd951;
   color: #4caf50;
   background-color: #adedd780;
   border: 1px solid #adedd780;
