@@ -1,12 +1,12 @@
 <template>
   <div id="app" @dragenter.prevent @dragover.prevent @dragleave.prevent @drop.prevent>
-<!--     <column class="app-wrapper">
+    <column class="app-wrapper">
       <multipane class="flex-1 content pane-group">
         <Sidebar class="pane" style="min-width: 120px"></Sidebar>
         <multipane-resizer></multipane-resizer>
         <router-view class="flex-1 scroll-view"></router-view>
       </multipane>
-    </column> -->
+    </column>
   </div>
 </template>
 
