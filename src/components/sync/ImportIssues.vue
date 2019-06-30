@@ -10,6 +10,7 @@
       <el-form-item label="token">
         <el-input v-model="configForm.token"></el-input>
       </el-form-item>
+      <el-button @click="handleDialogVisible()">取 消</el-button>
       <el-button type="primary" @click="importIssues" class="button" :loading="loading">导入</el-button>
     </el-form>
   </column>
@@ -20,6 +21,7 @@ import ipc from 'electron-ipc-extra'
 import { Form } from 'element-ui'
 
 export default {
+  props: ['handleDialogVisible'],
   data() {
     return {
       configForm : {
@@ -48,6 +50,7 @@ export default {
       } else {
         this.$message.warning('请先完成配置表单')
       }
+      this.handleDialogVisible()
     },
 
     async onSave() {

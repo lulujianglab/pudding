@@ -20,13 +20,7 @@
     </el-form>
     <div @click="onSave" class="button">保存</div>
     <el-dialog title="issues 配置" :visible.sync="dialogFormVisible">
-      <ImportIssues />
-      <!-- <el-form :model="form">
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-      </div> -->
+      <ImportIssues :handleDialogVisible="handleDialogVisible" />
     </el-dialog>
   </column>
 </template>
@@ -79,7 +73,12 @@ export default {
     importFromIssues() {
       // this.$router.push('/sync/import')
       this.dialogFormVisible = true
+    },
+
+    handleDialogVisible() {
+      this.dialogFormVisible = false
     }
+
   }
 }
 </script>
