@@ -302,7 +302,8 @@ export default {
       monaco.editor.defineTheme('pudding', themeData)
     },
     async getPostsLabel() {
-      var labels = await ipc.send('/posts/listLabel')
+      var labelsMap = await ipc.send('/posts/listLabel')
+      var labels = Object.keys(labelsMap)
       return labels
     },
     async savePost() {
