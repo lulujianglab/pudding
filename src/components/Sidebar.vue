@@ -90,6 +90,8 @@ export default {
           return label.name
         })
       })
+      // _.groupBy(_.flatten(labels), item => item)
+
       // return Array.from(new Set(_.flattenDeep(labels))).map(item => ({
       //   name: item, path: `/posts/list/${item}`, icon: 'el-icon-my-gongkai1'
       // }))
