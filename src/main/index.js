@@ -30,6 +30,7 @@ class Main {
     ipc.on('/posts/update_meta', (...args) => post.updateMeta(...args))
     ipc.on('/posts/listLabel', (...args) => post.listLabel(...args))
     ipc.on('/posts/addLabel', (...args) => post.addLabel(...args))
+    ipc.on('/posts/setLabel', (...args) => post.setLabel(...args))
     ipc.on('/posts/deleteLabel', (...args) => post.deleteLabel(...args))
     
     ipc.on('/github/detail', (...args) => github.show(...args))

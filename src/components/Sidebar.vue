@@ -38,12 +38,10 @@ export default {
       transferInfo: {},
       menu: [],
       loading: false,
-      labels: [],
     }
   },
   async created () {
     var defaultIcon = 'el-icon-my-wenjian'
-    this.labels = await this.getPostsLabel()
     this.menu = [
       {
         title: '我的文章',
@@ -67,7 +65,6 @@ export default {
         ]
       }, {
         title: '标签',
-        // list: this.labels
         list: [
           { name: '标签管理', path: '/labels/list', icon: 'el-icon-my-wenzhangshoufeiziyuan' }
         ]
@@ -80,27 +77,8 @@ export default {
         })
       }
     })
-    this.putLabels()
   },
   methods: {
-    async getPostsLabel() {
-      var allPosts = await ipc.send('/posts/list')
-      var labels = (allPosts || []).map(post => {
-        return post.labels.map(label => {
-          return label.name
-        })
-      })
-      // _.groupBy(_.flatten(labels), item => item)
-
-      // return Array.from(new Set(_.flattenDeep(labels))).map(item => ({
-      //   name: item, path: `/posts/list/${item}`, icon: 'el-icon-my-gongkai1'
-      // }))
-      return Array.from(new Set(_.flattenDeep(labels)))
-    },
-
-    async putLabels() {
-      await ipc.send('/posts/addLabel', this.labels)
-    },
 
     isItemActive (item) {
       if (item.remotePath) {

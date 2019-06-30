@@ -71,7 +71,6 @@ export default {
     },
 
     importFromIssues() {
-      // this.$router.push('/sync/import')
       this.dialogFormVisible = true
     },
 

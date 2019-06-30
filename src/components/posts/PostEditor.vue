@@ -131,7 +131,8 @@ export default {
   },
   methods: {
     async getPostsLabel() {
-      var labels = await ipc.send('/posts/listLabel')
+      var labelsMap = await ipc.send('/posts/listLabel')
+      var labels = Object.keys(labelsMap)
       return labels
     },
     async savePost() {
@@ -177,10 +178,10 @@ export default {
     async handleEdit() {
       this.$router.push('/labels/list')
     },
-    async addLabel() {
-      await ipc.send('/posts/addLabel', this.label)
-      this.labels = await ipc.send('/posts/listLabel')
-    }
+    // async addLabel() {
+    //   await ipc.send('/posts/addLabel', this.label)
+    //   this.labels = await ipc.send('/posts/listLabel')
+    // }
   },
   destroyed() {
     const win = BrowserWindow.getAllWindows()[0]

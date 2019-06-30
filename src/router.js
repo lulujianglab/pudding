@@ -25,10 +25,10 @@ export default new Router({
       path: '/sync/github', // 同步Github
       component: require('@/components/sync/Configuration').default
     },
-    {
-      path: '/sync/import', // 导入issues
-      component: require('@/components/sync/ImportIssues').default
-    },
+    // {
+    //   // path: '/sync/import', // 导入issues
+    //   // component: require('@/components/sync/ImportIssues').default
+    // },
     {
       path: '/labels/list', // 标签列表
       component: require('@/components/labels/List').default

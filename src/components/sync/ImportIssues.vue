@@ -44,7 +44,7 @@ export default {
       const { issuesAddress, token, userName } = this.configForm
       if (issuesAddress && token && userName) {
         this.loading = true
-        await ipc.send('/github/exportFromIssues')
+        await ipc.send('/github/exportFromIssues') // 更新posts
         this.loading = false
         this.$message.success('恭喜，导入成功 💐')
       } else {
