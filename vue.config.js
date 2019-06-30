@@ -21,8 +21,8 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       externals: [],
-      mainProcessFile: 'src/background.js',
-      mainProcessWatch: ['src/main'],
+      mainProcessFile: 'src/background/background.js',
+      mainProcessWatch: ['src/background'],
       builderOptions: {
         productName: productName,
         nsis: {
