@@ -8,9 +8,17 @@ features = features.map(item => `!${item}`)
 const productName = '布丁笔记'
 
 module.exports = {
+  css: {
+    loaderOptions: {
+      sass: {
+        data: `@import "@/style/element-variables.scss";`
+      }
+    }
+  },
   lintOnSave: false,
   pluginOptions: {
     electronBuilder: {
+      externals: [],
       mainProcessFile: 'src/background.js',
       mainProcessWatch: ['src/main'],
       builderOptions: {
@@ -30,16 +38,16 @@ module.exports = {
     // externals: {
     //   'simple-git/promise': 'simpleGit'
     // },
-    plugins: [
-      new MonacoEditorPlugin({
-        // https://github.com/Microsoft/monaco-editor-webpack-plugin#options
-        // Include a subset of languages support
-        // Some language extensions like typescript are so huge that may impact build performance
-        // e.g. Build full languages support with webpack 4.0 takes over 80 seconds
-        // Languages are loaded on demand at runtime
-        // languages: ['markdown', 'javascript', 'css', 'html'],
-        features: features
-      })
-    ]
+    // plugins: [
+    //   new MonacoEditorPlugin({
+    //     // https://github.com/Microsoft/monaco-editor-webpack-plugin#options
+    //     // Include a subset of languages support
+    //     // Some language extensions like typescript are so huge that may impact build performance
+    //     // e.g. Build full languages support with webpack 4.0 takes over 80 seconds
+    //     // Languages are loaded on demand at runtime
+    //     // languages: ['markdown', 'javascript', 'css', 'html'],
+    //     features: features
+    //   })
+    // ]
   }
 }
