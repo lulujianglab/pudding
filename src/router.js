@@ -11,7 +11,7 @@ export default new Router({
     },
     {
       path: '/posts/:id', // 编辑文章
-      component: require('@/components/posts/PostEditor').default
+      component: require('@/components/posts/Editor').default
     },
     {
       path: '/setting/info', // 基础信息
