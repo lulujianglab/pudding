@@ -8,8 +8,8 @@
       <div class="item">
         <row class="main">
           <el-link type="info" style="color:#333">
-            <p 
-              class="title ellipsis" 
+            <p
+              class="title ellipsis"
               @click="handleEdit(item.id)">
               {{item.title}}
             </p>
@@ -18,7 +18,7 @@
         </row>
         <div v-if="item.labels.length !== 0">
           <row class="label-list">
-            <p 
+            <p
               class="label-item"
               v-for="label in item.labels"
               :key="label.name">
@@ -108,7 +108,7 @@ export default {
     todelete(item) {
       const docPath = remote.app.getPath('documents')
       const fullPath = path.join(docPath, 'pudding', `${item.title}.md`)
-      const ret = shell.moveItemToTrash(fullPath)      
+      const ret = shell.moveItemToTrash(fullPath)
       if (ret) {
         this.$message({
           type: 'success',
@@ -213,7 +213,7 @@ export default {
 
 .circle-open {
   // background: #e34c26;
-  background: #ffd951;
+  background: $--color-primary-2;
 }
 
 .circle-private {

@@ -175,3 +175,9 @@
   /* autoprefixer: ignore next */
   -webkit-box-orient: vertical;
 }
+
+#app {
+  .multipane > div {
+    z-index: unset;
+  }
+}
