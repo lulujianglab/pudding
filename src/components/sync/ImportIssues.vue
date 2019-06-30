@@ -1,5 +1,5 @@
 <template>
-  <column class="wrapper">
+  <column class="wrapper-issues">
     <el-form :label-position="labelPosition" label-width="100px" :model="configForm">
       <el-form-item label="用户名：">
         <el-input v-model="configForm.userName"></el-input>
@@ -10,7 +10,7 @@
       <el-form-item label="token">
         <el-input v-model="configForm.token"></el-input>
       </el-form-item>
-      <el-button @click="handleDialogVisible()">取 消</el-button>
+      <el-button type="primary" class="cancle" @click="handleDialogVisible()">取 消</el-button>
       <el-button type="primary" @click="importIssues" class="button" :loading="loading">导入</el-button>
     </el-form>
   </column>
@@ -64,9 +64,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wrapper {
+.wrapper-issues {
   align-items:center;
-  padding-top: 140px;
+  // padding-top: 140px;
   font-size: 16px;
 }
 
@@ -74,6 +74,13 @@ export default {
   margin-bottom: 20px;
   width: 200px;
   height: 26px;
+}
+
+.cancle {
+  margin-left: 330px;
+  font-size: 16px;
+  padding: 6px 16px;
+  border-radius: 4px;
 }
 
 .button {
