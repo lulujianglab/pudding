@@ -1,6 +1,6 @@
 <template>
   <column class="wrapper">
-    <div @click="importFromIssues" class="issue-button">从 issues 中导入博客</div>
+    <div @click="importFromIssues()" class="issue-button">从 issues 中导入博客</div>
     <el-form :label-position="labelPosition" label-width="80px" :model="configForm">
       <el-form-item label="仓库名">
         <el-input v-model="configForm.repository"></el-input>
@@ -19,14 +19,28 @@
       </el-form-item>
     </el-form>
     <div @click="onSave" class="button">保存</div>
+    <el-dialog title="issues 配置" :visible.sync="dialogFormVisible">
+      <ImportIssues />
+      <!-- <el-form :model="form">
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      </div> -->
+    </el-dialog>
   </column>
 </template>
 
 <script>
 import ipc from 'electron-ipc-extra'
 import { Form } from 'element-ui'
+import ImportIssues from './ImportIssues'
 
 export default {
+  components: {
+    ImportIssues
+  },
+
   data() {
     return {
       configForm : {
@@ -36,7 +50,19 @@ export default {
         token: '',
         domain: ''
       },
-      labelPosition: 'right'
+      labelPosition: 'right',
+      dialogFormVisible: false,
+      form: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      },
+      formLabelWidth: '120px'
     }
   },
 
@@ -51,7 +77,8 @@ export default {
     },
 
     importFromIssues() {
-      this.$router.push('/sync/import')
+      // this.$router.push('/sync/import')
+      this.dialogFormVisible = true
     }
   }
 }
@@ -104,5 +131,9 @@ export default {
 }
 .el-form-item__label {
   letter-spacing: 1.5px;
+}
+
+.v-modal {
+  z-index: 0 !important;
 }
 </style>

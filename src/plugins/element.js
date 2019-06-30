@@ -15,6 +15,7 @@ import {
   Select,
   Option,
   OptionGroup,
+  Dialog
 } from 'element-ui'
 
 Vue.use(checkbox)
@@ -32,6 +33,7 @@ Vue.use(FormItem)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(OptionGroup)
+Vue.use(Dialog)
 
 Vue.prototype.$loading = Loading.service
 Vue.prototype.$msgbox = MessageBox
