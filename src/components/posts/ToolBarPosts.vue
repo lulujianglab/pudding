@@ -112,11 +112,6 @@ export default {
   margin-right: 20px;
 }
 
-.el-input__inner,
-.el-input__inner:focus  {
-  border-color: #adedd780 !important;
-}
-
 .button {
   border: 1px solid #DCDFE6;
   border-radius: 4px;
@@ -135,8 +130,7 @@ export default {
 .review,
 .upload {
   width: 80px;
-  background-color: #f7c101;
-  // color: #ffd951;
+  background-color: $--color-primary-5;
   color: #fff;
   font-weight: 500;
   border: 0;
@@ -144,18 +138,22 @@ export default {
 
 .review:hover,
 .upload:hover {
-  background-color: #ffd951;
+  background-color: $--color-primary-2;
 }
 
 .el-button--primary {
   width: 80px;
-  background-color: #f7c101;
+  background-color: $--color-primary-5;
   border: 0;
   color: #fff;
 }
 
 .el-button--primary:hover {
-  background-color: #ffd951;
+  background-color: $--color-primary-2;
   border: 0;
+}
+
+.el-button--small {
+  font-size: 14px;
 }
 </style>

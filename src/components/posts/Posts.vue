@@ -169,8 +169,8 @@ export default {
 }
 
 .label-item {
-  color: #4caf50;
-  background-color: #adedd780;
+  color: $--color-primary;
+  background-color: $--color-primary-4;
   margin-right: 4px;
   padding: 4px 10px;
   border-radius: 3px;
@@ -201,8 +201,8 @@ export default {
 }
 
 .operate:hover {
-  color: #4caf50;
-  background-color: #adedd780;
+  color: $--color-primary;
+  background: $--color-primary-4;
 }
 
 .circle {
@@ -212,28 +212,17 @@ export default {
 }
 
 .circle-open {
-  // background: #e34c26;
   background: $--color-primary-2;
 }
 
 .circle-private {
-  background: #ffb7a4;
+  background: $--color-primary-3;
 }
 
 .status {
   font-size: 12px;
   color: #999;
   padding: 0 5px;
-}
-
-.button {
-  color:lawngreen;
-  cursor: pointer;
-  letter-spacing: 2px;
-}
-
-.button:hover {
-  color:green;
 }
 
 .v-modal {

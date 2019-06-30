@@ -19,7 +19,7 @@
       </el-form-item>
     </el-form>
     <div @click="onSave" class="button">保存</div>
-    <el-dialog title="issues 配置" :visible.sync="dialogFormVisible">
+    <el-dialog title="Issues 配置" :visible.sync="dialogFormVisible">
       <ImportIssues :handleDialogVisible="handleDialogVisible" />
     </el-dialog>
   </column>
@@ -96,18 +96,16 @@ export default {
   font-size: 16px;
   margin: 20px 0 0 -252px;
   border: 1px solid #DCDFE6;
-  // background-color:#00f59d;
-  // color: #fff;
 }
 
 .button:hover {
-  color: #4caf50;
-  background-color: #adedd780;
-  border: 1px solid #adedd780;
+  color: $--color-primary;
+  background-color: $--color-primary-4;
+  border: 1px solid $--color-primary-4;
 }
 
 .issue-button {
-  background-color: #f7c101;
+  background-color: $--color-primary-5;
   color: #fff;
   font-weight: 500;
   border-radius: 4px;
@@ -118,7 +116,7 @@ export default {
 }
 
 .issue-button:hover {
-  background-color: #ffd951;
+  background-color: $--color-primary-2;
 }
 
 .el-form {

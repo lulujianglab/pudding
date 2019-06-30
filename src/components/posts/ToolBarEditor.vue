@@ -83,9 +83,9 @@ export default {
 
 .button:hover {
   // background-color: #ffd951;
-  color: #4caf50;
-  background-color: #adedd780;
-  border: 1px solid #adedd780;
+  color: $--color-primary;
+  background-color: $--color-primary-4;
+  border: 1px solid $--color-primary-4;
 }
 
 .review {
@@ -96,20 +96,6 @@ export default {
 
 .el-checkbox {
   margin: auto 20px;
-}
-
-.el-checkbox__input.is-focus .el-checkbox__inner {
-  border-color: #4caf50 !important;
-}
-.el-checkbox__input.is-checked
-.el-checkbox__inner,
-.el-checkbox__input.is-indeterminate 
-.el-checkbox__inner {
-  background-color: #4caf50 !important;
-  border-color: #4caf50 !important;
-}
-
-.el-checkbox__input.is-checked+.el-checkbox__label {
-  color: #4caf50 !important;
+  font-weight: 400;
 }
 </style>

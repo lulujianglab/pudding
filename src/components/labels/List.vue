@@ -89,8 +89,8 @@ export default {
 }
 
 .label {
-  color: #4caf50;
-  background-color: #adedd780;
+  color: $--color-primary;
+  background-color: $--color-primary-4;
   margin-right: 4px;
   padding: 4px 10px;
   border-radius: 3px;
@@ -109,7 +109,7 @@ export default {
 }
 
 .operate:hover {
-  color: #4caf50;
-  background-color: #adedd780;
+  color: $--color-primary;
+  background-color: $--color-primary-4;
 }
 </style>

@@ -249,9 +249,10 @@ export default {
 }
 
 .label-button:hover {
-  color: #4caf50;
-  background-color: #adedd780;
+  color: $--color-primary;
+  background-color: $--color-primary-4;
   border: 1px solid #adedd780;
+  border: 1px solid $--color-primary-4;
 }
 
 .button {
@@ -273,26 +274,13 @@ export default {
 
 .edit:hover {
   // background-color: #ffd951;
-  color: #4caf50;
-  background-color: #adedd780;
-  border: 1px solid #adedd780;
+  color: $--color-primary;
+  background-color: $--color-primary-4;
+  border: 1px solid $--color-primary-4;
 }
 
 .el-select {
   width: 300px;
-}
-
-.el-select .el-input.is-focus .el-input__inner {
-  border-color: #4caf50;
-}
-
-.el-select .el-input__inner:focus {
-  border-color: #4caf50;
-}
-
-.el-input.is-active .el-input__inner, 
-.el-input__inner:focus {
-  border-color: #4caf50;
 }
 </style>
 
