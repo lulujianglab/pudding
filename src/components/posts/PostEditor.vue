@@ -131,7 +131,8 @@ export default {
   },
   methods: {
     async getPostsLabel() {
-      var labels = await ipc.send('/posts/listLabel')
+      var labelsMap = await ipc.send('/posts/listLabel')
+      var labels = Object.keys(labelsMap)
       return labels
     },
     async savePost() {
@@ -177,10 +178,10 @@ export default {
     async handleEdit() {
       this.$router.push('/labels/list')
     },
-    async addLabel() {
-      await ipc.send('/posts/addLabel', this.label)
-      this.labels = await ipc.send('/posts/listLabel')
-    }
+    // async addLabel() {
+    //   await ipc.send('/posts/addLabel', this.label)
+    //   this.labels = await ipc.send('/posts/listLabel')
+    // }
   },
   destroyed() {
     const win = BrowserWindow.getAllWindows()[0]
@@ -249,9 +250,10 @@ export default {
 }
 
 .label-button:hover {
-  color: #4caf50;
-  background-color: #adedd780;
+  color: $--color-primary;
+  background-color: $--color-primary-4;
   border: 1px solid #adedd780;
+  border: 1px solid $--color-primary-4;
 }
 
 .button {
@@ -273,14 +275,15 @@ export default {
 
 .edit:hover {
   // background-color: #ffd951;
-  color: #4caf50;
-  background-color: #adedd780;
-  border: 1px solid #adedd780;
+  color: $--color-primary;
+  background-color: $--color-primary-4;
+  border: 1px solid $--color-primary-4;
 }
 
 .el-select {
   width: 300px;
 }
+<<<<<<< HEAD
 
 .el-select .el-input.is-focus .el-input__inner {
   border-color: #4caf50;
@@ -294,6 +297,8 @@ export default {
 .el-input__inner:focus {
   border-color: #4caf50;
 }
+=======
+>>>>>>> 18310b1e7e6715050c2b8d2fc0e21fe9cb9fb69d
 </style>
 
 <style lang="scss">

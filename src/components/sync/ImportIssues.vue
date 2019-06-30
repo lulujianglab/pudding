@@ -10,7 +10,7 @@
       <el-form-item label="token">
         <el-input v-model="configForm.token"></el-input>
       </el-form-item>
-      <el-button type="primary" class="cancle" @click="handleDialogVisible()">取 消</el-button>
+      <el-button class="cancle" @click="handleDialogVisible()">取 消</el-button>
       <el-button type="primary" @click="importIssues" class="button" :loading="loading">导入</el-button>
     </el-form>
   </column>
@@ -44,7 +44,7 @@ export default {
       const { issuesAddress, token, userName } = this.configForm
       if (issuesAddress && token && userName) {
         this.loading = true
-        await ipc.send('/github/exportFromIssues')
+        await ipc.send('/github/exportFromIssues') // 更新posts
         this.loading = false
         this.$message.success('恭喜，导入成功 💐')
       } else {
@@ -90,17 +90,17 @@ export default {
   margin: 20px 0 0 100px;
 }
 
-.el-button--primary {
-  background-color: #fff;
-  border-color: #DCDFE6;
-  color: #666;
-}
+// .el-button--primary {
+//   background-color: #fff;
+//   border-color: #DCDFE6;
+//   color: #666;
+// }
 
-.el-button--primary:hover {
-  color: #4caf50;
-  background-color: #adedd780;
-  border: 1px solid #adedd780;
-}
+// .el-button--primary:hover {
+//   color: $--color-primary;
+//   background-color: $--color-primary-4;
+//   border: 1px solid $--color-primary-4;
+// }
 
 .el-form {
   width: 480px;

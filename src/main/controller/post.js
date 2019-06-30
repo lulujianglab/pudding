@@ -18,7 +18,12 @@ class Posts {
     return this.library.getLabelsList()
   }
 
-  async addLabel(label) {
+  async setLabel() {
+    console.log('222222')
+    return this.library.setLabelsList()
+  }
+
+  async addLabel2(label) {
     console.log('新增标签', label)
     const newLabels = []
     const oldLabels = await this.library.getLabelsList()
@@ -30,22 +35,32 @@ class Posts {
             newLabels.push(item)
           }
         })
-        await db.get('labels').push(...newLabels).write()
+        await db.get('labelsMap').push(...newLabels).write()
       } else {
         if(!labelsSet.has(label)) {
-          await db.get('labels').push(label).write()
+          await db.get('labelsMap').push(label).write()
         }
       }
     }
   }
 
+  async addLabel(label) {
+    console.log('新增标签', label)
+    const labelsMap = await this.library.getLabelsList()
+    const labelsKey = Object.keys(labelsMap)
+    if(label && !labelsKey.includes(label)) {
+      await db.get('labelsMap').set(label, {count: 1}).write()
+    }
+  }
+
   async deleteLabel(label) {
     console.log('删除标签', label)
-    const labels = await this.library.getLabelsList()
-    const index = labels.indexOf(label)
-    labels.splice(index, 1)
+    const labelsMap = await this.library.getLabelsList()
+    // const index = labels.indexOf(label)
+    // labels.splice(index, 1)
+    delete labelsMap[label]
     // await db.get('labels').remove(label).write()
-    await db.set('labels', labels).write()
+    await db.set('labelsMap', labelsMap).write()
     return true
   }
 

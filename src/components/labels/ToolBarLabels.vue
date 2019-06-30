@@ -58,11 +58,6 @@ export default {
   margin-right: 20px;
 }
 
-.el-input__inner,
-.el-input__inner:focus  {
-  border-color: #adedd780 !important;
-}
-
 .button {
   border: 1px solid #DCDFE6;
   border-radius: 4px;
@@ -80,7 +75,7 @@ export default {
 
 .add {
   width: 80px;
-  background-color: #f7c101;
+  background-color: $--color-primary-5;
   // color: #ffd951;
   color: #fff;
   font-weight: 500;
@@ -88,18 +83,18 @@ export default {
 }
 
 .add:hover {
-  background-color: #ffd951;
+  background-color: $--color-primary-2;
 }
 
 .el-button--primary {
   width: 80px;
-  background-color: #f7c101;
+  background-color: $--color-primary-5;
   border: 0;
   color: #fff;
 }
 
 .el-button--primary:hover {
-  background-color: #ffd951;
+  background-color: $--color-primary-2;
   border: 0;
 }
 </style>
