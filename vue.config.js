@@ -26,6 +26,7 @@ module.exports = {
       mainProcessWatch: ['src/background'],
       builderOptions: {
         productName: productName,
+        asar: false,
         nsis: {
           oneClick: false,
           allowElevation: true,

@@ -4,11 +4,8 @@ import url from 'url'
 async function initEditor() {
   return new Promise(async resolve => {
     await sleep(100)
-    var protocol = location.protocol
-    if (/http/.test(protocol)) {
-      protocol = 'file:'
-    }
-    var baseVS = url.format({ protocol, pathname: path.join(__static, 'vs') })
+    var protocol = 'file:'
+    var baseVS = protocol + '//' + path.join(__static, 'vs')
     console.log('baseVS', baseVS)
     amdRequire.config({ paths: { 'vs': baseVS }})
     amdRequire(['vs/editor/editor.main'], () => {
