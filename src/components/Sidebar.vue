@@ -66,7 +66,7 @@ export default {
       }, {
         title: '标签',
         list: [
-          { name: '标签管理', path: '/labels/list', icon: 'el-icon-my-wenzhangshoufeiziyuan' }
+          { name: '标签管理', path: '/labels/list', icon: 'el-icon-my-biaoqian' }
         ]
       }
     ]
