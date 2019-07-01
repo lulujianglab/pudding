@@ -3,6 +3,7 @@ import url from 'url'
 const monaco = require('monaco-editor')
 
 async function initEditor() {
+  // 不能用 amd 的方式, 始终不行
   console.log('直接 require')
   initTheme(monaco)
   return monaco
