@@ -31,7 +31,6 @@
 <script>
 import ipc from 'electron-ipc-extra'
 const { dialog } = require('electron').remote
-const eventHub = require('@/eventHub')
 const log = require('electron-log')
 const { shell } = require('electron')
 

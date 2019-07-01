@@ -12,10 +12,12 @@
 
 <script>
 import Vue from 'vue'
+import * as helper from '@/helper'
 
 export default {
   name: 'app',
   async mounted () {
+    window.editorReady = helper.initEditor()
   }
 }
 </script>
