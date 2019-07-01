@@ -121,7 +121,8 @@ export default {
   },
   methods: {
     async initEditor() {
-      amdRequire.config({ paths: { 'vs': __static + '/vs' }})
+      var baseVS = 'file://' + path.join(__static, 'vs')
+      amdRequire.config({ paths: { 'vs': baseVS }})
 
       amdRequire(['vs/editor/editor.main'], () => {
         this.initTheme(monaco)

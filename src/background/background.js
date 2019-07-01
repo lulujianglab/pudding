@@ -22,13 +22,15 @@ function createWindow () {
     height: 800,
     title: '布丁笔记',
     webPreferences: {
-      nodeIntegration: true,
-      nodeIntegrationInWorker: true
+      webSecurity: false, // 编辑器需要用 file:// 协议
+      nodeIntegration: true, // 不能关
+      nodeIntegrationInWorker: false // 不能开, 编辑器会报错
     }
   })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
+    console.log('WEBPACK_DEV_SERVER_URL', process.env.WEBPACK_DEV_SERVER_URL)
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
     // win.loadURL(process.env.WEBPACK_DEV_SERVER_URL + 'editor.html')
     if (!process.env.IS_TEST) win.webContents.openDevTools()
