@@ -1,6 +1,13 @@
 <template>
   <column v-if="post" class="editor-wrapper">
-    <ToolBarEditor v-model="post.private" :savePost="savePost" :title="post.title"></ToolBarEditor>
+    <div class="top-bar">
+      <ToolBarEditor
+        v-model="post.private"
+        :savePost="savePost"
+        :title="post.title"
+        @changeLabel="handleChangeLabel">
+      </ToolBarEditor>
+    </div>
     <div class="header">
       <el-input
         class="title"
@@ -8,23 +15,6 @@
         placeholder="文章标题"
         clearable>
       </el-input>
-      <div class="right">
-        <el-select class="lable" v-model="selectedLabels" filterable multiple placeholder="请添加标签">
-          <el-option
-            v-for="item in labels"
-            :key="item"
-            :label="item"
-            :value="item">
-          </el-option>
-          <!-- 空标签占位 -->
-          <!-- <el-option class="item" value=""/> -->
-          <!-- <div class="bottom"> -->
-            <!-- <el-input class="label-input" v-model="label" placeholder="请选择标签"></el-input> -->
-            <!-- <div class="label-button" @click="addLabel()">新增</div> -->
-          <!-- </div> -->
-        </el-select>
-        <div class="edit button" @click="handleEdit()">编辑标签</div>
-      </div>
     </div>
     <div
       class="editor"
@@ -51,7 +41,7 @@ export default {
     return {
       post: {},
       edited: false,
-      labels: [],
+      // labels: [],
       selectedLabels: [],
       label: '',
       options: {
@@ -110,11 +100,10 @@ export default {
     }
   },
   async created() {
-    this.labels = await this.getPostsLabel()
     console.log('id',this.$route.query.id)
     this.post = await ipc.send('/posts/detail', this.$route.query.id)
     this.initEditor()
-    this.selectedLabels = this.post.labels.map(label => label.name)
+    // this.selectedLabels = this.post.labels.map(label => label.name)
     const win = BrowserWindow.getAllWindows()[0]
     win.setRepresentedFilename(this.post.localPath)
     win.setDocumentEdited(true)
@@ -131,11 +120,6 @@ export default {
       this.editor.getModel().onDidChangeContent(ev => {
         this.edited = true
       })
-    },
-    async getPostsLabel() {
-      var labelsMap = await ipc.send('/posts/listLabel')
-      var labels = Object.keys(labelsMap)
-      return labels
     },
     async savePost() {
       this.post.content = this.editor.getValue()
@@ -180,9 +164,9 @@ export default {
     async handleEdit() {
       this.$router.push('/labels/list')
     },
-    async addLabel() {
-      await ipc.send('/posts/addLabel', this.label)
-      this.labels = await ipc.send('/posts/listLabel')
+    handleChangeLabel(val) {
+      console.log('val', val)
+      this.selectedLabels = val
     }
   },
   destroyed() {
@@ -197,11 +181,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.top-bar {
+  border-bottom: 1px solid #f0f0f0;
+  margin: 0 26px;
+  margin-top: 20px;
+}
 .header {
   // width: 600px;
-  margin: 0 40px 20px 40px;
-  display: flex;
-  justify-content: space-between;
+  margin: 30px 40px 20px 40px;
 }
 
 .right {
@@ -210,7 +198,7 @@ export default {
 
 .title {
   min-width: 360px;
-  margin-right: 40px;
+  // margin-right: 40px;
 }
 
 .label {
@@ -269,37 +257,6 @@ export default {
   margin-left: 20px;
   text-align: center;
   cursor: pointer;
-}
-
-.edit {
-  width: 80px;
-  // background-color: #f7c101;
-  // color: #fff;
-  // border: 0;
-}
-
-.edit:hover {
-  // background-color: #ffd951;
-  color: #4caf50;
-  background-color: #adedd780;
-  border: 1px solid #adedd780;
-}
-
-.el-select {
-  width: 300px;
-}
-
-.el-select .el-input.is-focus .el-input__inner {
-  border-color: #4caf50;
-}
-
-.el-select .el-input__inner:focus {
-  border-color: #4caf50;
-}
-
-.el-input.is-active .el-input__inner,
-.el-input__inner:focus {
-  border-color: #4caf50;
 }
 </style>
 
