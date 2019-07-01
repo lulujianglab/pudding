@@ -19,7 +19,6 @@ class Posts {
   }
 
   async setLabel() {
-    console.log('222222')
     return this.library.setLabelsList()
   }
 
