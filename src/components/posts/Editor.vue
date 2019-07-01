@@ -31,16 +31,6 @@
       @keydown="onKeydown"
       @paste="handlePaste">
     </div>
-<!--     <monaco-editor
-      @change="edited = true"
-      ref="editor"
-      :options="options"
-      class="editor"
-      @keydown="onKeydown"
-      @paste.native="handlePaste"
-      v-model="post.content"
-      language="markdown">
-    </monaco-editor> -->
   </column>
 </template>
 
@@ -135,11 +125,15 @@ export default {
 
       amdRequire(['vs/editor/editor.main'], () => {
         this.initTheme(monaco)
-        this.editor = monaco.editor.create(document.querySelector('.editor'), {
+        this.editor = window.editor = monaco.editor.create(document.querySelector('.editor'), {
           value: this.post.content,
           language: 'markdown',
           ...this.options
         })
+        this.editor.getModel().onDidChangeContent(ev => {
+          this.edited = true
+        })
+        this.editor.focus()
       })
     },
     initTheme(monaco) {
@@ -307,15 +301,15 @@ export default {
       return labels
     },
     async savePost() {
+      this.post.content = this.editor.getValue()
       this.post.labels = this.selectedLabels.map(item => ({ name: item }))
       var post = await ipc.send('/posts/edit', this.post, this.selectedLabels)
-      // this.post.fileName = post.fileName
       console.log('post*****',post)
       this.edited = false
     },
     async onKeydown(ev) {
       if (ev.metaKey || ev.ctrlKey) {
-        if (ev.keyCode === 49) {
+        if (ev.key === 's') {
           this.savePost()
         }
       }
@@ -355,6 +349,10 @@ export default {
     }
   },
   destroyed() {
+    if (this.editor) {
+      this.editor.dispose()
+      this.editor = window.editor = null
+    }
     const win = BrowserWindow.getAllWindows()[0]
     win.setTitle(`布丁笔记`)
   }
