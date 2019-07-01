@@ -1,19 +1,11 @@
 import path from 'path'
 import url from 'url'
+const monaco = require('monaco-editor')
 
 async function initEditor() {
-  return new Promise(async resolve => {
-    await sleep(100)
-    var protocol = 'file:'
-    var baseVS = protocol + '//' + path.join(__static, 'vs')
-    console.log('baseVS', baseVS)
-    amdRequire.config({ paths: { 'vs': baseVS }})
-    amdRequire(['vs/editor/editor.main'], () => {
-      const monaco = window.monaco
-      initTheme(monaco)
-      resolve(monaco)
-    })
-  })
+  console.log('直接 require')
+  initTheme(monaco)
+  return monaco
 }
 
 async function sleep(time) {

@@ -32,6 +32,7 @@
     "markdown-it-imsize": "^2.0.1",
     "markdown-it-task-lists": "^2.1.1",
     "markdown-it-toc-and-anchor": "^4.2.0",
+    "monaco-editor": "^0.17.1",
     "shortid": "^2.2.14",
     "simple-git": "1.106.0",
     "unused-filename": "^2.1.0",
