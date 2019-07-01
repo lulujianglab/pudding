@@ -29,9 +29,7 @@ class Library {
   }
 
   async setLabelsList() {
-    console.log('xxxxxx')
     var oldLabels = await db.get('labelsMap').value()
-    console.log('oldLabels',oldLabels)
     var allPosts = await this.getPostsInfo()
     var labels = (allPosts || []).map(post => {
       return post.labels.map(label => {
@@ -42,7 +40,6 @@ class Library {
     for (let i in labelsMap) {
       labelsMap[i] = {count: labelsMap[i].length}
     }
-    console.log('labelsMap',labelsMap)
     // return Array.from(new Set(_.flattenDeep(labels)))
     await db.set('labelsMap', {...oldLabels, ...labelsMap}).write()
   }
