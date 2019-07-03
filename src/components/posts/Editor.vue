@@ -1,21 +1,19 @@
 <template>
   <column v-if="post" class="editor-wrapper">
-    <div class="top-bar">
-      <ToolBarEditor
-        v-model="post.private"
-        :savePost="savePost"
-        :title="post.title"
-        @changeLabel="handleChangeLabel">
-      </ToolBarEditor>
-    </div>
-    <div class="header">
+    <ToolBarEditor
+      v-model="post.private"
+      :savePost="savePost"
+      @changeLabel="handleChangeLabel"
+      @changeTitle="handleChangeTitle">
+    </ToolBarEditor>
+    <!-- <div class="header">
       <el-input
         class="title"
         v-model="post.title"
         placeholder="文章标题"
         clearable>
       </el-input>
-    </div>
+    </div> -->
     <div
       class="editor"
       @keydown="onKeydown"
@@ -165,8 +163,10 @@ export default {
       this.$router.push('/labels/list')
     },
     handleChangeLabel(val) {
-      console.log('val', val)
       this.selectedLabels = val
+    },
+    handleChangeTitle(val) {
+      this.post.title = val
     }
   },
   destroyed() {
@@ -181,12 +181,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.top-bar {
-  border-bottom: 1px solid #f0f0f0;
-  margin: 0 26px;
-  margin-top: 20px;
-}
 .header {
   // width: 600px;
   margin: 30px 40px 20px 40px;

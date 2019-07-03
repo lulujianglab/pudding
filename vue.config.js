@@ -26,6 +26,15 @@ module.exports = {
       mainProcessWatch: ['src/background'],
       builderOptions: {
         productName: productName,
+        win: {
+          icon: './public/app/icon.png',
+        },
+        mac: {
+          icon: './public/app/icon.png',
+        },
+        linux: {
+          icon: './public/app/icon.png',
+        },
         asar: true,
         nsis: {
           oneClick: false,
