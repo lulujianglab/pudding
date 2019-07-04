@@ -3,13 +3,13 @@
     <div @click="importFromIssues()" class="issue-button">从 issues 中导入博客</div>
     <el-form :label-position="labelPosition" label-width="80px" :model="configForm">
       <el-form-item label="仓库名">
-        <el-input v-model="configForm.repository"></el-input>
+        <el-input v-model="configForm.repository" placeholder="testlab.github.io"></el-input>
       </el-form-item>
       <el-form-item label="用户名">
-        <el-input v-model="configForm.userName"></el-input>
+        <el-input v-model="configForm.userName" placeholder="testlab"></el-input>
       </el-form-item>
       <el-form-item label="分支">
-        <el-input v-model="configForm.branch"></el-input>
+        <el-input v-model="configForm.branch" placeholder="master"></el-input>
       </el-form-item>
       <el-form-item label="token">
         <el-input v-model="configForm.token"></el-input>

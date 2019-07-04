@@ -50,7 +50,7 @@ export default {
           { name: '公开博客', path: '/posts/list/public', icon: 'el-icon-my-gongkai1' },
           { name: '私人笔记', path: '/posts/list/private', icon: 'el-icon-my-private' },
         ]
-      }, 
+      },
       {
         title: '博客设置',
         list: [
@@ -152,7 +152,8 @@ export default {
 }
 
 .item:hover {
-  background-color: #ecefef;
+  // background-color: #ecefef;
+  background-color: #dcdfe1;
   // opacity: 0.8;
 }
 .item-active {

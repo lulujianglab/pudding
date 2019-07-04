@@ -2,10 +2,10 @@
   <column class="wrapper-issues">
     <el-form :label-position="labelPosition" label-width="100px" :model="configForm">
       <el-form-item label="用户名：">
-        <el-input v-model="configForm.userName"></el-input>
+        <el-input v-model="configForm.userName" placeholder="testlab"></el-input>
       </el-form-item>
       <el-form-item label="issues 地址">
-        <el-input v-model="configForm.issuesAddress"></el-input>
+        <el-input v-model="configForm.issuesAddress" placeholder="blog"></el-input>
       </el-form-item>
       <el-form-item label="token">
         <el-input v-model="configForm.token"></el-input>

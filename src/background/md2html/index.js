@@ -1,3 +1,4 @@
+import { app } from 'electron'
 import path from 'path'
 import fs from 'fs-extra'
 import db from '../db'
@@ -82,6 +83,15 @@ export default class Translate {
     await fs.writeFile(path.join(this.localPath, 'dist', 'README.md'), readmeData)
   }
 
+  async handleWelcome() {
+    const postDistDir = path.join(this.localPath, 'dist')
+    const docPath = app.getPath('documents')
+    const welcomePath = path.join(docPath, 'pudding', 'Welcome.md')
+    var mdContent = await fs.readFile(welcomePath, 'utf8')
+    var htmlContent = markdownIt.render(mdContent)
+    await fs.writeFile(path.join(postDistDir, 'Welcome.md'), htmlContent)
+  }
+
   async handleIndexHtml(github, posts) {
     var templateDir = path.join(__static, 'themes/default')
     var indexTemplate = await fs.readFile(path.join(templateDir, 'index.html'), 'utf8')
@@ -129,6 +139,8 @@ export default class Translate {
     await this.handleIndexHtml(github, posts)
     // 将README编译完成后放入dist目录下
     await this.handleREADME(github, posts)
+    // 将Welcome.md render为Markdown格式
+    // await this.handleWelcome()
     // 依次将post md文件render为html，并编译完成放入posts目录下
     await this.handlePostHtml(github, posts)
     return true

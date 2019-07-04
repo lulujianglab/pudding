@@ -72,6 +72,7 @@ export default {
     const post = await ipc.send('/posts/detail', this.$route.query.id)
     this.selectedLabels = post.labels.map(label => label.name)
     this.postTitle = post.title
+    this.show = !post.private
   },
   methods: {
     async getPostsLabel() {

@@ -2,7 +2,7 @@
   <row class="element">
     <div class="left">
       <div class="input">
-        <el-input 
+        <el-input
           v-model="input"
           placeholder="请输入文章标题"
           suffix-icon="el-icon-search"
@@ -56,8 +56,8 @@ export default {
     },
 
     async upload() {
-      const { repository, userName, branch, token, domain } = await ipc.send('/github/detail') || {}
-      if (userName && repository && branch && token && domain) {
+      const { repository, userName, branch, token } = await ipc.send('/github/detail') || {}
+      if (userName && repository && branch && token) {
         this.loading = true
         await ipc.send('/publish/translate')
         await ipc.send('/publish/github')

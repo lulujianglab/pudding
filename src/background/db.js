@@ -3,6 +3,7 @@ import { app } from 'electron'
 import fs from 'fs-extra'
 const low = require('lowdb')
 const FileAsync = require('lowdb/adapters/FileAsync')
+const shortid = require('shortid')
 
 // 目前只在 main 中用, 相当于 server 中用 mongo 一样, 对 renderer 提供 ipc 接口
 class DB {
@@ -19,7 +20,27 @@ class DB {
     const adapter = new FileAsync(dbPath)
     var db = await low(adapter)
     db.defaults({
-      posts: [], // 文章列表, title, name, content, createdAt, updatedAt
+      posts: [{
+        id: shortid.generate(),
+        title: 'Welcome',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        comments: 0,
+        private: false,
+        labels: [],
+        avatar_url: '',
+        login: ''
+      }, {
+        id: shortid.generate(),
+        title: 'Pudding',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        comments: 0,
+        private: true,
+        labels: [],
+        avatar_url: '',
+        login: ''
+      }], // 文章列表, title, name, content, createdAt, updatedAt
       labelsMap: {
         "JavaScript": {
           "count": 0

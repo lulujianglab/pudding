@@ -22,27 +22,6 @@ class Posts {
     return this.library.setLabelsList()
   }
 
-  async addLabel2(label) {
-    console.log('新增标签', label)
-    const newLabels = []
-    const oldLabels = await this.library.getLabelsList()
-    const labelsSet = new Set(oldLabels)
-    if (label) {
-      if (Array.isArray(label)) {
-        label.map(item => {
-          if(!labelsSet.has(item)) {
-            newLabels.push(item)
-          }
-        })
-        await db.get('labelsMap').push(...newLabels).write()
-      } else {
-        if(!labelsSet.has(label)) {
-          await db.get('labelsMap').push(label).write()
-        }
-      }
-    }
-  }
-
   async addLabel(label) {
     console.log('新增标签', label)
     const labelsMap = await this.library.getLabelsList()
@@ -117,7 +96,7 @@ class Posts {
     delete post.content
     delete post.localPath
     this.updateMeta(post)
-    console.log('数据更新完成')  
+    console.log('数据更新完成')
     return post
   }
 

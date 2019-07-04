@@ -19,6 +19,7 @@ class Library {
     this.imagePath = path.join(this.localPath, 'images')
     await fs.mkdirp(this.imagePath)
     await this.tryInitWelcomeFile()
+    await this.tryInitPuddingFile()
     return this.localPath
   }
 
@@ -55,6 +56,15 @@ class Library {
     if (!await fs.exists(welcomePath)) {
       var templatePath = path.join(__static, name)
       await fs.copy(templatePath, welcomePath)
+    }
+  }
+
+  async tryInitPuddingFile() {
+    var name = 'Pudding.md'
+    var puddingPath = path.join(this.localPath, name)
+    if (!await fs.exists(puddingPath)) {
+      var templatePath = path.join(__static, name)
+      await fs.copy(templatePath, puddingPath)
     }
   }
 }
