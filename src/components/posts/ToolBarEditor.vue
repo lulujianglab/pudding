@@ -110,8 +110,10 @@ export default {
 
 <style lang="scss" scoped>
 .element {
-  margin: 20px 40px 0 40px;
-  padding: 20px 0 40px;
+  // margin: 20px 40px 0 40px;
+  // padding: 20px 0 40px;
+  padding: 0 20px 10px;
+  margin: 0 -10px;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #f0f0f0;

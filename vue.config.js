@@ -27,13 +27,13 @@ module.exports = {
       builderOptions: {
         productName: productName,
         win: {
-          icon: './public/app/icon.png',
+          icon: './public/app/pudding.png',
         },
         mac: {
-          icon: './public/app/icon.png',
+          icon: './public/app/pudding.png',
         },
         linux: {
-          icon: './public/app/icon.png',
+          icon: './public/app/pudding.png',
         },
         asar: true,
         nsis: {

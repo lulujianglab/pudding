@@ -205,7 +205,8 @@ export default {
 }
 
 .editor-wrapper {
-  padding-top: 20px;
+  padding-top: 10px;
+  position: relative;
 }
 
 .item {
@@ -262,5 +263,9 @@ export default {
 .cursor {
   background-color: #666 !important;
   width: 1px;
+}
+
+.monaco-scrollable-element {
+  margin-top: 10px;
 }
 </style>
