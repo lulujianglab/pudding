@@ -20,6 +20,8 @@ function createWindow () {
   win = new BrowserWindow({
     width: 1100,
     height: 800,
+    minWidth: 900,
+    minHeight: 600,
     title: '布丁笔记',
     webPreferences: {
       webSecurity: false, // 编辑器需要用 file:// 协议
