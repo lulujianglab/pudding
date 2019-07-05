@@ -13,7 +13,7 @@ class Library {
 
   async init(localPath) {
     var docPath = app.getPath('documents')
-    this.localPath = localPath || path.join(docPath, 'pudding')
+    this.localPath = localPath || path.join(docPath, 'Pudding')
     await fs.mkdirp(this.localPath)
     await db.init(path.join(this.localPath, 'metadata'))
     this.imagePath = path.join(this.localPath, 'images')
