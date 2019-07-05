@@ -19,7 +19,7 @@
           <el-input v-model="configForm.domain" placeholder="CNAME"></el-input>
         </el-form-item>
       </el-form>
-      <el-button class="btn-save" type="primary" round size="large">保存</el-button>
+      <el-button class="btn-save" type="primary" round size="medium">保存</el-button>
     </column>
     <el-dialog title="Issues 配置" :visible.sync="dialogFormVisible">
       <ImportIssues :handleDialogVisible="handleDialogVisible" />
@@ -86,14 +86,13 @@ export default {
 
 <style scoped lang="scss">
 .wrapper {
-  align-items:center;
-  padding-top: 20px;
+  align-items: center;
   padding-top: 80px;
 }
 
 .btn-save {
   min-width: 140px;
-  align-self: flex-start;
+  align-self: flex-end;
 }
 
 .issue-button:hover {
