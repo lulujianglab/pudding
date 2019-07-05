@@ -1,24 +1,26 @@
 <template>
   <column class="wrapper">
-    <div @click="importFromIssues()" class="issue-button">从 issues 中导入博客</div>
-    <el-form :label-position="labelPosition" label-width="80px" :model="configForm">
-      <el-form-item label="仓库名">
-        <el-input v-model="configForm.repository" placeholder="testlab.github.io"></el-input>
-      </el-form-item>
-      <el-form-item label="用户名">
-        <el-input v-model="configForm.userName" placeholder="testlab"></el-input>
-      </el-form-item>
-      <el-form-item label="分支">
-        <el-input v-model="configForm.branch" placeholder="master"></el-input>
-      </el-form-item>
-      <el-form-item label="token">
-        <el-input v-model="configForm.token"></el-input>
-      </el-form-item>
-      <el-form-item label="域名">
-        <el-input v-model="configForm.domain"></el-input>
-      </el-form-item>
-    </el-form>
-    <div @click="onSave" class="button">保存</div>
+    <column class="content">
+      <el-button @click="importFromIssues" type="text" style="align-self: flex-end">从 issues 中导入博客</el-button>
+      <el-form :label-position="labelPosition" label-width="60px" :model="configForm">
+        <el-form-item label="仓库名">
+          <el-input v-model="configForm.repository" placeholder="testlab.github.io"></el-input>
+        </el-form-item>
+        <el-form-item label="用户名">
+          <el-input v-model="configForm.userName" placeholder="testlab"></el-input>
+        </el-form-item>
+        <el-form-item label="分支">
+          <el-input v-model="configForm.branch" placeholder="master"></el-input>
+        </el-form-item>
+        <el-form-item label="token">
+          <el-input v-model="configForm.token"></el-input>
+        </el-form-item>
+        <el-form-item label="域名">
+          <el-input v-model="configForm.domain" placeholder="CNAME"></el-input>
+        </el-form-item>
+      </el-form>
+      <el-button class="btn-save" type="primary" round size="large">保存</el-button>
+    </column>
     <el-dialog title="Issues 配置" :visible.sync="dialogFormVisible">
       <ImportIssues :handleDialogVisible="handleDialogVisible" />
     </el-dialog>
@@ -44,7 +46,7 @@ export default {
         token: '',
         domain: ''
       },
-      labelPosition: 'right',
+      labelPosition: 'left',
       dialogFormVisible: false,
       form: {
         name: '',
@@ -89,29 +91,9 @@ export default {
   padding-top: 80px;
 }
 
-.button {
-  padding: 4px 16px;
-  border-radius: 4px;
-  font-size: 16px;
-  margin: 20px 0 0 -252px;
-  border: 1px solid #DCDFE6;
-}
-
-.button:hover {
-  color: $--color-primary;
-  background-color: $--color-primary-4;
-  border: 1px solid $--color-primary-4;
-}
-
-.issue-button {
-  background-color: $--color-primary-5;
-  color: #fff;
-  font-weight: 500;
-  border-radius: 4px;
-  padding: 6px 12px;
-  margin-left: 320px;
-  margin-bottom: 30px;
-  cursor: pointer;
+.btn-save {
+  min-width: 140px;
+  align-self: flex-start;
 }
 
 .issue-button:hover {
