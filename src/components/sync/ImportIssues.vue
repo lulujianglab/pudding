@@ -1,14 +1,11 @@
 <template>
   <column class="wrapper-issues">
     <el-form :label-position="labelPosition" label-width="100px" :model="configForm">
-      <el-form-item label="用户名：">
-        <el-input v-model="configForm.userName" placeholder="testlab"></el-input>
-      </el-form-item>
-      <el-form-item label="issues 地址">
-        <el-input v-model="configForm.issuesAddress" placeholder="blog"></el-input>
-      </el-form-item>
-      <el-form-item label="token">
-        <el-input v-model="configForm.token"></el-input>
+      <el-form-item label="Github Issues">
+        <el-input
+          v-model="configForm.issuesAddress"
+          placeholder="https://github.com/<user>/<repo>/issues">
+        </el-input>
       </el-form-item>
       <div class="btn-list">
         <el-button size="large" class="cancel" @click="handleDialogVisible()">取 消</el-button>
@@ -27,9 +24,7 @@ export default {
   data() {
     return {
       configForm : {
-        userName: '',
         issuesAddress: '',
-        token: '',
       },
       labelPosition: 'right',
       loading: false
@@ -42,11 +37,10 @@ export default {
 
   methods: {
     async importIssues() {
-      await this.onSave() // 保存配置项
-      const { issuesAddress, token, userName } = this.configForm
-      if (issuesAddress && token && userName) {
+      const { issuesAddress } = this.configForm
+      if (issuesAddress) {
         this.loading = true
-        await ipc.send('/github/exportFromIssues') // 更新posts
+        await ipc.send('/github/exportFromIssues', this.configForm) // 更新posts
         this.loading = false
         this.$message.success('恭喜，导入成功 💐')
       } else {
