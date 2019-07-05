@@ -10,8 +10,10 @@
       <el-form-item label="token">
         <el-input v-model="configForm.token"></el-input>
       </el-form-item>
-      <el-button class="cancle" @click="handleDialogVisible()">取 消</el-button>
-      <el-button type="primary" @click="importIssues" class="button" :loading="loading">导入</el-button>
+      <div class="btn-list">
+        <el-button size="large" class="cancel" @click="handleDialogVisible()">取 消</el-button>
+        <el-button size="large" type="primary" @click="importIssues" class="button" :loading="loading">导入</el-button>
+      </div>
     </el-form>
   </column>
 </template>
@@ -65,8 +67,7 @@ export default {
 
 <style scoped lang="scss">
 .wrapper-issues {
-  align-items:center;
-  // padding-top: 140px;
+  align-items: center;
   font-size: 16px;
 }
 
@@ -76,31 +77,10 @@ export default {
   height: 26px;
 }
 
-.cancle {
-  margin-left: 330px;
-  font-size: 16px;
-  padding: 6px 16px;
-  border-radius: 4px;
+.btn-list {
+  display: flex;
+  justify-content: flex-end;
 }
-
-.button {
-  padding: 6px 16px;
-  border-radius: 4px;
-  font-size: 16px;
-  margin: 20px 0 0 100px;
-}
-
-// .el-button--primary {
-//   background-color: #fff;
-//   border-color: #DCDFE6;
-//   color: #666;
-// }
-
-// .el-button--primary:hover {
-//   color: $--color-primary;
-//   background-color: $--color-primary-4;
-//   border: 1px solid $--color-primary-4;
-// }
 
 .el-form {
   width: 480px;
