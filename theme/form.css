@@ -286,7 +286,8 @@
   .el-form-item--medium .el-form-item__content {
     line-height: 36px; }
   .el-form-item--small .el-form-item__label {
-    line-height: 32px; }
+    line-height: 32px;
+    padding: 0; }
   .el-form-item--small .el-form-item__content {
     line-height: 32px; }
   .el-form-item--small.el-form-item {

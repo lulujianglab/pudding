@@ -30832,7 +30832,8 @@
   .el-form-item--medium .el-form-item__content {
     line-height: 36px; }
   .el-form-item--small .el-form-item__label {
-    line-height: 32px; }
+    line-height: 32px;
+    padding: 0; }
   .el-form-item--small .el-form-item__content {
     line-height: 32px; }
   .el-form-item--small.el-form-item {
@@ -31470,7 +31471,7 @@
     .el-tabs--left .el-tabs__nav-wrap.is-left::after,
     .el-tabs--left .el-tabs__nav-wrap.is-right::after, .el-tabs--right .el-tabs__nav-wrap.is-left::after,
     .el-tabs--right .el-tabs__nav-wrap.is-right::after {
-      height: 100%;
+      height: 80px;
       width: 2px;
       bottom: auto;
       top: 0; }

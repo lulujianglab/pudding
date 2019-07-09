@@ -19,7 +19,7 @@
           <el-input v-model="configForm.domain" placeholder="CNAME"></el-input>
         </el-form-item>
       </el-form>
-      <el-button class="btn-save" type="primary" round size="medium">保存</el-button>
+      <el-button class="btn-save" type="primary" round size="medium" @click="onSave">保存</el-button>
     </column>
     <el-dialog title="Issues 配置" :visible.sync="dialogFormVisible">
       <ImportIssues :handleDialogVisible="handleDialogVisible" />
@@ -48,17 +48,6 @@ export default {
       },
       labelPosition: 'left',
       dialogFormVisible: false,
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      },
-      formLabelWidth: '120px'
     }
   },
 

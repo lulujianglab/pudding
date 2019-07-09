@@ -148,5 +148,8 @@ export default {
   float: right;
   margin-right: 80px;
   height: 32px;
+  color: #4caf50;
+  line-height: 32px;
+  cursor: pointer;
 }
 </style>

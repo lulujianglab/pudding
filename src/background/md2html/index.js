@@ -92,10 +92,11 @@ export default class Translate {
     await fs.writeFile(path.join(postDistDir, 'Welcome.md'), htmlContent)
   }
 
-  async handleIndexHtml(github, posts) {
+  async handleIndexHtml(posts) {
     var templateDir = path.join(__static, 'themes/default')
     var indexTemplate = await fs.readFile(path.join(templateDir, 'index.html'), 'utf8')
-    var html = _.template(indexTemplate)({ posts, 'userName': (github.userName ? `${github.userName} Blog` : '布丁笔记'), dayjs })
+    var blogInfo = db.get('syncSetting.blogInfo').value()
+    var html = _.template(indexTemplate)({ posts, blogInfo, dayjs })
     await fs.writeFile(path.join(this.localPath, 'dist', 'index.html'), html)
   }
 
@@ -136,7 +137,7 @@ export default class Translate {
     // 将每篇post用到的images文件copy到dist目录下
     await fs.copy(path.join(this.localPath, 'images'), path.join(this.localPath, 'dist', 'images'))
     // 将首页模板编译完成后放入dist目录下
-    await this.handleIndexHtml(github, posts)
+    await this.handleIndexHtml(posts)
     // 将README编译完成后放入dist目录下
     await this.handleREADME(github, posts)
     // 将Welcome.md render为Markdown格式

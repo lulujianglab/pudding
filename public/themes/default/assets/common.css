@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+ol, ul {
+	list-style: none;
+}
+
 body {
   color: #333;
   line-height: 1.7;
@@ -175,7 +179,7 @@ body {
   font-size: 15px;
 }
 
-.content blockquote { 
+.content blockquote {
   width: 100%;
   background: #fff;
   box-shadow: 0 10px 20px 0 hsla(0,4%,95%,.95);
@@ -224,16 +228,53 @@ body {
   height: 200px;
 }
 
-.blog-title {
+.blog-info-wrapper {
   color: #fff;
-  padding: 24px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.blog-title {
+  /* padding-bottom: 24px; */
   font-size: 90px;
   font-weight: 500;
-  z-index: 100;
   letter-spacing: 1px;
+}
+
+.blog-des {
+  font-size: 30px;
+  color: #fff;
+}
+
+.tag {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  padding-top: 10px;
+}
+
+.tag-item {
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.tag-item:first-child {
+  padding-left: 0;
+}
+
+.label-list {
+  display: flex;
+  margin: 2px 0 12px 0;
+}
+
+.label-item {
+  color: #4caf50;
+  background-color: #adedd780;
+  margin-right: 4px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-size: 12px;
 }
 
 .post {
@@ -264,7 +305,7 @@ body {
 
 .post a:hover  {
   color: #333;
-  text-decoration: underline #333;  
+  text-decoration: underline #333;
 }
 
 .poster {
@@ -272,7 +313,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
-  height: 560px;
+  height: 460px;
   position: relative;
   display: flex;
   justify-content: center;
@@ -330,7 +371,7 @@ body {
   border-radius: 50%;
   left: calc(50% + 420px);
   line-height: 40px;
-  text-align: center; 
+  text-align: center;
   cursor: pointer;
 }
 

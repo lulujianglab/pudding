@@ -56,6 +56,10 @@ class DB {
         }
       },
       syncSetting: {
+        blogInfo: {
+          name: 'Pudding',
+          des: '记录成长的脚步😁',
+        },
         issues: {},
         github: {}, // github
         oss: {} // 阿里云oss

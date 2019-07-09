@@ -41,7 +41,6 @@ class Github {
     const exportUrl = `https://api.github.com/repos/${owner}/${repo}/issues?per_page=1000`
     console.log('github issue export', exportUrl)
     let { body: posts } = await http.get(exportUrl)
-    console.log(111, posts, 2222)
     posts = await Promise.all((posts || [])
       .filter(item => item.state === 'open')
       .map(async item => {

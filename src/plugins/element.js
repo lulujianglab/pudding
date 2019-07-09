@@ -15,7 +15,9 @@ import {
   Select,
   Option,
   OptionGroup,
-  Dialog
+  Dialog,
+  Tabs,
+  TabPane,
 } from 'element-ui'
 
 Vue.use(checkbox)
@@ -34,6 +36,8 @@ Vue.use(Select)
 Vue.use(Option)
 Vue.use(OptionGroup)
 Vue.use(Dialog)
+Vue.use(Tabs)
+Vue.use(TabPane)
 
 Vue.prototype.$loading = Loading.service
 Vue.prototype.$msgbox = MessageBox
