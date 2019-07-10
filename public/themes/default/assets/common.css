@@ -58,6 +58,13 @@ body {
   border-radius: 0.6em 0.2em;
 } */
 
+.archive-date {
+  margin-left: -100px;
+  font-size: 20px;
+  color: hsla(165, 94%, 38%, 1);
+  margin-top: 20px;
+}
+
 .post-date {
   font-size: 14px;
   color: #777;
@@ -258,6 +265,7 @@ body {
 .tag {
   display: flex;
   padding-top: 10px;
+  height: 38px;
 }
 
 .tag-item {

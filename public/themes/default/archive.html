@@ -1,0 +1,53 @@
+<!DOCTYPE html></body>
+<html>
+  <head>
+    <title><%= blogInfo.name %></title>
+    <meta charset="utf8">
+    <link href="./assets/common.css" rel="stylesheet"></link>
+    <link href="./assets/font.css" rel="stylesheet"></link>
+  </head>
+  <body>
+      <div style="background-image: url(./assets/images/index-poster.jpg)" class="poster">
+        <div class="mask"></div>
+        <div class="blog-info-wrapper">
+          <p class="blog-title"><%= blogInfo.name %></p>
+          <p class="blog-des"><%= blogInfo.des %></p>
+          <div class="tag">
+            <a class="tag-item" href="../">首页</a>
+            <a class="tag-item" href="./">归档</a>
+            <a class="tag-item" href="./label">标签</a>
+          </div>
+        </div>
+      </div>
+      <div class="wrapper">
+        <% for (var date in sortPosts) { %>
+          <h4 class="archive-date"><%= date %></h4>
+          <% for (let post of sortPosts[date]) { %>
+            <% if (!post.private) { %>
+              <article class="post">
+                <header class="post-header">
+                  <h1 class="post-title">
+                    <a href="./posts/<%= post.title %>.html" class="post-title-link"><%= post.title %></a>
+                  </h1>
+                  <div class="post-time"><%= dayjs(post.createdAt).format('YYYY-MM-DD') %></div>
+                  <% if (post.labels.length) { %>
+                    <div class="label-list">
+                      <% for (let label of post.labels ) { %>
+                        <p class="label-item"><%= label.name %></p>
+                      <% } %>
+                    </div>
+                  <% } %>
+                </header>
+                <div class="post-body">
+
+                </div>
+              </article>
+            <% } %>
+          <% } %>
+        <% } %>
+      </div>
+      <div class="footer">
+        Powered by PuddingNote
+      </div>
+  </body>
+</html>

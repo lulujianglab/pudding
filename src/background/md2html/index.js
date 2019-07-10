@@ -94,8 +94,15 @@ export default class Translate {
 
   async handleIndexHtml(templateDir, blogInfo, posts) {
     var indexTemplate = await fs.readFile(path.join(templateDir, 'index.html'), 'utf8')
-    var html = _.template(indexTemplate)({ posts, blogInfo, dayjs, lable: false })
+    var html = _.template(indexTemplate)({ posts, blogInfo, dayjs, label: false })
     await fs.writeFile(path.join(this.localPath, 'dist', 'index.html'), html)
+  }
+
+  async handleArchiveHtml(templateDir, blogInfo, posts) {
+    var sortPosts = _.groupBy(posts, post => dayjs(post.createdAt).format('MMM YYYY'))
+    var archiveTemplate = await fs.readFile(path.join(templateDir, 'archive.html'), 'utf8')
+    var html = _.template(archiveTemplate)({ sortPosts, blogInfo, dayjs })
+    await fs.writeFile(path.join(this.localPath, 'dist', 'archive.html'), html)
   }
 
   async handleLabelHtml(templateDir, labelsMap, labels, blogInfo) {
@@ -112,7 +119,7 @@ export default class Translate {
     await fs.mkdirp(labelsDistDir)
     for (let label of labels) {
       const posts = (allPosts ||[]).filter(item => item.labels.some(ele => ele.name === label))
-      var labelHtmlPage = labelHtmlCompiled({ posts, blogInfo, dayjs, lable: true })
+      var labelHtmlPage = labelHtmlCompiled({ posts, blogInfo, dayjs, label })
       await fs.writeFile(path.join(labelsDistDir, `${label}.html`), labelHtmlPage)
     }
   }
@@ -158,6 +165,8 @@ export default class Translate {
     await fs.copy(path.join(this.localPath, 'images'), path.join(this.localPath, 'dist', 'images'))
     // 将首页模板编译完成后放入dist目录下
     await this.handleIndexHtml(templateDir, blogInfo, posts)
+    // 将归档模板编译完成后放入dist目录下
+    await this.handleArchiveHtml(templateDir, blogInfo, posts)
     // 将标签模板编译完成后放入dist目录下
     await this.handleLabelHtml(templateDir, labelsMap, labels, blogInfo)
     // 将标签分类好的post列表放入labels目录下
