@@ -83,7 +83,12 @@ export default {
 .el-form-item--small.el-form-item {
   margin-bottom: 28px;
 }
+
 .el-form-item__label {
   letter-spacing: 1.5px;
+}
+
+.el-input--small {
+  margin-left: 12px;
 }
 </style>

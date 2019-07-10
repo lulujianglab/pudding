@@ -26,6 +26,12 @@ body {
   position: relative;
 }
 
+.wrapper-labels {
+ display: flex;
+ flex-wrap: wrap;
+ justify-content: center;
+}
+
 .title-wrapper {
   text-align: center;
   padding: 24px;
@@ -255,7 +261,8 @@ body {
 }
 
 .tag-item {
-  padding-left: 10px;
+  color: #fff;
+  margin-left: 10px;
   cursor: pointer;
 }
 
@@ -263,18 +270,35 @@ body {
   padding-left: 0;
 }
 
+.tag-item:hover {
+  /* font-weight: 500; */
+  border-bottom: 1px solid #fff;
+}
+
 .label-list {
   display: flex;
   margin: 2px 0 12px 0;
 }
 
-.label-item {
+.label-item,
+.label {
   color: #4caf50;
   background-color: #adedd780;
   margin-right: 4px;
   padding: 4px 10px;
   border-radius: 3px;
   font-size: 12px;
+}
+
+.label {
+  display: flex;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+.label-count {
+  padding-left: 4px;
 }
 
 .post {
@@ -359,6 +383,14 @@ body {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.footer {
+  padding-top: 80px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #999;
 }
 
 .scroll {

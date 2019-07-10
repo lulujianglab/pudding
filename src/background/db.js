@@ -42,7 +42,7 @@ class DB {
         login: ''
       }], // 文章列表, title, name, content, createdAt, updatedAt
       labelsMap: {
-        "JavaScript": {
+        "Javascript": {
           "count": 0
         },
         "CSS": {

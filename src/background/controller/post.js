@@ -27,7 +27,7 @@ class Posts {
     const labelsMap = await this.library.getLabelsList()
     const labelsKey = Object.keys(labelsMap)
     if(label && !labelsKey.includes(label)) {
-      await db.get('labelsMap').set(label, {count: 1}).write()
+      await db.get('labelsMap').set(label, {count: 0}).write()
     }
   }
 

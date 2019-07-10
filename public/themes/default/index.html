@@ -3,19 +3,33 @@
   <head>
     <title><%= blogInfo.name %></title>
     <meta charset="utf8">
-    <link href="./assets/common.css" rel="stylesheet"></link>
-    <link href="./assets/font.css" rel="stylesheet"></link>
+    <% if (lable) { %>
+      <link href="../assets/common.css" rel="stylesheet"></link>
+      <link href="../assets/font.css" rel="stylesheet"></link>
+    <% } else { %>
+      <link href="./assets/common.css" rel="stylesheet"></link>
+      <link href="./assets/font.css" rel="stylesheet"></link>
+    <% } %>
   </head>
   <body>
+    <% if (lable) { %>
+    <div style="background-image: url(../assets/images/index-poster.jpg)" class="poster">
+    <% } else { %>
     <div style="background-image: url(./assets/images/index-poster.jpg)" class="poster">
+    <% } %>
       <div class="mask"></div>
       <div class="blog-info-wrapper">
         <p class="blog-title"><%= blogInfo.name %></p>
         <p class="blog-des"><%= blogInfo.des %></p>
-        <ul class="tag">
-          <li class="tag-item">首页</li>
-          <li class="tag-item">标签</li>
-        </ul>
+        <div class="tag">
+          <% if (lable) { %>
+          <a class="tag-item" href="../">首页</a>
+          <a class="tag-item" href="../label">标签</a>
+          <% } else { %>
+          <a class="tag-item" href="./">首页</a>
+          <a class="tag-item" href="./label">标签</a>
+          <% } %>
+        </div>
       </div>
     </div>
     <div class="wrapper">
@@ -24,7 +38,11 @@
           <article class="post">
             <header class="post-header">
               <h1 class="post-title">
-                <a href="./posts/<%= post.title %>.html" class="post-title-link"><%= post.title %></a>
+                <% if (lable) { %>
+                  <a href="../posts/<%= post.title %>.html" class="post-title-link"><%= post.title %></a>
+                <% } else { %>
+                  <a href="./posts/<%= post.title %>.html" class="post-title-link"><%= post.title %></a>
+                <% } %>
               </h1>
               <div class="post-time"><%= dayjs(post.createdAt).format('YYYY-MM-DD') %></div>
               <% if (post.labels.length) { %>
@@ -41,6 +59,9 @@
           </article>
         <% } %>
       <% } %>
+      <div class="footer">
+        Powered by PuddingNote
+      </div>
       <div class="scroll index-top" id="top">
         <a href="javascript:void(0)" onclick="toBackTop()">
           <i class="iconfont icon-shangsanjiaoxing"></i>

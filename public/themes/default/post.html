@@ -15,6 +15,9 @@
       <div class="content" id="content">
           <%= post.htmlContent %>
       </div>
+      <div class="footer">
+        Powered by PuddingNote
+      </div>
       <div class="toc_nav">
         <div class="article_nav" id="article_nav">
         </div>
@@ -35,7 +38,7 @@
       function toBackTop(){
         document.documentElement.scrollTop = 0
       }
-  
+
       function onScrollToTop() {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
         // 回到顶部
@@ -55,7 +58,7 @@
           navNode.style.top = ''
         }
       }
-      
+
       function addAchor() {
         var allNodes = document.getElementById('content').childNodes
         // var nodesH =  [...allNodes].map((item, index) => {

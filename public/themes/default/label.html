@@ -1,0 +1,32 @@
+<!DOCTYPE html></body>
+<html>
+  <head>
+    <title><%= blogInfo.name %></title>
+    <meta charset="utf8">
+    <link href="./assets/common.css" rel="stylesheet"></link>
+    <link href="./assets/font.css" rel="stylesheet"></link>
+  </head>
+  <body>
+      <div style="background-image: url(./assets/images/index-poster.jpg)" class="poster">
+        <div class="mask"></div>
+        <div class="blog-info-wrapper">
+          <p class="blog-title"><%= blogInfo.name %></p>
+          <p class="blog-des"><%= blogInfo.des %></p>
+          <div class="tag">
+            <a class="tag-item" href="../">首页</a>
+            <a class="tag-item" href="./">标签</a>
+          </div>
+        </div>
+      </div>
+      <div class="wrapper wrapper-labels">
+        <% for (let label of labels ) { %>
+          <a class="label" href="../labels/<%= label %>.html">
+            <p><%= label %></p><p class="label-count">(<%= labelsMap[label].count %>)</p>
+          </a>
+        <% } %>
+      </div>
+      <div class="footer">
+        Powered by PuddingNote
+      </div>
+  </body>
+</html>

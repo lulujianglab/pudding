@@ -66,7 +66,8 @@ class Github {
         }
       })
     )
-    db.get('posts').push(...posts).write()
+    await db.get('posts').push(...posts).write()
+    await this.library.setLabelsList()
   }
 }
 
