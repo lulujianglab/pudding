@@ -26,24 +26,26 @@
           <a class="tag-item" href="../">首页</a>
           <a class="tag-item" href="../archive">归档</a>
           <a class="tag-item" href="../label">标签</a>
+          <a class="tag-item" href="../posts/About">关于</a>
           <% } else { %>
           <a class="tag-item" href="./">首页</a>
           <a class="tag-item" href="./archive">归档</a>
           <a class="tag-item" href="./label">标签</a>
+          <a class="tag-item" href="./posts/About">关于</a>
           <% } %>
         </div>
       </div>
     </div>
     <div class="wrapper">
       <% for (let post of posts ) { %>
-        <% if (!post.private) { %>
+        <% if (!post.private && post.title !== 'About') { %>
           <article class="post">
             <header class="post-header">
               <h1 class="post-title">
                 <% if (label) { %>
-                  <a href="../posts/<%= post.title %>.html" class="post-title-link"><%= post.title %></a>
+                  <a href="../posts/<%= post.title %>" class="post-title-link"><%= post.title %></a>
                 <% } else { %>
-                  <a href="./posts/<%= post.title %>.html" class="post-title-link"><%= post.title %></a>
+                  <a href="./posts/<%= post.title %>" class="post-title-link"><%= post.title %></a>
                 <% } %>
               </h1>
               <div class="post-time"><%= dayjs(post.createdAt).format('YYYY-MM-DD') %></div>

@@ -83,13 +83,13 @@ export default class Translate {
     await fs.writeFile(path.join(this.localPath, 'dist', 'README.md'), readmeData)
   }
 
-  async handleWelcome() {
+  async handleAbout() {
     const postDistDir = path.join(this.localPath, 'dist')
     const docPath = app.getPath('documents')
-    const welcomePath = path.join(docPath, 'pudding', 'Welcome.md')
-    var mdContent = await fs.readFile(welcomePath, 'utf8')
+    const AboutPath = path.join(docPath, 'pudding', 'About.md')
+    var mdContent = await fs.readFile(AboutPath, 'utf8')
     var htmlContent = markdownIt.render(mdContent)
-    await fs.writeFile(path.join(postDistDir, 'Welcome.md'), htmlContent)
+    await fs.writeFile(path.join(postDistDir, 'About.html'), htmlContent)
   }
 
   async handleIndexHtml(templateDir, blogInfo, posts) {
@@ -173,8 +173,8 @@ export default class Translate {
     await this.handleLabelIndexHtml(templateDir, blogInfo, posts, labels)
     // 将README编译完成后放入dist目录下
     await this.handleREADME(github, posts)
-    // 将Welcome.md render为Markdown格式
-    // await this.handleWelcome()
+    // 将About.md render为html，并编译完成放入posts目录下
+    // await this.handleAbout()
     // 依次将post md文件render为html，并编译完成放入posts目录下
     await this.handlePostHtml(templateDir, github, posts)
     return true

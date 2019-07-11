@@ -40,6 +40,16 @@ class DB {
         labels: [],
         avatar_url: '',
         login: ''
+      }, {
+        id: shortid.generate(),
+        title: 'About',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        comments: 0,
+        private: false,
+        labels: [],
+        avatar_url: '',
+        login: ''
       }], // 文章列表, title, name, content, createdAt, updatedAt
       labelsMap: {
         "Javascript": {

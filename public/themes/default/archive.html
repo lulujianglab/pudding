@@ -16,6 +16,7 @@
             <a class="tag-item" href="../">首页</a>
             <a class="tag-item" href="./">归档</a>
             <a class="tag-item" href="./label">标签</a>
+            <a class="tag-item" href="./posts/About">关于</a>
           </div>
         </div>
       </div>
@@ -23,11 +24,11 @@
         <% for (var date in sortPosts) { %>
           <h4 class="archive-date"><%= date %></h4>
           <% for (let post of sortPosts[date]) { %>
-            <% if (!post.private) { %>
+            <% if (!post.private && post.title !== 'About') { %>
               <article class="post">
                 <header class="post-header">
                   <h1 class="post-title">
-                    <a href="./posts/<%= post.title %>.html" class="post-title-link"><%= post.title %></a>
+                    <a href="./posts/<%= post.title %>" class="post-title-link"><%= post.title %></a>
                   </h1>
                   <div class="post-time"><%= dayjs(post.createdAt).format('YYYY-MM-DD') %></div>
                   <% if (post.labels.length) { %>

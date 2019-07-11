@@ -18,8 +18,11 @@ class Library {
     await db.init(path.join(this.localPath, 'metadata'))
     this.imagePath = path.join(this.localPath, 'images')
     await fs.mkdirp(this.imagePath)
-    await this.tryInitWelcomeFile()
-    await this.tryInitPuddingFile()
+    // await this.tryInitWelcomeFile()
+    // await this.tryInitPuddingFile()
+    await this.tryInitFile('Welcome.md')
+    await this.tryInitFile('Pudding.md')
+    await this.tryInitFile('About.md')
     return this.localPath
   }
 
@@ -32,11 +35,7 @@ class Library {
   async setLabelsList() {
     var oldLabels = await db.get('labelsMap').value()
     var allPosts = await this.getPostsInfo()
-    var labels = (allPosts || []).map(post => {
-      return post.labels.map(label => {
-        return label.name
-      })
-    })
+    var labels = (allPosts || []).map(post => post.labels.map(label => label.name))
     var labelsMap = _.groupBy(_.flatten(labels), item => item)
     for (let i in labelsMap) {
       labelsMap[i] = {count: labelsMap[i].length}
@@ -50,8 +49,7 @@ class Library {
     return labelsMap
   }
 
-  async tryInitWelcomeFile() {
-    var name = 'Welcome.md'
+  async tryInitFile(name) {
     var welcomePath = path.join(this.localPath, name)
     if (!await fs.exists(welcomePath)) {
       var templatePath = path.join(__static, name)
@@ -59,14 +57,23 @@ class Library {
     }
   }
 
-  async tryInitPuddingFile() {
-    var name = 'Pudding.md'
-    var puddingPath = path.join(this.localPath, name)
-    if (!await fs.exists(puddingPath)) {
-      var templatePath = path.join(__static, name)
-      await fs.copy(templatePath, puddingPath)
-    }
-  }
+  // async tryInitWelcomeFile() {
+  //   var name = 'Welcome.md'
+  //   var welcomePath = path.join(this.localPath, name)
+  //   if (!await fs.exists(welcomePath)) {
+  //     var templatePath = path.join(__static, name)
+  //     await fs.copy(templatePath, welcomePath)
+  //   }
+  // }
+
+  // async tryInitPuddingFile() {
+  //   var name = 'Pudding.md'
+  //   var puddingPath = path.join(this.localPath, name)
+  //   if (!await fs.exists(puddingPath)) {
+  //     var templatePath = path.join(__static, name)
+  //     await fs.copy(templatePath, puddingPath)
+  //   }
+  // }
 }
 
 export default Library

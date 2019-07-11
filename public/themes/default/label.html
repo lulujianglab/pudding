@@ -16,15 +16,18 @@
             <a class="tag-item" href="../">首页</a>
             <a class="tag-item" href="../archive">归档</a>
             <a class="tag-item" href="./">标签</a>
+            <a class="tag-item" href="./posts/About">关于</a>
           </div>
         </div>
       </div>
-      <div class="wrapper wrapper-labels">
+      <div class="wrapper">
+        <div class="wrapper-labels">
         <% for (let label of labels ) { %>
-          <a class="label" href="../labels/<%= label %>.html">
+          <a class="label" href="../labels/<%= label %>">
             <p><%= label %></p><p class="label-count">(<%= labelsMap[label].count %>)</p>
           </a>
         <% } %>
+        </div>
         <div class="footer">
           Powered by PuddingNote
         </div>
