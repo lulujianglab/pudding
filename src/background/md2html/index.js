@@ -5,19 +5,25 @@ import db from '../db'
 import _ from 'lodash'
 import dayjs from 'dayjs'
 import 'dayjs/locale/de-ch'
+// import markdownItMermaid from '@liradb2000/markdown-it-mermaid'
+import markdownItMermaid from 'markdown-it-mermaid'
 
 const MarkdownIt = require('markdown-it')
-const MarkdownItKatex = require('@iktakahiro/markdown-it-katex')
-// const markdownItTocAndAnchor = require('markdown-it-toc-and-anchor')
+const MarkdownItKatex = require('@iktakahiro/markdown-it-katex') // 公式
+// const markdownItTocAndAnchor = require('markdown-it-toc-and-anchor').default
 const MarkdownItTaskLists = require('markdown-it-task-lists')
 const emoji = require('markdown-it-emoji')
-const imsize = require('markdown-it-imsize')
+const imsize = require('markdown-it-imsize') // images size
 const hljs = require('highlight.js')
+const galleryPlugin = require('markdown-it-gallery') // images
+// const markdownItMermaid = require('markdown-it-mermaid')
 
 const markdownIt = new MarkdownIt({
   html: true,
   linkify: true,
   typography: true,
+  breaks: true,
+  xhtmlOut: false,
   highlight: (str, lang) => {
     // 添加这两行才能正确显示 <>
     str = str.replace(/&lt;/g, "<");
@@ -35,15 +41,27 @@ const markdownIt = new MarkdownIt({
   }
 })
 
-markdownIt.use(MarkdownItKatex)
-// markdownIt.use(markdownItTocAndAnchor, {
-//   anchorLink: false,
-// })
+markdownIt.use(MarkdownItKatex, {"throwOnError" : false, "errorColor" : " #cc0000"})
+// markdownIt.use(markdownItTocAndAnchor)
 markdownIt.use(MarkdownItTaskLists, {
   label: true, labelAfter: true,
 })
 markdownIt.use(emoji)
 markdownIt.use(imsize, { autofill: true })
+markdownIt.use(galleryPlugin, {
+  galleryClass: 'md-gallery',
+  galleryTag: 'figure',
+  imgClass: 'md-gallery__image',
+  wrapImagesInLinks: true,
+  linkClass: 'md-gallery__link',
+  linkTarget: '_blank',
+  imgTokenType: 'image',
+  linkTokenType: 'link',
+  imageFilterFn: token => /example.com/.test(token.attrGet('src')),
+  imageSrcFn: token => token.attrGet('src').replace(/(\.\w+$)/, '-320x320$1'),
+  linkHrefFn: token => token.attrGet('src').replace(/(\.\w+$)/, '-1920x1920$1'),
+})
+markdownIt.use(markdownItMermaid)
 
 export default class Translate {
   constructor(opt) {
