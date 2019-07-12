@@ -148,13 +148,14 @@ export default {
         const imagePath = path.join(docPath, 'pudding', 'images', imageName)
         console.log('imagePath',imagePath)
         await fs.writeFile(imagePath, imgBuffer)
+
         var position = this.editor.getPosition()
-        var lines = this.post.content.split('\n')
+        var lines = this.editor.getValue().split('\n')
         var currrentLine = lines[position.lineNumber - 1]
         var left = currrentLine.slice(0, position.column - 1)
         var right = currrentLine.slice(position.column - 1)
         lines[position.lineNumber - 1] = left + `![](../images/${imageName})` + right
-        this.post.content = lines.join('\n')
+        this.editor.setValue(lines.join('\n'))
       }else {
         return
       }
