@@ -76,7 +76,7 @@ export default {
   },
   computed: {
     name() {
-      return this.post.name
+      return this.post.title
     },
     windowTitle() {
       var title = ['布丁笔记']

@@ -59,7 +59,8 @@ export default {
     return {
       tag: '',
       keyword: '',
-      posts: []
+      posts: [],
+      visible: false,
     }
   },
   components: {
@@ -105,17 +106,29 @@ export default {
         message: '更新成功!'
       })
     },
-    todelete(item) {
-      const docPath = remote.app.getPath('documents')
-      const fullPath = path.join(docPath, 'pudding', `${item.title}.md`)
-      const ret = shell.moveItemToTrash(fullPath)
-      if (ret) {
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
+    async todelete(item) {
+      try {
+        await this.$confirm('此操作将删除该文件至电脑回收站, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         })
-        ipc.send('/posts/delete', item)
-        this.handleFetch()
+        const docPath = remote.app.getPath('documents')
+        const fullPath = path.join(docPath, 'pudding', `${item.title}.md`)
+        const ret = shell.moveItemToTrash(fullPath)
+        if (ret) {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+          ipc.send('/posts/delete', item)
+          this.handleFetch()
+        }
+      } catch {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       }
     },
     async handleReview(title) {
