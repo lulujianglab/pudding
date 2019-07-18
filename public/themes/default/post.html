@@ -14,10 +14,12 @@
           <p class="post-date"><%= dayjs(post.createdAt).format('YYYY-MM-DD') %></p>
       </div>
       <div class="content" id="content">
+        <div class="main">
           <%= post.htmlContent %>
-          <div class="footer">
-            Powered by PuddingNote
-          </div>
+        </div>
+        <div class="footer">
+          Powered by PuddingNote
+        </div>
       </div>
       <div class="toc_nav">
         <div class="article_nav" id="article_nav">
