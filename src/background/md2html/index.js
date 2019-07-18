@@ -5,8 +5,7 @@ import db from '../db'
 import _ from 'lodash'
 import dayjs from 'dayjs'
 import 'dayjs/locale/de-ch'
-// import markdownItMermaid from '@liradb2000/markdown-it-mermaid'
-import markdownItMermaid from 'markdown-it-mermaid'
+// import markdownItMermaid from 'markdown-it-mermaid'
 
 const MarkdownIt = require('markdown-it')
 const MarkdownItKatex = require('@iktakahiro/markdown-it-katex') // 公式
@@ -61,7 +60,7 @@ markdownIt.use(galleryPlugin, {
   imageSrcFn: token => token.attrGet('src').replace(/(\.\w+$)/, '-320x320$1'),
   linkHrefFn: token => token.attrGet('src').replace(/(\.\w+$)/, '-1920x1920$1'),
 })
-markdownIt.use(markdownItMermaid)
+// markdownIt.use(markdownItMermaid)
 
 export default class Translate {
   constructor(opt) {
