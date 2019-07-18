@@ -51,34 +51,6 @@ $$\begin{array}{c}
 
 \end{array}$$
 
-### 流程图
-
-```flow
-st=>start: Start
-e=>end
-op=>operation: My Operation
-cond=>condition: Yes or No?
-
-st->op->cond
-cond(yes)->e
-cond(no)->op
-```
-
-以及时序图:
-
-```sequence
-Alice->Bob: Hello Bob, how are you?
-Note right of Bob: Bob thinks
-Bob-->Alice: I am good thanks!
-```
-
-```mermaid
-graph LR;
-　　Portal-->|发布/更新配置|Apollo配置中心;
-　　Apollo配置中心-->|实时推送|App;
-　　App-->|实时查询|Apollo配置中心;
-```
-
 ### 复选框
 
 GFM Task List
