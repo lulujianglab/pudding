@@ -31,7 +31,6 @@
 <script>
 import ipc from 'electron-ipc-extra'
 const { dialog } = require('electron').remote
-const eventHub = require('@/eventHub')
 const log = require('electron-log')
 const { shell } = require('electron')
 
@@ -41,11 +40,11 @@ export default {
   },
   methods: {
     async createPost() {
-      const postName = await ipc.send('/posts/create')
+      const title = await ipc.send('/posts/create')
       this.$router.push({
         path: '/posts/edit',
         query: {
-          name: postName
+          name: title
         }
       })
     }

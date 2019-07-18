@@ -6,6 +6,17 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>布丁笔记</title>
+    <script>
+      // Monaco uses a custom amd loader that over-rides node's require.
+      // Keep a reference to node's require so we can restore it after executing the amd loader file.
+      var rawRequire = require
+    </script>
+    <script>
+      // Save Monaco's amd require and restore Node's require
+      var amdRequire = require
+      require = rawRequire
+      require.nodeRequire = rawRequire
+    </script>
   </head>
   <body>
     <noscript>

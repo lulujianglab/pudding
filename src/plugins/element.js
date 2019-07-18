@@ -2,17 +2,42 @@ import Vue from 'vue'
 import {
   checkbox,
   checkboxGroup,
+  CheckboxButton,
   popover,
   Message,
   MessageBox,
   Loading,
+  Button,
+  Input,
+  Link,
+  Form,
+  FormItem,
+  Select,
+  Option,
+  OptionGroup,
+  Dialog,
+  Tabs,
+  TabPane,
 } from 'element-ui'
 
 Vue.use(checkbox)
 Vue.use(checkboxGroup)
+Vue.use(CheckboxButton)
 Vue.use(popover)
 
 Vue.use(Loading.directive)
+
+Vue.use(Button)
+Vue.use(Input)
+Vue.use(Link)
+Vue.use(Form)
+Vue.use(FormItem)
+Vue.use(Select)
+Vue.use(Option)
+Vue.use(OptionGroup)
+Vue.use(Dialog)
+Vue.use(Tabs)
+Vue.use(TabPane)
 
 Vue.prototype.$loading = Loading.service
 Vue.prototype.$msgbox = MessageBox

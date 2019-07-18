@@ -7,7 +7,6 @@ import Toolbar from '@/components/Toolbar'
 import Sidebar from '@/components/Sidebar'
 import DetailView from '@/components/DetailView'
 import { Multipane, MultipaneResizer } from 'vue-multipane'
-
 const dayjs = require('dayjs')
 const http = require('axios')
 const _ = require('lodash')

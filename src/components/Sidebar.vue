@@ -1,6 +1,6 @@
 <template>
-  <column class="sidebar">
-   <button @click="upload">同步</button>
+  <column class="sidebar" v-loading="loading">
+   <img src="/app/logo.png" alt="" class="image" />
     <column
       v-for="item in menu"
       :key="item.title"
@@ -15,7 +15,8 @@
           :key="item.name">
           <row class="cross-align-center main-align-space-between">
             <row class="cross-align-center">
-              <i :class="item.icon" class="icon"></i><span>{{item.name}}</span>
+              <i :class="item.icon" class="icon"></i>
+              <span>{{item.name}}</span>
             </row>
             <row class="cross-align-center">{{transferInfo[item.transferType] || '&nbsp;'}}</row>
           </row>
@@ -27,45 +28,58 @@
 
 <script>
 import ipc from 'electron-ipc-extra'
+import { shell, remote } from 'electron'
+import path,{ posix } from 'path'
+import _ from 'lodash'
 
 export default {
   data () {
+    return {
+      transferInfo: {},
+      menu: [],
+      loading: false,
+    }
+  },
+  async created () {
     var defaultIcon = 'el-icon-my-wenjian'
-    var menu = [
+    this.menu = [
       {
-        title: '快速访问',
+        title: '我的文章',
         list: [
-          { name: '全部文章', path: '/posts', icon: 'el-icon-my-xiangmu1' },
-          { name: '回收站', path: '/recycle', icon: 'el-icon-my-huishouzhan' },
-          { name: '配置', path: '/configuration', icon: 'el-icon-my-huishouzhan' }
+          { name: '全部文章', path: '/posts/list/all', icon: 'el-icon-my-wenzhangshoufeiziyuan' },
+          { name: '公开博客', path: '/posts/list/public', icon: 'el-icon-my-gongkai1' },
+          { name: '私人笔记', path: '/posts/list/private', icon: 'el-icon-my-private' },
+        ]
+      },
+      {
+        title: '博客设置',
+        list: [
+          { name: '基础信息', path: '/setting/info', icon: 'el-icon-my-jichugongneng' },
+          { name: '评论功能', path: '/setting/comment', icon: 'el-icon-my-pinglun' }
+        ]
+      },
+      {
+        title: '同步设置',
+        list: [
+          { name: 'Github', path: '/sync/github', icon: 'el-icon-my-github' }
+        ]
+      }, {
+        title: '标签',
+        list: [
+          { name: '标签管理', path: '/labels/list', icon: 'el-icon-my-biaoqian' }
         ]
       }
     ]
-    menu.forEach(item => {
+    this.menu.forEach(item => {
       if (item.list) {
         item.list.forEach(item => {
           item.icon = item.icon || defaultIcon
         })
       }
     })
-    return {
-      transferInfo: {},
-      menu
-    }
-  },
-  created () {
-    this.getTransferInfo()
-    ipc.on('/renderer/transfer/info', data => {
-      this.transferInfo = data
-    })
   },
   methods: {
-    async getTransferInfo () {
-      this.transferInfo = await ipc.send('/transfer/info') || {}
-    },
-    async upload() {
-      var ret = await ipc.send('/publish/github')
-    },
+
     isItemActive (item) {
       if (item.remotePath) {
         if (this.$route.query.path === item.remotePath) {
@@ -75,6 +89,7 @@ export default {
       }
       return item.path === this.$route.path
     },
+
     async clickItem (item) {
       var route = {
         path: item.path
@@ -88,7 +103,11 @@ export default {
         }
       }
       this.$router.push(route)
-    }
+    },
+
+    openBrowser(url) {
+      shell.openExternal(url)
+    },
   }
 }
 </script>
@@ -98,7 +117,19 @@ export default {
   width: 220px;
   background-color: #f5f5f4;
   white-space: nowrap; // 整个 sidebar 不能换行
-  border-right: 1px solid #ddd;
+  // border-right: 1px solid #ddd;
+  overflow-y: auto;
+}
+
+.group {
+  padding-bottom: 10px;
+}
+
+.image {
+  width: 100px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 20px auto;
 }
 
 .title {
@@ -110,16 +141,21 @@ export default {
 }
 
 .item {
-  color: #333;
+  font-weight: 500;
+  color: #666;
   font-size: 14px;
   padding: 2px 10px 2px 17px;
   display: block;
-  color: #333;
   text-decoration: none;
   line-height: 22px;
-  cursor: default;
+  cursor: pointer;
 }
 
+.item:hover {
+  // background-color: #ecefef;
+  background-color: #dcdfe1;
+  // opacity: 0.8;
+}
 .item-active {
   background-color: #dcdfe1;
 }
@@ -127,6 +163,7 @@ export default {
 .icon {
   width: 20px;
   text-align: center;
+  color: #777;
   margin-right: 3px;
 }
 </style>
