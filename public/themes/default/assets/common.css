@@ -250,7 +250,8 @@ body {
   max-width: 100%
 }
 
-.content a {
+.content a,
+.footer a {
   text-decoration: none;
   color: hsla(165, 94%, 38%, 1);
 }
