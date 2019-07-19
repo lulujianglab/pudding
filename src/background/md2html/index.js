@@ -116,7 +116,8 @@ export default class Translate {
   }
 
   async handleArchiveHtml(templateDir, blogInfo, posts) {
-    var sortPosts = _.groupBy(posts, post => dayjs(post.createdAt).format('MMM YYYY'))
+    var postsFilter = posts.filter(post => post.title !== 'About' && !post.private)
+    var sortPosts = _.groupBy(postsFilter, post => dayjs(post.createdAt).format('MMM YYYY'))
     var archiveTemplate = await fs.readFile(path.join(templateDir, 'archive.html'), 'utf8')
     var html = _.template(archiveTemplate)({ sortPosts, blogInfo, dayjs })
     await fs.writeFile(path.join(this.localPath, 'dist', 'archive.html'), html)
