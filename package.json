@@ -26,7 +26,7 @@
     "fs-extra": "^8.0.1",
     "git-url-parse": "^11.1.2",
     "got": "^9.6.0",
-    "highlight.js": "^9.15.8",
+    "highlight.js": "^10.4.1",
     "klaw": "^3.0.0",
     "lowdb": "^1.0.0",
     "markdown-it": "^8.4.2",
