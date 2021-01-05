@@ -15,7 +15,7 @@
   "main": "background.js",
   "dependencies": {
     "@iktakahiro/markdown-it-katex": "^3.1.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "core-js": "^2.6.5",
     "dayjs": "^1.8.14",
     "electron-ipc-extra": "^1.2.4",
