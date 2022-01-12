@@ -29,7 +29,7 @@
     "highlight.js": "^9.15.8",
     "klaw": "^3.0.0",
     "lowdb": "^1.0.0",
-    "markdown-it": "^8.4.2",
+    "markdown-it": "^12.3.2",
     "markdown-it-emoji": "^1.4.0",
     "markdown-it-gallery": "^0.1.6",
     "markdown-it-imsize": "^2.0.1",
