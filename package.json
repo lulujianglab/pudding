@@ -38,7 +38,7 @@
     "markdown-it-toc-and-anchor": "^4.2.0",
     "monaco-editor": "^0.17.1",
     "shortid": "^2.2.14",
-    "simple-git": "1.106.0",
+    "simple-git": "3.5.0",
     "unused-filename": "^2.1.0",
     "vue": "^2.6.10",
     "vue-multipane": "^0.9.5",
