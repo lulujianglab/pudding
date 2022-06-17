@@ -51,7 +51,7 @@
     "@vue/cli-service": "^3.8.0",
     "babel-eslint": "^10.0.1",
     "babel-plugin-component": "^1.1.1",
-    "electron": "^5.0.0",
+    "electron": "^15.5.5",
     "element-theme": "^2.0.1",
     "element-theme-chalk": "^2.10.0",
     "eslint": "^5.16.0",
